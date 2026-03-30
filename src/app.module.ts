@@ -6,9 +6,10 @@ import { RestaurantModule } from './restaurant/restaurant.module';
 import { TableModule } from './table/table.module';
 import { CategoryModule } from './category/category.module';
 import { MenuItemModule } from './menu-item/menu-item.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
-  imports: [PrismaModule, RestaurantModule, TableModule, CategoryModule, MenuItemModule],
+  imports: [PrismaModule, RestaurantModule, TableModule, CategoryModule, MenuItemModule, OrderModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -3,6 +3,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common'
 import { TableService } from './table.service';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
+import { VerifyLocationDto } from './dto/verify-location.dto';
 
 @Controller('tables')
 export class TableController {
@@ -13,16 +14,18 @@ export class TableController {
     findAll(@Param('restaurant_id') restaurant_id: string) {
         return this.tableService.findAll(restaurant_id);
     }
+    // customer scan QR แล้วเรียก endpoint นี้เพื่อตรวจ token
+    @Post('scan/:token')
+    scanQR(
+        @Param('token') token: string,
+        @Body() dto: VerifyLocationDto,
+    ) {
+        return this.tableService.verifyLocationAndScan(token, dto);
+    }
 
     @Get(':id')
     findOne(@Param('id') id: string) {
         return this.tableService.findOne(id);
-    }
-
-    // customer scan QR แล้วเรียก endpoint นี้เพื่อตรวจ token
-    @Get('scan/:token')
-    scanQR(@Param('token') token: string) {
-        return this.tableService.findByToken(token);
     }
 
     @Post()

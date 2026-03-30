@@ -1,12 +1,18 @@
 // table/table.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { randomUUID } from 'crypto';
 import * as QRCode from 'qrcode';
 
+import { calculateDistance } from 'common/utils/location.util';
+import { VerifyLocationDto } from './dto/verify-location.dto';
+
+
+
 @Injectable()
+
 export class TableService {
     constructor(private prisma: PrismaService) { }
 
@@ -79,5 +85,41 @@ export class TableService {
         });
         if (!table || !table.is_active) throw new NotFoundException('Invalid QR Code');
         return table;
+    }
+
+    async verifyLocationAndScan(token: string, dto: VerifyLocationDto) {
+        // 1. หาโต๊ะจาก token
+        const table = await this.prisma.table.findUnique({
+            where: { qr_code_token: token },
+            include: { restaurant: true },
+        });
+
+        if (!table || !table.is_active) {
+            throw new NotFoundException('Invalid QR Code');
+        }
+
+        // 2. คำนวณระยะห่างระหว่าง customer กับร้าน
+        const distance = calculateDistance(
+            dto.latitude,
+            dto.longitude,
+            table.restaurant.latitude,
+            table.restaurant.longitude,
+        );
+
+        // 3. เช็คว่าอยู่ในรัศมีของร้านไหม
+        if (distance > table.restaurant.radius_meters) {
+            throw new BadRequestException(
+                `You are ${Math.round(distance)}m away. Must be within ${table.restaurant.radius_meters}m of the restaurant.`
+            );
+        }
+
+        // 4. ผ่านหมด — คืนข้อมูลโต๊ะ + ร้าน ให้ frontend เอาไปแสดงเมนู
+        return {
+            table_id: table.id,
+            table_number: table.table_number,
+            restaurant_id: table.restaurant.id,
+            restaurant_name: table.restaurant.name,
+            distance_meters: Math.round(distance),
+        };
     }
 }

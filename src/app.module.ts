@@ -7,6 +7,7 @@ import { TableModule } from './table/table.module';
 import { CategoryModule } from './category/category.module';
 import { MenuItemModule } from './menu-item/menu-item.module';
 import { OrderModule } from './order/order.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { OrderModule } from './order/order.module';
     CategoryModule,
     MenuItemModule,
     OrderModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

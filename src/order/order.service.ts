@@ -7,10 +7,14 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order.dto';
+import { EventsGateway } from 'src/events/events/events.gateway';
 
 @Injectable()
 export class OrderService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private eventsGateway: EventsGateway,
+  ) {}
 
   // ดู order ทั้งหมดของโต๊ะนั้น
   findByTable(table_id: string) {
@@ -109,6 +113,8 @@ export class OrderService {
 
   // อัปเดต status เช่น เชฟกด PREPARING, แคชเชียร์กด PAID
   async updateStatus(id: string, dto: UpdateOrderStatusDto) {
+    console.log('updating order id:', id);
+    console.log('status:', dto.status);
     await this.findOne(id);
     return this.prisma.order.update({
       where: { id },

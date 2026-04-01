@@ -1,9 +1,8 @@
+// order/dto/update-order.dto.ts
+import { IsEnum } from 'class-validator';
+import { OrderStatus } from 'generated/prisma/client';
+
 export class UpdateOrderStatusDto {
-  status:
-    | 'PENDING'
-    | 'CONFIRMED'
-    | 'PREPARING'
-    | 'SERVED'
-    | 'PAID'
-    | 'CANCELLED';
+  @IsEnum(OrderStatus)
+  status: OrderStatus;
 }

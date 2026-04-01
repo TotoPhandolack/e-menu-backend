@@ -20,17 +20,6 @@ export class OrderController {
     return this.orderService.findByRestaurant(restaurant_id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(id);
-  }
-
-  // ลูกค้ากดสั่งอาหาร
-  @Post()
-  create(@Body() dto: CreateOrderDto) {
-    return this.orderService.create(dto);
-  }
-
   // เชฟ/แคชเชียร์อัปเดต status
   @Put(':id/status')
   updateStatus(@Param('id') id: string, @Body() dto: UpdateOrderStatusDto) {
@@ -41,5 +30,16 @@ export class OrderController {
   @Put(':id/cancel')
   cancel(@Param('id') id: string) {
     return this.orderService.cancel(id);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.orderService.findOne(id);
+  }
+
+  // ลูกค้ากดสั่งอาหาร
+  @Post()
+  create(@Body() dto: CreateOrderDto) {
+    return this.orderService.create(dto);
   }
 }

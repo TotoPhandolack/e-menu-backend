@@ -8,4 +8,4 @@ import { MenuItemController } from './menu-item.controller';
   providers: [MenuItemService],
   exports: [MenuItemService],
 })
-export class MenuItemModule { }
+export class MenuItemModule {}

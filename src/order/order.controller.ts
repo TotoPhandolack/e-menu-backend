@@ -6,40 +6,40 @@ import { UpdateOrderStatusDto } from './dto/update-order.dto';
 
 @Controller('orders')
 export class OrderController {
-    constructor(private readonly orderService: OrderService) { }
+  constructor(private readonly orderService: OrderService) {}
 
-    // ลูกค้าดู order ของโต๊ะตัวเอง
-    @Get('table/:table_id')
-    findByTable(@Param('table_id') table_id: string) {
-        return this.orderService.findByTable(table_id);
-    }
+  // ลูกค้าดู order ของโต๊ะตัวเอง
+  @Get('table/:table_id')
+  findByTable(@Param('table_id') table_id: string) {
+    return this.orderService.findByTable(table_id);
+  }
 
-    // แคชเชียร์/เชฟดู order ทั้งหมดของร้าน
-    @Get('restaurant/:restaurant_id')
-    findByRestaurant(@Param('restaurant_id') restaurant_id: string) {
-        return this.orderService.findByRestaurant(restaurant_id);
-    }
+  // แคชเชียร์/เชฟดู order ทั้งหมดของร้าน
+  @Get('restaurant/:restaurant_id')
+  findByRestaurant(@Param('restaurant_id') restaurant_id: string) {
+    return this.orderService.findByRestaurant(restaurant_id);
+  }
 
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.orderService.findOne(id);
-    }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.orderService.findOne(id);
+  }
 
-    // ลูกค้ากดสั่งอาหาร
-    @Post()
-    create(@Body() dto: CreateOrderDto) {
-        return this.orderService.create(dto);
-    }
+  // ลูกค้ากดสั่งอาหาร
+  @Post()
+  create(@Body() dto: CreateOrderDto) {
+    return this.orderService.create(dto);
+  }
 
-    // เชฟ/แคชเชียร์อัปเดต status
-    @Put(':id/status')
-    updateStatus(@Param('id') id: string, @Body() dto: UpdateOrderStatusDto) {
-        return this.orderService.updateStatus(id, dto);
-    }
+  // เชฟ/แคชเชียร์อัปเดต status
+  @Put(':id/status')
+  updateStatus(@Param('id') id: string, @Body() dto: UpdateOrderStatusDto) {
+    return this.orderService.updateStatus(id, dto);
+  }
 
-    // ลูกค้ายกเลิก order
-    @Put(':id/cancel')
-    cancel(@Param('id') id: string) {
-        return this.orderService.cancel(id);
-    }
+  // ลูกค้ายกเลิก order
+  @Put(':id/cancel')
+  cancel(@Param('id') id: string) {
+    return this.orderService.cancel(id);
+  }
 }

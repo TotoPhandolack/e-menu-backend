@@ -6,4 +6,4 @@ import { PrismaService } from './prisma.service';
   providers: [PrismaService],
   exports: [PrismaService], // สำคัญมาก! ต้อง export ออกไปให้คนอื่นใช้
 })
-export class PrismaModule { }
+export class PrismaModule {}

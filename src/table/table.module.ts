@@ -8,4 +8,4 @@ import { TableController } from './table.controller';
   providers: [TableService],
   exports: [TableService],
 })
-export class TableModule { }
+export class TableModule {}

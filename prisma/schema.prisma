@@ -34,6 +34,7 @@ model Restaurant {
   tables     Table[]
   categories Category[]
   menuItems  MenuItem[]
+  admins     Admin[]
 }
 
 model Table {
@@ -101,4 +102,15 @@ model OrderItem {
   // relation
   order    Order    @relation(fields: [order_id], references: [id])
   menuItem MenuItem @relation(fields: [menu_item_id], references: [id])
+}
+
+model Admin {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  name          String
+  restaurant_id String
+  created_at    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
 }

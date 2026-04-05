@@ -7,14 +7,16 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('restaurants')
 export class RestaurantController {
-  constructor(private readonly restaurantService: RestaurantService) {}
+  constructor(private readonly restaurantService: RestaurantService) { }
 
   @Get()
   findAll() {
@@ -26,6 +28,7 @@ export class RestaurantController {
     return this.restaurantService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() dto: CreateRestaurantDto) {
     return this.restaurantService.create(dto);

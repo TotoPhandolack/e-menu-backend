@@ -7,7 +7,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order.dto';
-import { EventsGateway } from 'src/events/events/events.gateway';
+import { EventsGateway } from '../events/events/events.gateway';
 
 @Injectable()
 export class OrderService {

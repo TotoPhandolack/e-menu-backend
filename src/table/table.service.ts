@@ -10,7 +10,7 @@ import { UpdateTableDto } from './dto/update-table.dto';
 import { randomUUID } from 'crypto';
 import * as QRCode from 'qrcode';
 
-import { calculateDistance } from 'common/utils/location.util';
+import { calculateDistance } from '../../common/utils/location.util';
 import { VerifyLocationDto } from './dto/verify-location.dto';
 
 @Injectable()

@@ -11,22 +11,22 @@ import {
 
 export class CreateMenuItemDto {
   @IsUUID()
-  restaurant_id: string;
+  restaurant_id!: string;
 
   @IsUUID()
-  category_id: string;
+  category_id!: string;
 
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description!: string;
 
   @IsNumber()
   @Min(0)
-  price: number;
+  price!: number;
 
   @IsUrl()
   @IsOptional()

@@ -12,7 +12,6 @@ import {
 import { RestaurantService } from './restaurant.service';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('restaurants')
 export class RestaurantController {
@@ -28,7 +27,6 @@ export class RestaurantController {
     return this.restaurantService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() dto: CreateRestaurantDto) {
     return this.restaurantService.create(dto);

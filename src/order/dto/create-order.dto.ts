@@ -13,11 +13,11 @@ import { Type } from 'class-transformer';
 
 export class CreateOrderItemDto {
   @IsUUID()
-  menu_item_id: string;
+  menu_item_id!: string;
 
   @IsNumber()
   @Min(1)
-  quantity: number;
+  quantity!: number;
 
   @IsString()
   @IsOptional()
@@ -26,14 +26,14 @@ export class CreateOrderItemDto {
 
 export class CreateOrderDto {
   @IsUUID()
-  table_id: string;
+  table_id!: string;
 
   @IsString()
   @IsNotEmpty()
-  session_id: string;
+  session_id!: string;
 
   @IsArray()
   @ValidateNested({ each: true }) // validate ทุก item ใน array
   @Type(() => CreateOrderItemDto)
-  items: CreateOrderItemDto[];
+  items!: CreateOrderItemDto[];
 }

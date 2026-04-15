@@ -6,20 +6,28 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoryService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   findAll(restaurant_id: string) {
     return this.prisma.category.findMany({
       where: { restaurant_id },
       orderBy: { sort_order: 'asc' },
-      include: { menuItems: true }, // ดึง menuItems มาด้วยเลย
+      include: {
+        menuItems: {
+          where: { is_available: true },
+        },
+      }, // ดึง menuItems เฉพาะที่ยัง available มาด้วย
     });
   }
 
   async findOne(id: string) {
     const category = await this.prisma.category.findUnique({
       where: { id },
-      include: { menuItems: true },
+      include: {
+        menuItems: {
+          where: { is_available: true },
+        },
+      },
     });
     if (!category) throw new NotFoundException('Category not found');
     return category;

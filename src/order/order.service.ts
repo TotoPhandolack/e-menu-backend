@@ -86,7 +86,7 @@ export class OrderService {
     }, 0);
 
     // 4. สร้าง order พร้อม orderItems ในครั้งเดียว
-    return this.prisma.order.create({
+    const newOrder = await this.prisma.order.create({
       data: {
         table_id: dto.table_id,
         session_id: dto.session_id,
@@ -104,11 +104,15 @@ export class OrderService {
         },
       },
       include: {
+        table: true,
         orderItems: {
           include: { menuItem: true },
         },
       },
     });
+
+    this.eventsGateway.notifyNewOrder(table.restaurant_id, newOrder);
+    return newOrder;
   }
 
   // อัปเดต status เช่น เชฟกด PREPARING, แคชเชียร์กด PAID
@@ -116,7 +120,7 @@ export class OrderService {
     console.log('updating order id:', id);
     console.log('status:', dto.status);
     await this.findOne(id);
-    return this.prisma.order.update({
+    const updatedOrder = await this.prisma.order.update({
       where: { id },
       data: { status: dto.status },
       include: {
@@ -126,6 +130,9 @@ export class OrderService {
         },
       },
     });
+
+    this.eventsGateway.notifyOrderStatus(updatedOrder.table.restaurant_id, updatedOrder);
+    return updatedOrder;
   }
 
   // ยกเลิก order (เฉพาะ PENDING เท่านั้น)

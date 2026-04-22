@@ -78,7 +78,7 @@ export class TableService {
     return { ...updated, qr_image };
   }
 
-  // ใช้ตอน customer scan QR — เช็คว่า token นี้ถูกต้องไหม
+  // ใช้ตอน customer scan QR — เช็คว่า token นี้ถูกต้องไหม (ไม่ตรวจ location)
   async findByToken(token: string) {
     const table = await this.prisma.table.findUnique({
       where: { qr_code_token: token },
@@ -87,6 +87,18 @@ export class TableService {
     if (!table || !table.is_active)
       throw new NotFoundException('Invalid QR Code');
     return table;
+  }
+
+  // ใช้ตอน scan QR เพื่อโหลดเมนู — ไม่ต้องตรวจสอบ location
+  async scanByToken(token: string) {
+    const table = await this.findByToken(token);
+    return {
+      table_id: table.id,
+      table_number: table.table_number,
+      restaurant_id: table.restaurant.id,
+      restaurant_name: table.restaurant.name,
+      distance_meters: null,
+    };
   }
 
   async verifyLocationAndScan(token: string, dto: VerifyLocationDto) {

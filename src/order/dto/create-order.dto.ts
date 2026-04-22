@@ -8,6 +8,7 @@ import {
   IsNumber,
   IsOptional,
   Min,
+  Max,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -36,4 +37,15 @@ export class CreateOrderDto {
   @ValidateNested({ each: true }) // validate ทุก item ใน array
   @Type(() => CreateOrderItemDto)
   items!: CreateOrderItemDto[];
+
+  // location ของลูกค้าตอนสั่งอาหาร (required เพื่อตรวจสอบว่าอยู่ในร้าน)
+  @IsNumber()
+  @Min(-90)
+  @Max(90)
+  latitude!: number;
+
+  @IsNumber()
+  @Min(-180)
+  @Max(180)
+  longitude!: number;
 }

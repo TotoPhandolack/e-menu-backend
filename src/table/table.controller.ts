@@ -13,6 +13,7 @@ import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { VerifyLocationDto } from './dto/verify-location.dto';
 
+
 @Controller('tables')
 export class TableController {
   constructor(private readonly tableService: TableService) {}
@@ -22,7 +23,13 @@ export class TableController {
   findAll(@Param('restaurant_id') restaurant_id: string) {
     return this.tableService.findAll(restaurant_id);
   }
-  // customer scan QR แล้วเรียก endpoint นี้เพื่อตรวจ token
+  // customer scan QR เพื่อโหลดเมนู — ไม่ตรวจ location (เข้าถึงได้จากทุกที่)
+  @Get('scan/:token')
+  scanQRNoLocation(@Param('token') token: string) {
+    return this.tableService.scanByToken(token);
+  }
+
+  // customer ยืนยัน location ก่อนสั่งอาหาร
   @Post('scan/:token')
   scanQR(@Param('token') token: string, @Body() dto: VerifyLocationDto) {
     return this.tableService.verifyLocationAndScan(token, dto);

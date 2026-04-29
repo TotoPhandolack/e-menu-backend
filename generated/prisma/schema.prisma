@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  SERVED
+  PAID
+  CANCELLED
+}
+
+model Restaurant {
+  id            String  @id @default(uuid())
+  name          String
+  address       String
+  latitude      Float
+  longitude     Float
+  radius_meters Float
+  is_active     Boolean @default(true)
+
+  // back-relations
+  tables     Table[]
+  categories Category[]
+  menuItems  MenuItem[]
+  admins     Admin[]
+}
+
+model Table {
+  id            String  @id @default(uuid())
+  restaurant_id String // field จริงเก็บ FK
+  table_number  String
+  qr_code_token String  @unique // ควร unique เพราะใช้ identify โต๊ะ
+  capacity      Int
+  is_active     Boolean @default(true)
+
+  // relation
+  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+  orders     Order[]
+}
+
+model Category {
+  id            String @id @default(uuid())
+  restaurant_id String
+  name          String
+  sort_order    Int
+
+  //relation
+  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+  menuItems  MenuItem[]
+}
+
+model MenuItem {
+  id            String  @id @default(uuid())
+  restaurant_id String
+  category_id   String
+  name          String
+  description   String
+  price         Decimal
+  imge_url      String?
+  is_available  Boolean @default(true)
+
+  // relation
+  restaurant Restaurant  @relation(fields: [restaurant_id], references: [id])
+  category   Category    @relation(fields: [category_id], references: [id])
+  orderItems OrderItem[]
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  table_id     String
+  session_id   String
+  status       OrderStatus @default(PENDING)
+  total_amount Decimal
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+
+  // relation
+  table      Table       @relation(fields: [table_id], references: [id])
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id           String  @id @default(uuid())
+  order_id     String
+  menu_item_id String
+  quantity     Int
+  unit_price   Decimal
+  special_note String?
+
+  // relation
+  order    Order    @relation(fields: [order_id], references: [id])
+  menuItem MenuItem @relation(fields: [menu_item_id], references: [id])
+}
+
+model Admin {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  name          String
+  restaurant_id String
+  created_at    DateTime @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+}

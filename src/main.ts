@@ -7,7 +7,6 @@ import express from 'express';
 import { INestApplication } from '@nestjs/common';
 import { IncomingMessage, ServerResponse } from 'http';
 
-// Cache the app instance across serverless invocations (warm starts)
 let cachedApp: INestApplication;
 
 async function createApp(): Promise<INestApplication> {
@@ -16,9 +15,15 @@ async function createApp(): Promise<INestApplication> {
   const expressApp = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
+  // --- แก้ไขจุดที่ 1: การตั้งค่า CORS ให้ยืดหยุ่นขึ้น ---
+  const frontendUrl = process.env.FRONTEND_URL;
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL,
+    // แนะนำให้จัดการเรื่อง trailing slash (ตัด / ท้าย URL ออกถ้ามี)
+    origin: frontendUrl?.replace(/\/$/, ""),
     credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type, Accept, Authorization',
   });
 
   app.useGlobalPipes(
@@ -34,17 +39,24 @@ async function createApp(): Promise<INestApplication> {
   return app;
 }
 
-// Vercel serverless handler
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
+  // --- แก้ไขจุดที่ 2: จัดการ Preflight Request (OPTIONS) ---
+  // บางครั้ง Serverless Handler อาจจะบล็อกคำขอ OPTIONS จากเบราว์เซอร์
+  if (req.method === 'OPTIONS') {
+    res.statusCode = 204;
+    res.end();
+    return;
+  }
+
   const app = await createApp();
   const expressApp = app.getHttpAdapter().getInstance();
   expressApp(req, res);
 }
 
-// Local development: start a normal HTTP server
 if (process.env.NODE_ENV !== 'production') {
   createApp().then(async (app) => {
-    await app.listen(process.env.PORT || 3003);
-    console.log(`Server running on http://localhost:${process.env.PORT || 3003}`);
+    const port = process.env.PORT || 3003;
+    await app.listen(port);
+    console.log(`🚀 Server running on http://localhost:${port}`);
   });
 }

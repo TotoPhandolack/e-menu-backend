@@ -55,7 +55,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
 
 if (process.env.NODE_ENV !== 'production') {
   createApp().then(async (app) => {
-    const port = process.env.PORT || 3003;
+    const port = process.env.PORT || 3001;
     await app.listen(port);
     console.log(`🚀 Server running on http://localhost:${port}`);
   });

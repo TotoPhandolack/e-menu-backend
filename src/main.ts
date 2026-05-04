@@ -15,12 +15,9 @@ async function createApp(): Promise<INestApplication> {
   const expressApp = express();
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
-  // --- แก้ไขจุดที่ 1: การตั้งค่า CORS ให้ยืดหยุ่นขึ้น ---
-  const frontendUrl = process.env.FRONTEND_URL;
-
   app.enableCors({
-    // แนะนำให้จัดการเรื่อง trailing slash (ตัด / ท้าย URL ออกถ้ามี)
-    origin: frontendUrl?.replace(/\/$/, ""),
+    // Allow all origins (true allows reflection of request origin) or specify domains
+    origin: true,
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
@@ -43,6 +40,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   // --- แก้ไขจุดที่ 2: จัดการ Preflight Request (OPTIONS) ---
   // บางครั้ง Serverless Handler อาจจะบล็อกคำขอ OPTIONS จากเบราว์เซอร์
   if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.statusCode = 204;
     res.end();
     return;

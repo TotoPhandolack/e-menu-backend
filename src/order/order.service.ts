@@ -72,19 +72,19 @@ export class OrderService {
       throw new BadRequestException('Table not found or inactive');
     }
 
-    // 2. ตรวจสอบว่าลูกค้าอยู่ในรัศมีของร้านไหมก่อนสั่งอาหาร
+    // 2. ตรวจสอบว่าลูกค้าอยู่ในรัศมีของร้านไหมก่อนสั่งอาหาร (Disabled for testing)
     const restaurant = table.restaurant;
-    const distance = calculateDistance(
-      dto.latitude,
-      dto.longitude,
-      restaurant.latitude,
-      restaurant.longitude,
-    );
-    if (distance > restaurant.radius_meters) {
-      throw new BadRequestException(
-        `You must be inside the restaurant to order. You are ${Math.round(distance)}m away (max ${restaurant.radius_meters}m).`,
-      );
-    }
+    // const distance = calculateDistance(
+    //   dto.latitude,
+    //   dto.longitude,
+    //   restaurant.latitude,
+    //   restaurant.longitude,
+    // );
+    // if (distance > restaurant.radius_meters) {
+    //   throw new BadRequestException(
+    //     `You must be inside the restaurant to order. You are ${Math.round(distance)}m away (max ${restaurant.radius_meters}m).`,
+    //   );
+    // }
 
     // 3. ดึงราคา menuItem ทุกตัวที่สั่ง
     const menuItemIds = dto.items.map((item) => item.menu_item_id);

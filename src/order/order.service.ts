@@ -16,7 +16,7 @@ export class OrderService {
   constructor(
     private prisma: PrismaService,
     private eventsGateway: EventsGateway,
-  ) {}
+  ) { }
 
   // ดู order ทั้งหมดของโต๊ะนั้น
   findByTable(table_id: string) {

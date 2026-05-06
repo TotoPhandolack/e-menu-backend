@@ -181,6 +181,7 @@ exports.Prisma.AdminScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
+  role: 'role',
   restaurant_id: 'restaurant_id',
   created_at: 'created_at'
 };
@@ -206,6 +207,11 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   SERVED: 'SERVED',
   PAID: 'PAID',
   CANCELLED: 'CANCELLED'
+};
+
+exports.AdminRole = exports.$Enums.AdminRole = {
+  ADMIN: 'ADMIN',
+  CASHIER: 'CASHIER'
 };
 
 exports.Prisma.ModelName = {

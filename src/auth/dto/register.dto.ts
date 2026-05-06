@@ -3,8 +3,11 @@ import {
   IsString,
   IsNotEmpty,
   IsUUID,
+  IsOptional,
+  IsEnum,
   MinLength,
 } from 'class-validator';
+import { AdminRole } from '../../../generated/prisma';
 
 export class RegisterDto {
   @IsEmail()
@@ -20,4 +23,8 @@ export class RegisterDto {
 
   @IsUUID()
   restaurant_id!: string;
+
+  @IsOptional()
+  @IsEnum(AdminRole)
+  role?: AdminRole;
 }

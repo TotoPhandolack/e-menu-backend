@@ -64,11 +64,23 @@ export namespace $Enums {
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
 
+
+export const AdminRole: {
+  ADMIN: 'ADMIN',
+  CASHIER: 'CASHIER'
+};
+
+export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
+
 }
 
 export type OrderStatus = $Enums.OrderStatus
 
 export const OrderStatus: typeof $Enums.OrderStatus
+
+export type AdminRole = $Enums.AdminRole
+
+export const AdminRole: typeof $Enums.AdminRole
 
 /**
  * ##  Prisma Client ʲˢ
@@ -8559,6 +8571,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     name: string | null
+    role: $Enums.AdminRole | null
     restaurant_id: string | null
     created_at: Date | null
   }
@@ -8568,6 +8581,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     name: string | null
+    role: $Enums.AdminRole | null
     restaurant_id: string | null
     created_at: Date | null
   }
@@ -8577,6 +8591,7 @@ export namespace Prisma {
     email: number
     password: number
     name: number
+    role: number
     restaurant_id: number
     created_at: number
     _all: number
@@ -8588,6 +8603,7 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
+    role?: true
     restaurant_id?: true
     created_at?: true
   }
@@ -8597,6 +8613,7 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
+    role?: true
     restaurant_id?: true
     created_at?: true
   }
@@ -8606,6 +8623,7 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
+    role?: true
     restaurant_id?: true
     created_at?: true
     _all?: true
@@ -8688,6 +8706,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role: $Enums.AdminRole
     restaurant_id: string
     created_at: Date
     _count: AdminCountAggregateOutputType | null
@@ -8714,6 +8733,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    role?: boolean
     restaurant_id?: boolean
     created_at?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
@@ -8724,6 +8744,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    role?: boolean
     restaurant_id?: boolean
     created_at?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
@@ -8734,6 +8755,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    role?: boolean
     restaurant_id?: boolean
     created_at?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
@@ -8744,11 +8766,12 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    role?: boolean
     restaurant_id?: boolean
     created_at?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "restaurant_id" | "created_at", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "restaurant_id" | "created_at", ExtArgs["result"]["admin"]>
   export type AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
   }
@@ -8769,6 +8792,7 @@ export namespace Prisma {
       email: string
       password: string
       name: string
+      role: $Enums.AdminRole
       restaurant_id: string
       created_at: Date
     }, ExtArgs["result"]["admin"]>
@@ -9199,6 +9223,7 @@ export namespace Prisma {
     readonly email: FieldRef<"Admin", 'String'>
     readonly password: FieldRef<"Admin", 'String'>
     readonly name: FieldRef<"Admin", 'String'>
+    readonly role: FieldRef<"Admin", 'AdminRole'>
     readonly restaurant_id: FieldRef<"Admin", 'String'>
     readonly created_at: FieldRef<"Admin", 'DateTime'>
   }
@@ -9713,6 +9738,7 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     name: 'name',
+    role: 'role',
     restaurant_id: 'restaurant_id',
     created_at: 'created_at'
   };
@@ -9837,6 +9863,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'AdminRole'
+   */
+  export type EnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'AdminRole[]'
+   */
+  export type ListEnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole[]'>
     
   /**
    * Deep Input Types
@@ -10260,6 +10300,7 @@ export namespace Prisma {
     email?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     name?: StringFilter<"Admin"> | string
+    role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
     restaurant_id?: StringFilter<"Admin"> | string
     created_at?: DateTimeFilter<"Admin"> | Date | string
     restaurant?: XOR<RestaurantScalarRelationFilter, RestaurantWhereInput>
@@ -10270,6 +10311,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    role?: SortOrder
     restaurant_id?: SortOrder
     created_at?: SortOrder
     restaurant?: RestaurantOrderByWithRelationInput
@@ -10283,6 +10325,7 @@ export namespace Prisma {
     NOT?: AdminWhereInput | AdminWhereInput[]
     password?: StringFilter<"Admin"> | string
     name?: StringFilter<"Admin"> | string
+    role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
     restaurant_id?: StringFilter<"Admin"> | string
     created_at?: DateTimeFilter<"Admin"> | Date | string
     restaurant?: XOR<RestaurantScalarRelationFilter, RestaurantWhereInput>
@@ -10293,6 +10336,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    role?: SortOrder
     restaurant_id?: SortOrder
     created_at?: SortOrder
     _count?: AdminCountOrderByAggregateInput
@@ -10308,6 +10352,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Admin"> | string
     password?: StringWithAggregatesFilter<"Admin"> | string
     name?: StringWithAggregatesFilter<"Admin"> | string
+    role?: EnumAdminRoleWithAggregatesFilter<"Admin"> | $Enums.AdminRole
     restaurant_id?: StringWithAggregatesFilter<"Admin"> | string
     created_at?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
   }
@@ -10734,6 +10779,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: $Enums.AdminRole
     created_at?: Date | string
     restaurant: RestaurantCreateNestedOneWithoutAdminsInput
   }
@@ -10743,6 +10789,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: $Enums.AdminRole
     restaurant_id: string
     created_at?: Date | string
   }
@@ -10752,6 +10799,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     restaurant?: RestaurantUpdateOneRequiredWithoutAdminsNestedInput
   }
@@ -10761,6 +10809,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     restaurant_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10770,6 +10819,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: $Enums.AdminRole
     restaurant_id: string
     created_at?: Date | string
   }
@@ -10779,6 +10829,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -10787,6 +10838,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     restaurant_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11305,11 +11357,19 @@ export namespace Prisma {
     unit_price?: SortOrder
   }
 
+  export type EnumAdminRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleFilter<$PrismaModel> | $Enums.AdminRole
+  }
+
   export type AdminCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    role?: SortOrder
     restaurant_id?: SortOrder
     created_at?: SortOrder
   }
@@ -11319,6 +11379,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    role?: SortOrder
     restaurant_id?: SortOrder
     created_at?: SortOrder
   }
@@ -11328,8 +11389,19 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    role?: SortOrder
     restaurant_id?: SortOrder
     created_at?: SortOrder
+  }
+
+  export type EnumAdminRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleWithAggregatesFilter<$PrismaModel> | $Enums.AdminRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAdminRoleFilter<$PrismaModel>
+    _max?: NestedEnumAdminRoleFilter<$PrismaModel>
   }
 
   export type TableCreateNestedManyWithoutRestaurantInput = {
@@ -11816,6 +11888,10 @@ export namespace Prisma {
     connect?: RestaurantWhereUniqueInput
   }
 
+  export type EnumAdminRoleFieldUpdateOperationsInput = {
+    set?: $Enums.AdminRole
+  }
+
   export type RestaurantUpdateOneRequiredWithoutAdminsNestedInput = {
     create?: XOR<RestaurantCreateWithoutAdminsInput, RestaurantUncheckedCreateWithoutAdminsInput>
     connectOrCreate?: RestaurantCreateOrConnectWithoutAdminsInput
@@ -12033,6 +12109,23 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumAdminRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleFilter<$PrismaModel> | $Enums.AdminRole
+  }
+
+  export type NestedEnumAdminRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminRoleWithAggregatesFilter<$PrismaModel> | $Enums.AdminRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAdminRoleFilter<$PrismaModel>
+    _max?: NestedEnumAdminRoleFilter<$PrismaModel>
+  }
+
   export type TableCreateWithoutRestaurantInput = {
     id?: string
     table_number: string
@@ -12122,6 +12215,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: $Enums.AdminRole
     created_at?: Date | string
   }
 
@@ -12130,6 +12224,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: $Enums.AdminRole
     created_at?: Date | string
   }
 
@@ -12251,6 +12346,7 @@ export namespace Prisma {
     email?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     name?: StringFilter<"Admin"> | string
+    role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
     restaurant_id?: StringFilter<"Admin"> | string
     created_at?: DateTimeFilter<"Admin"> | Date | string
   }
@@ -12971,6 +13067,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: $Enums.AdminRole
     created_at?: Date | string
   }
 
@@ -13057,6 +13154,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -13065,6 +13163,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -13073,6 +13172,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

@@ -50,10 +50,11 @@ export class AuthService {
     const isMatch = await bcrypt.compare(dto.password, admin.password);
     if (!isMatch) throw new UnauthorizedException('Invalid credentials');
 
-    // สร้าง JWT token
+    // สร้าง JWT token — include role so guards can check it
     const token = this.jwtService.sign({
       sub: admin.id,
       email: admin.email,
+      role: admin.role,
       restaurant_id: admin.restaurant_id,
     });
 
@@ -63,6 +64,7 @@ export class AuthService {
         id: admin.id,
         name: admin.name,
         email: admin.email,
+        role: admin.role,
         restaurant_id: admin.restaurant_id,
         restaurant_name: admin.restaurant.name,
       },
@@ -76,6 +78,7 @@ export class AuthService {
         id: true,
         name: true,
         email: true,
+        role: true,
         restaurant_id: true,
         restaurant: { select: { name: true } },
       },

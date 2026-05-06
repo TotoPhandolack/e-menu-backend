@@ -9,6 +9,7 @@ import { MenuItemModule } from './menu-item/menu-item.module';
 import { OrderModule } from './order/order.module';
 import { EventsModule } from './events/events.module';
 import { AuthModule } from './auth/auth.module';
+import { CashierModule } from './cashier/cashier.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthModule } from './auth/auth.module';
     OrderModule,
     EventsModule,
     AuthModule,
+    CashierModule,
   ],
   controllers: [AppController],
   providers: [AppService],

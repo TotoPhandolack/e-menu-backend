@@ -148,7 +148,9 @@ export class OrderService {
       },
     });
 
-    this.eventsGateway.notifyOrderStatus(updatedOrder.table.restaurant_id, updatedOrder);
+    if (updatedOrder.table) {
+      this.eventsGateway.notifyOrderStatus(updatedOrder.table.restaurant_id, updatedOrder);
+    }
     return updatedOrder;
   }
 

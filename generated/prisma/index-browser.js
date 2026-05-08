@@ -136,7 +136,8 @@ exports.Prisma.TableScalarFieldEnum = {
   table_number: 'table_number',
   qr_code_token: 'qr_code_token',
   capacity: 'capacity',
-  is_active: 'is_active'
+  is_active: 'is_active',
+  status: 'status'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
@@ -161,7 +162,12 @@ exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
   table_id: 'table_id',
   session_id: 'session_id',
+  order_type: 'order_type',
+  queue_number: 'queue_number',
   status: 'status',
+  subtotal: 'subtotal',
+  vat_amount: 'vat_amount',
+  service_charge_amount: 'service_charge_amount',
   total_amount: 'total_amount',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -186,9 +192,33 @@ exports.Prisma.AdminScalarFieldEnum = {
   created_at: 'created_at'
 };
 
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  order_id: 'order_id',
+  method: 'method',
+  amount: 'amount',
+  paid_at: 'paid_at'
+};
+
+exports.Prisma.ShiftScalarFieldEnum = {
+  id: 'id',
+  admin_id: 'admin_id',
+  restaurant_id: 'restaurant_id',
+  clock_in: 'clock_in',
+  clock_out: 'clock_out',
+  opening_float: 'opening_float',
+  closing_summary: 'closing_summary',
+  status: 'status'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -200,6 +230,22 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.TableStatus = exports.$Enums.TableStatus = {
+  AVAILABLE: 'AVAILABLE',
+  OCCUPIED: 'OCCUPIED'
+};
+
+exports.OrderType = exports.$Enums.OrderType = {
+  TABLE: 'TABLE',
+  TAKEAWAY: 'TAKEAWAY'
+};
+
 exports.OrderStatus = exports.$Enums.OrderStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
@@ -214,6 +260,17 @@ exports.AdminRole = exports.$Enums.AdminRole = {
   CASHIER: 'CASHIER'
 };
 
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  CASH: 'CASH',
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  CREDIT_CARD: 'CREDIT_CARD'
+};
+
+exports.ShiftStatus = exports.$Enums.ShiftStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED'
+};
+
 exports.Prisma.ModelName = {
   Restaurant: 'Restaurant',
   Table: 'Table',
@@ -221,7 +278,9 @@ exports.Prisma.ModelName = {
   MenuItem: 'MenuItem',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  Admin: 'Admin'
+  Admin: 'Admin',
+  Payment: 'Payment',
+  Shift: 'Shift'
 };
 
 /**

@@ -26,6 +26,27 @@ enum AdminRole {
   CASHIER
 }
 
+enum TableStatus {
+  AVAILABLE
+  OCCUPIED
+}
+
+enum OrderType {
+  TABLE
+  TAKEAWAY
+}
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  CREDIT_CARD
+}
+
+enum ShiftStatus {
+  OPEN
+  CLOSED
+}
+
 model Restaurant {
   id            String  @id @default(uuid())
   name          String
@@ -40,15 +61,17 @@ model Restaurant {
   categories Category[]
   menuItems  MenuItem[]
   admins     Admin[]
+  shifts     Shift[]
 }
 
 model Table {
-  id            String  @id @default(uuid())
-  restaurant_id String // field จริงเก็บ FK
+  id            String      @id @default(uuid())
+  restaurant_id String
   table_number  String
-  qr_code_token String  @unique // ควร unique เพราะใช้ identify โต๊ะ
+  qr_code_token String      @unique
   capacity      Int
-  is_active     Boolean @default(true)
+  is_active     Boolean     @default(true)
+  status        TableStatus @default(AVAILABLE)
 
   // relation
   restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
@@ -83,17 +106,23 @@ model MenuItem {
 }
 
 model Order {
-  id           String      @id @default(uuid())
-  table_id     String
-  session_id   String
-  status       OrderStatus @default(PENDING)
-  total_amount Decimal
-  created_at   DateTime    @default(now())
-  updated_at   DateTime    @updatedAt
+  id                    String      @id @default(uuid())
+  table_id              String?
+  session_id            String
+  order_type            OrderType   @default(TABLE)
+  queue_number          String?
+  status                OrderStatus @default(PENDING)
+  subtotal              Decimal     @default(0)
+  vat_amount            Decimal     @default(0)
+  service_charge_amount Decimal     @default(0)
+  total_amount          Decimal
+  created_at            DateTime    @default(now())
+  updated_at            DateTime    @updatedAt
 
   // relation
-  table      Table       @relation(fields: [table_id], references: [id])
+  table      Table?      @relation(fields: [table_id], references: [id])
   orderItems OrderItem[]
+  payments   Payment[]
 }
 
 model OrderItem {
@@ -118,5 +147,30 @@ model Admin {
   restaurant_id String
   created_at    DateTime  @default(now())
 
+  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+  shifts     Shift[]
+}
+
+model Payment {
+  id       String        @id @default(uuid())
+  order_id String
+  method   PaymentMethod
+  amount   Decimal
+  paid_at  DateTime      @default(now())
+
+  order Order @relation(fields: [order_id], references: [id])
+}
+
+model Shift {
+  id              String      @id @default(uuid())
+  admin_id        String
+  restaurant_id   String
+  clock_in        DateTime    @default(now())
+  clock_out       DateTime?
+  opening_float   Decimal
+  closing_summary Json?
+  status          ShiftStatus @default(OPEN)
+
+  admin      Admin      @relation(fields: [admin_id], references: [id])
   restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
 }

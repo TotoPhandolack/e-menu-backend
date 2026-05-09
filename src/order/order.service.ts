@@ -8,15 +8,13 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order.dto';
 import { EventsGateway } from '../events/events/events.gateway';
-import { calculateDistance } from '../../common/utils/location.util';
-
 
 @Injectable()
 export class OrderService {
   constructor(
     private prisma: PrismaService,
     private eventsGateway: EventsGateway,
-  ) { }
+  ) {}
 
   // ดู order ทั้งหมดของโต๊ะนั้น
   findByTable(table_id: string) {
@@ -71,21 +69,6 @@ export class OrderService {
     if (!table || !table.is_active) {
       throw new BadRequestException('Table not found or inactive');
     }
-
-    // 2. ตรวจสอบว่าลูกค้าอยู่ในรัศมีของร้านไหมก่อนสั่งอาหาร (Disabled for testing)
-    const restaurant = table.restaurant;
-    // const distance = calculateDistance(
-    //   dto.latitude,
-    //   dto.longitude,
-    //   restaurant.latitude,
-    //   restaurant.longitude,
-    // );
-    // if (distance > restaurant.radius_meters) {
-    //   throw new BadRequestException(
-    //     `You must be inside the restaurant to order. You are ${Math.round(distance)}m away (max ${restaurant.radius_meters}m).`,
-    //   );
-    // }
-
     // 3. ดึงราคา menuItem ทุกตัวที่สั่ง
     const menuItemIds = dto.items.map((item) => item.menu_item_id);
     const menuItems = await this.prisma.menuItem.findMany({
@@ -149,7 +132,10 @@ export class OrderService {
     });
 
     if (updatedOrder.table) {
-      this.eventsGateway.notifyOrderStatus(updatedOrder.table.restaurant_id, updatedOrder);
+      this.eventsGateway.notifyOrderStatus(
+        updatedOrder.table.restaurant_id,
+        updatedOrder,
+      );
     }
     return updatedOrder;
   }

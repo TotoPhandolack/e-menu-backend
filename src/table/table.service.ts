@@ -65,7 +65,6 @@ export class TableService {
 
   // regenerate QR ใหม่ เช่น กรณี token หลุด
   async regenerateQR(id: string) {
-    const table = await this.findOne(id);
     const qr_code_token = randomUUID();
     const qr_url = `${process.env.FRONTEND_URL}/menu?token=${qr_code_token}`;
     const qr_image = await QRCode.toDataURL(qr_url);

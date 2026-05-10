@@ -1931,12 +1931,16 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     radius_meters: number | null
+    vat_rate: Decimal | null
+    service_charge_rate: Decimal | null
   }
 
   export type RestaurantSumAggregateOutputType = {
     latitude: number | null
     longitude: number | null
     radius_meters: number | null
+    vat_rate: Decimal | null
+    service_charge_rate: Decimal | null
   }
 
   export type RestaurantMinAggregateOutputType = {
@@ -1947,6 +1951,8 @@ export namespace Prisma {
     longitude: number | null
     radius_meters: number | null
     is_active: boolean | null
+    vat_rate: Decimal | null
+    service_charge_rate: Decimal | null
   }
 
   export type RestaurantMaxAggregateOutputType = {
@@ -1957,6 +1963,8 @@ export namespace Prisma {
     longitude: number | null
     radius_meters: number | null
     is_active: boolean | null
+    vat_rate: Decimal | null
+    service_charge_rate: Decimal | null
   }
 
   export type RestaurantCountAggregateOutputType = {
@@ -1967,6 +1975,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active: number
+    vat_rate: number
+    service_charge_rate: number
     _all: number
   }
 
@@ -1975,12 +1985,16 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     radius_meters?: true
+    vat_rate?: true
+    service_charge_rate?: true
   }
 
   export type RestaurantSumAggregateInputType = {
     latitude?: true
     longitude?: true
     radius_meters?: true
+    vat_rate?: true
+    service_charge_rate?: true
   }
 
   export type RestaurantMinAggregateInputType = {
@@ -1991,6 +2005,8 @@ export namespace Prisma {
     longitude?: true
     radius_meters?: true
     is_active?: true
+    vat_rate?: true
+    service_charge_rate?: true
   }
 
   export type RestaurantMaxAggregateInputType = {
@@ -2001,6 +2017,8 @@ export namespace Prisma {
     longitude?: true
     radius_meters?: true
     is_active?: true
+    vat_rate?: true
+    service_charge_rate?: true
   }
 
   export type RestaurantCountAggregateInputType = {
@@ -2011,6 +2029,8 @@ export namespace Prisma {
     longitude?: true
     radius_meters?: true
     is_active?: true
+    vat_rate?: true
+    service_charge_rate?: true
     _all?: true
   }
 
@@ -2108,6 +2128,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active: boolean
+    vat_rate: Decimal
+    service_charge_rate: Decimal
     _count: RestaurantCountAggregateOutputType | null
     _avg: RestaurantAvgAggregateOutputType | null
     _sum: RestaurantSumAggregateOutputType | null
@@ -2137,6 +2159,8 @@ export namespace Prisma {
     longitude?: boolean
     radius_meters?: boolean
     is_active?: boolean
+    vat_rate?: boolean
+    service_charge_rate?: boolean
     tables?: boolean | Restaurant$tablesArgs<ExtArgs>
     categories?: boolean | Restaurant$categoriesArgs<ExtArgs>
     menuItems?: boolean | Restaurant$menuItemsArgs<ExtArgs>
@@ -2154,6 +2178,8 @@ export namespace Prisma {
     longitude?: boolean
     radius_meters?: boolean
     is_active?: boolean
+    vat_rate?: boolean
+    service_charge_rate?: boolean
   }, ExtArgs["result"]["restaurant"]>
 
   export type RestaurantSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2164,6 +2190,8 @@ export namespace Prisma {
     longitude?: boolean
     radius_meters?: boolean
     is_active?: boolean
+    vat_rate?: boolean
+    service_charge_rate?: boolean
   }, ExtArgs["result"]["restaurant"]>
 
   export type RestaurantSelectScalar = {
@@ -2174,9 +2202,11 @@ export namespace Prisma {
     longitude?: boolean
     radius_meters?: boolean
     is_active?: boolean
+    vat_rate?: boolean
+    service_charge_rate?: boolean
   }
 
-  export type RestaurantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude" | "radius_meters" | "is_active", ExtArgs["result"]["restaurant"]>
+  export type RestaurantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude" | "radius_meters" | "is_active" | "vat_rate" | "service_charge_rate", ExtArgs["result"]["restaurant"]>
   export type RestaurantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tables?: boolean | Restaurant$tablesArgs<ExtArgs>
     categories?: boolean | Restaurant$categoriesArgs<ExtArgs>
@@ -2207,6 +2237,8 @@ export namespace Prisma {
       longitude: number
       radius_meters: number
       is_active: boolean
+      vat_rate: Prisma.Decimal
+      service_charge_rate: Prisma.Decimal
     }, ExtArgs["result"]["restaurant"]>
     composites: {}
   }
@@ -2643,6 +2675,8 @@ export namespace Prisma {
     readonly longitude: FieldRef<"Restaurant", 'Float'>
     readonly radius_meters: FieldRef<"Restaurant", 'Float'>
     readonly is_active: FieldRef<"Restaurant", 'Boolean'>
+    readonly vat_rate: FieldRef<"Restaurant", 'Decimal'>
+    readonly service_charge_rate: FieldRef<"Restaurant", 'Decimal'>
   }
     
 
@@ -12455,7 +12489,9 @@ export namespace Prisma {
     latitude: 'latitude',
     longitude: 'longitude',
     radius_meters: 'radius_meters',
-    is_active: 'is_active'
+    is_active: 'is_active',
+    vat_rate: 'vat_rate',
+    service_charge_rate: 'service_charge_rate'
   };
 
   export type RestaurantScalarFieldEnum = (typeof RestaurantScalarFieldEnum)[keyof typeof RestaurantScalarFieldEnum]
@@ -12649,6 +12685,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -12673,20 +12723,6 @@ export namespace Prisma {
    * Reference to a field of type 'TableStatus[]'
    */
   export type ListEnumTableStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TableStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Decimal'
-   */
-  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-  /**
-   * Reference to a field of type 'Decimal[]'
-   */
-  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -12802,6 +12838,8 @@ export namespace Prisma {
     longitude?: FloatFilter<"Restaurant"> | number
     radius_meters?: FloatFilter<"Restaurant"> | number
     is_active?: BoolFilter<"Restaurant"> | boolean
+    vat_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
     tables?: TableListRelationFilter
     categories?: CategoryListRelationFilter
     menuItems?: MenuItemListRelationFilter
@@ -12818,6 +12856,8 @@ export namespace Prisma {
     longitude?: SortOrder
     radius_meters?: SortOrder
     is_active?: SortOrder
+    vat_rate?: SortOrder
+    service_charge_rate?: SortOrder
     tables?: TableOrderByRelationAggregateInput
     categories?: CategoryOrderByRelationAggregateInput
     menuItems?: MenuItemOrderByRelationAggregateInput
@@ -12837,6 +12877,8 @@ export namespace Prisma {
     longitude?: FloatFilter<"Restaurant"> | number
     radius_meters?: FloatFilter<"Restaurant"> | number
     is_active?: BoolFilter<"Restaurant"> | boolean
+    vat_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
     tables?: TableListRelationFilter
     categories?: CategoryListRelationFilter
     menuItems?: MenuItemListRelationFilter
@@ -12853,6 +12895,8 @@ export namespace Prisma {
     longitude?: SortOrder
     radius_meters?: SortOrder
     is_active?: SortOrder
+    vat_rate?: SortOrder
+    service_charge_rate?: SortOrder
     _count?: RestaurantCountOrderByAggregateInput
     _avg?: RestaurantAvgOrderByAggregateInput
     _max?: RestaurantMaxOrderByAggregateInput
@@ -12871,6 +12915,8 @@ export namespace Prisma {
     longitude?: FloatWithAggregatesFilter<"Restaurant"> | number
     radius_meters?: FloatWithAggregatesFilter<"Restaurant"> | number
     is_active?: BoolWithAggregatesFilter<"Restaurant"> | boolean
+    vat_rate?: DecimalWithAggregatesFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalWithAggregatesFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
   }
 
   export type TableWhereInput = {
@@ -13455,6 +13501,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -13471,6 +13519,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -13487,6 +13537,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -13503,6 +13555,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -13519,6 +13573,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
   }
 
   export type RestaurantUpdateManyMutationInput = {
@@ -13529,6 +13585,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type RestaurantUncheckedUpdateManyInput = {
@@ -13539,6 +13597,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type TableCreateInput = {
@@ -14158,6 +14218,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
   export type TableListRelationFilter = {
     every?: TableWhereInput
     some?: TableWhereInput
@@ -14226,12 +14297,16 @@ export namespace Prisma {
     longitude?: SortOrder
     radius_meters?: SortOrder
     is_active?: SortOrder
+    vat_rate?: SortOrder
+    service_charge_rate?: SortOrder
   }
 
   export type RestaurantAvgOrderByAggregateInput = {
     latitude?: SortOrder
     longitude?: SortOrder
     radius_meters?: SortOrder
+    vat_rate?: SortOrder
+    service_charge_rate?: SortOrder
   }
 
   export type RestaurantMaxOrderByAggregateInput = {
@@ -14242,6 +14317,8 @@ export namespace Prisma {
     longitude?: SortOrder
     radius_meters?: SortOrder
     is_active?: SortOrder
+    vat_rate?: SortOrder
+    service_charge_rate?: SortOrder
   }
 
   export type RestaurantMinOrderByAggregateInput = {
@@ -14252,12 +14329,16 @@ export namespace Prisma {
     longitude?: SortOrder
     radius_meters?: SortOrder
     is_active?: SortOrder
+    vat_rate?: SortOrder
+    service_charge_rate?: SortOrder
   }
 
   export type RestaurantSumOrderByAggregateInput = {
     latitude?: SortOrder
     longitude?: SortOrder
     radius_meters?: SortOrder
+    vat_rate?: SortOrder
+    service_charge_rate?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -14300,6 +14381,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -14418,17 +14515,6 @@ export namespace Prisma {
     sort_order?: SortOrder
   }
 
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -14503,22 +14589,6 @@ export namespace Prisma {
 
   export type MenuItemSumOrderByAggregateInput = {
     price?: SortOrder
-  }
-
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15058,6 +15128,14 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
   export type TableUpdateManyWithoutRestaurantNestedInput = {
     create?: XOR<TableCreateWithoutRestaurantInput, TableUncheckedCreateWithoutRestaurantInput> | TableCreateWithoutRestaurantInput[] | TableUncheckedCreateWithoutRestaurantInput[]
     connectOrCreate?: TableCreateOrConnectWithoutRestaurantInput | TableCreateOrConnectWithoutRestaurantInput[]
@@ -15374,14 +15452,6 @@ export namespace Prisma {
     connectOrCreate?: OrderItemCreateOrConnectWithoutMenuItemInput | OrderItemCreateOrConnectWithoutMenuItemInput[]
     createMany?: OrderItemCreateManyMenuItemInputEnvelope
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-  }
-
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
-    increment?: Decimal | DecimalJsLike | number | string
-    decrement?: Decimal | DecimalJsLike | number | string
-    multiply?: Decimal | DecimalJsLike | number | string
-    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -15732,6 +15802,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15784,6 +15865,22 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
   export type NestedEnumTableStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.TableStatus | EnumTableStatusFieldRefInput<$PrismaModel>
     in?: $Enums.TableStatus[] | ListEnumTableStatusFieldRefInput<$PrismaModel>
@@ -15817,17 +15914,6 @@ export namespace Prisma {
     _max?: NestedEnumTableStatusFilter<$PrismaModel>
   }
 
-  export type NestedDecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -15840,22 +15926,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
-    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16421,6 +16491,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
@@ -16436,6 +16508,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
@@ -16511,6 +16585,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
@@ -16526,6 +16602,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -16557,6 +16635,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
@@ -16572,6 +16652,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
@@ -16635,6 +16717,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
@@ -16650,6 +16734,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -16681,6 +16767,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
@@ -16696,6 +16784,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
@@ -16772,6 +16862,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
@@ -16787,6 +16879,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -16855,6 +16949,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -16870,6 +16966,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -16976,6 +17074,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -16991,6 +17091,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -17224,6 +17326,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -17239,6 +17343,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -17300,6 +17406,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -17315,6 +17423,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -17455,6 +17565,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -17470,6 +17582,8 @@ export namespace Prisma {
     longitude: number
     radius_meters: number
     is_active?: boolean
+    vat_rate?: Decimal | DecimalJsLike | number | string
+    service_charge_rate?: Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -17532,6 +17646,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -17547,6 +17663,8 @@ export namespace Prisma {
     longitude?: FloatFieldUpdateOperationsInput | number
     radius_meters?: FloatFieldUpdateOperationsInput | number
     is_active?: BoolFieldUpdateOperationsInput | boolean
+    vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput

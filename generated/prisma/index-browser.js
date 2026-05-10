@@ -127,7 +127,9 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   latitude: 'latitude',
   longitude: 'longitude',
   radius_meters: 'radius_meters',
-  is_active: 'is_active'
+  is_active: 'is_active',
+  vat_rate: 'vat_rate',
+  service_charge_rate: 'service_charge_rate'
 };
 
 exports.Prisma.TableScalarFieldEnum = {

@@ -6,7 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -16,6 +15,10 @@ import { MoveTableDto } from './dto/move-table.dto';
 import { CreateCashierOrderDto } from './dto/create-cashier-order.dto';
 import { AddOrderItemsDto } from './dto/add-order-items.dto';
 import { UpdateOrderItemDto } from './dto/update-order-item.dto';
+import { SplitBillDto } from './dto/split-bill.dto';
+import { ProcessPaymentDto } from './dto/process-payment.dto';
+
+type JwtReq = { user: { restaurant_id: string } };
 
 @UseGuards(JwtAuthGuard)
 @Controller('cashier')
@@ -41,74 +44,62 @@ export class CashierController {
 
   // ─── Order Management ─────────────────────────────────────────────────────
 
-  /**
-   * POST /cashier/orders
-   * Cashier creates a TABLE or TAKEAWAY order manually.
-   * restaurant_id is taken from the JWT token — no need to send it in the body.
-   */
   @Post('orders')
-  createOrder(@Body() dto: CreateCashierOrderDto, @Request() req: { user: { restaurant_id: string } }) {
+  createOrder(@Body() dto: CreateCashierOrderDto, @Request() req: JwtReq) {
     return this.cashierService.createCashierOrder(dto, req.user.restaurant_id);
   }
 
-  /**
-   * GET /cashier/orders/live
-   * Real-time dashboard — all active orders for the cashier's restaurant.
-   */
   @Get('orders/live')
-  getLiveOrders(@Request() req: { user: { restaurant_id: string } }) {
+  getLiveOrders(@Request() req: JwtReq) {
     return this.cashierService.getLiveOrders(req.user.restaurant_id);
   }
 
-  /**
-   * POST /cashier/orders/:id/items
-   * Add one or more items to an existing in-progress order.
-   */
   @Post('orders/:id/items')
   addOrderItems(
     @Param('id') order_id: string,
     @Body() dto: AddOrderItemsDto,
-    @Request() req,
+    @Request() req: JwtReq,
   ) {
     return this.cashierService.addOrderItems(order_id, dto, req.user.restaurant_id);
   }
 
-  /**
-   * PATCH /cashier/orders/:id/items/:itemId
-   * Edit quantity or special note on a single order item.
-   */
   @Patch('orders/:id/items/:itemId')
   updateOrderItem(
     @Param('id') order_id: string,
     @Param('itemId') item_id: string,
     @Body() dto: UpdateOrderItemDto,
-    @Request() req,
+    @Request() req: JwtReq,
   ) {
     return this.cashierService.updateOrderItem(order_id, item_id, dto, req.user.restaurant_id);
   }
 
-  /**
-   * DELETE /cashier/orders/:id/items/:itemId
-   * Remove a single item from an active order.
-   */
   @Delete('orders/:id/items/:itemId')
   removeOrderItem(
     @Param('id') order_id: string,
     @Param('itemId') item_id: string,
-    @Request() req,
+    @Request() req: JwtReq,
   ) {
     return this.cashierService.removeOrderItem(order_id, item_id, req.user.restaurant_id);
   }
 
-  // ─── Billing (Phase 2 carry-over) ─────────────────────────────────────────
+  // ─── Billing & Payments ───────────────────────────────────────────────────
 
-  @Get('orders')
-  getServedOrders(@Query('restaurant_id') restaurant_id: string) {
-    return this.cashierService.getServedOrders(restaurant_id);
+  @Get('orders/:id/bill')
+  getBill(@Param('id') order_id: string) {
+    return this.cashierService.getBill(order_id);
   }
 
-  @Patch('orders/:id/pay')
-  payOrder(@Param('id') order_id: string) {
-    return this.cashierService.payOrder(order_id);
+  @Post('orders/:id/bill/split')
+  splitBill(@Param('id') order_id: string, @Body() dto: SplitBillDto) {
+    return this.cashierService.splitBill(order_id, dto);
+  }
+
+  @Post('orders/:id/pay')
+  processPayment(
+    @Param('id') order_id: string,
+    @Body() dto: ProcessPaymentDto,
+    @Request() req: JwtReq,
+  ) {
+    return this.cashierService.processPayment(order_id, dto, req.user.restaurant_id);
   }
 }

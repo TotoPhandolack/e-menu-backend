@@ -10,6 +10,8 @@ import { CreateCashierOrderDto } from './dto/create-cashier-order.dto';
 import { AddOrderItemsDto } from './dto/add-order-items.dto';
 import { UpdateOrderItemDto } from './dto/update-order-item.dto';
 import { OrderStatus } from '../../generated/prisma';
+import { SplitBillDto } from './dto/split-bill.dto';
+import { ProcessPaymentDto } from './dto/process-payment.dto';
 import { randomUUID } from 'crypto';
 import * as QRCode from 'qrcode';
 
@@ -17,6 +19,8 @@ const CLOSED_STATUSES: OrderStatus[] = [
   OrderStatus.PAID,
   OrderStatus.CANCELLED,
 ];
+
+const round = (n: number) => Math.round(n * 100) / 100;
 
 @Injectable()
 export class CashierService {
@@ -370,40 +374,184 @@ export class CashierService {
     });
   }
 
-  // ─── Orders (billing – carried from Phase 2) ──────────────────────────────
+  // ─── Billing & Payments ───────────────────────────────────────────────────
 
-  async getServedOrders(restaurant_id: string) {
-    return this.prisma.order.findMany({
-      where: { restaurant_id, status: 'SERVED' },
-      include: {
-        table: { select: { id: true, table_number: true } },
-        orderItems: {
-          include: {
-            menuItem: { select: { id: true, name: true, price: true } },
-          },
-        },
-      },
-      orderBy: { created_at: 'asc' },
-    });
-  }
-
-  async payOrder(order_id: string) {
+  private async _loadOrderForBilling(order_id: string) {
     const order = await this.prisma.order.findUnique({
       where: { id: order_id },
+      include: {
+        restaurant: true,
+        orderItems: {
+          include: { menuItem: { select: { id: true, name: true } } },
+        },
+        payments: true,
+      },
     });
     if (!order) throw new NotFoundException('Order not found');
+    if (order.status === 'PAID')
+      throw new BadRequestException('Order is already paid');
+    if (order.status === 'CANCELLED')
+      throw new BadRequestException('Order is cancelled');
+    return order;
+  }
 
-    return this.prisma.order.update({
-      where: { id: order_id },
-      data: { status: 'PAID' },
-      include: {
-        table: { select: { id: true, table_number: true } },
-        orderItems: {
-          include: {
-            menuItem: { select: { id: true, name: true, price: true } },
-          },
+  private _calcBill(
+    order: Awaited<ReturnType<CashierService['_loadOrderForBilling']>>,
+  ) {
+    const subtotal = order.orderItems.reduce(
+      (sum, item) => sum + Number(item.unit_price) * item.quantity,
+      0,
+    );
+    const vat_rate = Number(order.restaurant?.vat_rate ?? 7);
+    const sc_rate = Number(order.restaurant?.service_charge_rate ?? 0);
+    const vat_amount = subtotal * (vat_rate / 100);
+    const service_charge_amount = subtotal * (sc_rate / 100);
+    const total_amount = subtotal + vat_amount + service_charge_amount;
+    const already_paid = order.payments.reduce(
+      (s, p) => s + Number(p.amount),
+      0,
+    );
+
+    return {
+      subtotal: round(subtotal),
+      vat_rate,
+      vat_amount: round(vat_amount),
+      service_charge_rate: sc_rate,
+      service_charge_amount: round(service_charge_amount),
+      total_amount: round(total_amount),
+      already_paid: round(already_paid),
+      remaining_balance: round(total_amount - already_paid),
+    };
+  }
+
+  async getBill(order_id: string) {
+    const order = await this._loadOrderForBilling(order_id);
+    const bill = this._calcBill(order);
+    return {
+      order_id,
+      order_type: order.order_type,
+      queue_number: order.queue_number,
+      table_id: order.table_id,
+      ...bill,
+      items: order.orderItems.map((item) => ({
+        id: item.id,
+        name: item.menuItem.name,
+        quantity: item.quantity,
+        unit_price: Number(item.unit_price),
+        line_total: round(Number(item.unit_price) * item.quantity),
+        special_note: item.special_note,
+      })),
+    };
+  }
+
+  async splitBill(order_id: string, dto: SplitBillDto) {
+    const order = await this._loadOrderForBilling(order_id);
+    const bill = this._calcBill(order);
+
+    if (dto.mode === 'equal') {
+      const n = dto.number_of_people!;
+      const per_person = round(bill.total_amount / n);
+      const splits = Array.from({ length: n }, (_, i) => ({
+        label: `Person ${i + 1}`,
+        amount:
+          i === n - 1
+            ? round(bill.total_amount - per_person * (n - 1))
+            : per_person,
+      }));
+      return { mode: 'equal', total_amount: bill.total_amount, splits };
+    }
+
+    // by_item mode
+    const splits = dto.splits!;
+    const allItemIds = splits.flatMap((s) => s.item_ids);
+    const orderItemIds = order.orderItems.map((i) => i.id);
+    const invalid = allItemIds.filter((id) => !orderItemIds.includes(id));
+    if (invalid.length > 0)
+      throw new BadRequestException(
+        `Item IDs not in this order: ${invalid.join(', ')}`,
+      );
+
+    const result = splits.map((split) => {
+      const items = split.item_ids.map(
+        (id) => order.orderItems.find((i) => i.id === id)!,
+      );
+      const subtotal = items.reduce(
+        (s, i) => s + Number(i.unit_price) * i.quantity,
+        0,
+      );
+      const vat = round(subtotal * (bill.vat_rate / 100));
+      const sc = round(subtotal * (bill.service_charge_rate / 100));
+      return {
+        label: split.label,
+        items: items.map((i) => ({
+          name: i.menuItem.name,
+          quantity: i.quantity,
+          line_total: round(Number(i.unit_price) * i.quantity),
+        })),
+        subtotal: round(subtotal),
+        vat_amount: vat,
+        service_charge_amount: sc,
+        amount: round(subtotal + vat + sc),
+      };
+    });
+
+    return { mode: 'by_item', total_amount: bill.total_amount, splits: result };
+  }
+
+  async processPayment(
+    order_id: string,
+    dto: ProcessPaymentDto,
+    restaurant_id: string,
+  ) {
+    const order = await this._loadOrderForBilling(order_id);
+    if (order.restaurant_id !== restaurant_id)
+      throw new BadRequestException('Order does not belong to your restaurant');
+
+    const bill = this._calcBill(order);
+
+    const change =
+      dto.amount > bill.remaining_balance
+        ? round(dto.amount - bill.remaining_balance)
+        : 0;
+    const applied = round(dto.amount - change);
+    const new_total_paid = round(bill.already_paid + applied);
+    const is_fully_paid = new_total_paid >= bill.total_amount - 0.001;
+
+    return this.prisma.$transaction(async (tx) => {
+      await tx.payment.create({
+        data: { order_id, method: dto.method, amount: applied },
+      });
+
+      const updatedOrder = await tx.order.update({
+        where: { id: order_id },
+        data: {
+          subtotal: bill.subtotal,
+          vat_amount: bill.vat_amount,
+          service_charge_amount: bill.service_charge_amount,
+          total_amount: bill.total_amount,
+          ...(is_fully_paid && { status: 'PAID' }),
         },
-      },
+      });
+
+      if (is_fully_paid && order.table_id) {
+        await tx.table.update({
+          where: { id: order.table_id },
+          data: { status: 'AVAILABLE' },
+        });
+      }
+
+      return {
+        order_id,
+        order_status: updatedOrder.status,
+        ...bill,
+        payment_recorded: { method: dto.method, amount: applied },
+        total_paid: new_total_paid,
+        remaining_balance: is_fully_paid
+          ? 0
+          : round(bill.total_amount - new_total_paid),
+        change,
+        is_fully_paid,
+      };
     });
   }
 }

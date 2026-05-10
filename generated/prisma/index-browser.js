@@ -160,6 +160,7 @@ exports.Prisma.MenuItemScalarFieldEnum = {
 
 exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
+  restaurant_id: 'restaurant_id',
   table_id: 'table_id',
   session_id: 'session_id',
   order_type: 'order_type',

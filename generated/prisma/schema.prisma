@@ -62,6 +62,7 @@ model Restaurant {
   menuItems  MenuItem[]
   admins     Admin[]
   shifts     Shift[]
+  orders     Order[]
 }
 
 model Table {
@@ -107,6 +108,7 @@ model MenuItem {
 
 model Order {
   id                    String      @id @default(uuid())
+  restaurant_id         String?
   table_id              String?
   session_id            String
   order_type            OrderType   @default(TABLE)
@@ -120,6 +122,7 @@ model Order {
   updated_at            DateTime    @updatedAt
 
   // relation
+  restaurant Restaurant? @relation(fields: [restaurant_id], references: [id])
   table      Table?      @relation(fields: [table_id], references: [id])
   orderItems OrderItem[]
   payments   Payment[]

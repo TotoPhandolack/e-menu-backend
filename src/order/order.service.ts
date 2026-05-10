@@ -88,6 +88,7 @@ export class OrderService {
     // 4. สร้าง order พร้อม orderItems ในครั้งเดียว
     const newOrder = await this.prisma.order.create({
       data: {
+        restaurant_id: table.restaurant_id,
         table_id: dto.table_id,
         session_id: dto.session_id,
         total_amount,

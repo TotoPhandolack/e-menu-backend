@@ -1681,6 +1681,7 @@ export namespace Prisma {
     menuItems: number
     admins: number
     shifts: number
+    orders: number
   }
 
   export type RestaurantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1689,6 +1690,7 @@ export namespace Prisma {
     menuItems?: boolean | RestaurantCountOutputTypeCountMenuItemsArgs
     admins?: boolean | RestaurantCountOutputTypeCountAdminsArgs
     shifts?: boolean | RestaurantCountOutputTypeCountShiftsArgs
+    orders?: boolean | RestaurantCountOutputTypeCountOrdersArgs
   }
 
   // Custom InputTypes
@@ -1735,6 +1737,13 @@ export namespace Prisma {
    */
   export type RestaurantCountOutputTypeCountShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ShiftWhereInput
+  }
+
+  /**
+   * RestaurantCountOutputType without action
+   */
+  export type RestaurantCountOutputTypeCountOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderWhereInput
   }
 
 
@@ -2133,6 +2142,7 @@ export namespace Prisma {
     menuItems?: boolean | Restaurant$menuItemsArgs<ExtArgs>
     admins?: boolean | Restaurant$adminsArgs<ExtArgs>
     shifts?: boolean | Restaurant$shiftsArgs<ExtArgs>
+    orders?: boolean | Restaurant$ordersArgs<ExtArgs>
     _count?: boolean | RestaurantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["restaurant"]>
 
@@ -2173,6 +2183,7 @@ export namespace Prisma {
     menuItems?: boolean | Restaurant$menuItemsArgs<ExtArgs>
     admins?: boolean | Restaurant$adminsArgs<ExtArgs>
     shifts?: boolean | Restaurant$shiftsArgs<ExtArgs>
+    orders?: boolean | Restaurant$ordersArgs<ExtArgs>
     _count?: boolean | RestaurantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type RestaurantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2186,6 +2197,7 @@ export namespace Prisma {
       menuItems: Prisma.$MenuItemPayload<ExtArgs>[]
       admins: Prisma.$AdminPayload<ExtArgs>[]
       shifts: Prisma.$ShiftPayload<ExtArgs>[]
+      orders: Prisma.$OrderPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2594,6 +2606,7 @@ export namespace Prisma {
     menuItems<T extends Restaurant$menuItemsArgs<ExtArgs> = {}>(args?: Subset<T, Restaurant$menuItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MenuItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     admins<T extends Restaurant$adminsArgs<ExtArgs> = {}>(args?: Subset<T, Restaurant$adminsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shifts<T extends Restaurant$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, Restaurant$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    orders<T extends Restaurant$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Restaurant$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3140,6 +3153,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+  }
+
+  /**
+   * Restaurant.orders
+   */
+  export type Restaurant$ordersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    where?: OrderWhereInput
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    cursor?: OrderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
   }
 
   /**
@@ -6630,6 +6667,7 @@ export namespace Prisma {
 
   export type OrderMinAggregateOutputType = {
     id: string | null
+    restaurant_id: string | null
     table_id: string | null
     session_id: string | null
     order_type: $Enums.OrderType | null
@@ -6645,6 +6683,7 @@ export namespace Prisma {
 
   export type OrderMaxAggregateOutputType = {
     id: string | null
+    restaurant_id: string | null
     table_id: string | null
     session_id: string | null
     order_type: $Enums.OrderType | null
@@ -6660,6 +6699,7 @@ export namespace Prisma {
 
   export type OrderCountAggregateOutputType = {
     id: number
+    restaurant_id: number
     table_id: number
     session_id: number
     order_type: number
@@ -6691,6 +6731,7 @@ export namespace Prisma {
 
   export type OrderMinAggregateInputType = {
     id?: true
+    restaurant_id?: true
     table_id?: true
     session_id?: true
     order_type?: true
@@ -6706,6 +6747,7 @@ export namespace Prisma {
 
   export type OrderMaxAggregateInputType = {
     id?: true
+    restaurant_id?: true
     table_id?: true
     session_id?: true
     order_type?: true
@@ -6721,6 +6763,7 @@ export namespace Prisma {
 
   export type OrderCountAggregateInputType = {
     id?: true
+    restaurant_id?: true
     table_id?: true
     session_id?: true
     order_type?: true
@@ -6823,6 +6866,7 @@ export namespace Prisma {
 
   export type OrderGroupByOutputType = {
     id: string
+    restaurant_id: string | null
     table_id: string | null
     session_id: string
     order_type: $Enums.OrderType
@@ -6857,6 +6901,7 @@ export namespace Prisma {
 
   export type OrderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    restaurant_id?: boolean
     table_id?: boolean
     session_id?: boolean
     order_type?: boolean
@@ -6868,6 +6913,7 @@ export namespace Prisma {
     total_amount?: boolean
     created_at?: boolean
     updated_at?: boolean
+    restaurant?: boolean | Order$restaurantArgs<ExtArgs>
     table?: boolean | Order$tableArgs<ExtArgs>
     orderItems?: boolean | Order$orderItemsArgs<ExtArgs>
     payments?: boolean | Order$paymentsArgs<ExtArgs>
@@ -6876,6 +6922,7 @@ export namespace Prisma {
 
   export type OrderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    restaurant_id?: boolean
     table_id?: boolean
     session_id?: boolean
     order_type?: boolean
@@ -6887,11 +6934,13 @@ export namespace Prisma {
     total_amount?: boolean
     created_at?: boolean
     updated_at?: boolean
+    restaurant?: boolean | Order$restaurantArgs<ExtArgs>
     table?: boolean | Order$tableArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    restaurant_id?: boolean
     table_id?: boolean
     session_id?: boolean
     order_type?: boolean
@@ -6903,11 +6952,13 @@ export namespace Prisma {
     total_amount?: boolean
     created_at?: boolean
     updated_at?: boolean
+    restaurant?: boolean | Order$restaurantArgs<ExtArgs>
     table?: boolean | Order$tableArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectScalar = {
     id?: boolean
+    restaurant_id?: boolean
     table_id?: boolean
     session_id?: boolean
     order_type?: boolean
@@ -6921,29 +6972,34 @@ export namespace Prisma {
     updated_at?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "table_id" | "session_id" | "order_type" | "queue_number" | "status" | "subtotal" | "vat_amount" | "service_charge_amount" | "total_amount" | "created_at" | "updated_at", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "restaurant_id" | "table_id" | "session_id" | "order_type" | "queue_number" | "status" | "subtotal" | "vat_amount" | "service_charge_amount" | "total_amount" | "created_at" | "updated_at", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    restaurant?: boolean | Order$restaurantArgs<ExtArgs>
     table?: boolean | Order$tableArgs<ExtArgs>
     orderItems?: boolean | Order$orderItemsArgs<ExtArgs>
     payments?: boolean | Order$paymentsArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    restaurant?: boolean | Order$restaurantArgs<ExtArgs>
     table?: boolean | Order$tableArgs<ExtArgs>
   }
   export type OrderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    restaurant?: boolean | Order$restaurantArgs<ExtArgs>
     table?: boolean | Order$tableArgs<ExtArgs>
   }
 
   export type $OrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Order"
     objects: {
+      restaurant: Prisma.$RestaurantPayload<ExtArgs> | null
       table: Prisma.$TablePayload<ExtArgs> | null
       orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      restaurant_id: string | null
       table_id: string | null
       session_id: string
       order_type: $Enums.OrderType
@@ -7349,6 +7405,7 @@ export namespace Prisma {
    */
   export interface Prisma__OrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    restaurant<T extends Order$restaurantArgs<ExtArgs> = {}>(args?: Subset<T, Order$restaurantArgs<ExtArgs>>): Prisma__RestaurantClient<$Result.GetResult<Prisma.$RestaurantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     table<T extends Order$tableArgs<ExtArgs> = {}>(args?: Subset<T, Order$tableArgs<ExtArgs>>): Prisma__TableClient<$Result.GetResult<Prisma.$TablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     orderItems<T extends Order$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Order$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payments<T extends Order$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, Order$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7382,6 +7439,7 @@ export namespace Prisma {
    */
   interface OrderFieldRefs {
     readonly id: FieldRef<"Order", 'String'>
+    readonly restaurant_id: FieldRef<"Order", 'String'>
     readonly table_id: FieldRef<"Order", 'String'>
     readonly session_id: FieldRef<"Order", 'String'>
     readonly order_type: FieldRef<"Order", 'OrderType'>
@@ -7791,6 +7849,25 @@ export namespace Prisma {
      * Limit how many Orders to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Order.restaurant
+   */
+  export type Order$restaurantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Restaurant
+     */
+    select?: RestaurantSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Restaurant
+     */
+    omit?: RestaurantOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RestaurantInclude<ExtArgs> | null
+    where?: RestaurantWhereInput
   }
 
   /**
@@ -12423,6 +12500,7 @@ export namespace Prisma {
 
   export const OrderScalarFieldEnum: {
     id: 'id',
+    restaurant_id: 'restaurant_id',
     table_id: 'table_id',
     session_id: 'session_id',
     order_type: 'order_type',
@@ -12729,6 +12807,7 @@ export namespace Prisma {
     menuItems?: MenuItemListRelationFilter
     admins?: AdminListRelationFilter
     shifts?: ShiftListRelationFilter
+    orders?: OrderListRelationFilter
   }
 
   export type RestaurantOrderByWithRelationInput = {
@@ -12744,6 +12823,7 @@ export namespace Prisma {
     menuItems?: MenuItemOrderByRelationAggregateInput
     admins?: AdminOrderByRelationAggregateInput
     shifts?: ShiftOrderByRelationAggregateInput
+    orders?: OrderOrderByRelationAggregateInput
   }
 
   export type RestaurantWhereUniqueInput = Prisma.AtLeast<{
@@ -12762,6 +12842,7 @@ export namespace Prisma {
     menuItems?: MenuItemListRelationFilter
     admins?: AdminListRelationFilter
     shifts?: ShiftListRelationFilter
+    orders?: OrderListRelationFilter
   }, "id">
 
   export type RestaurantOrderByWithAggregationInput = {
@@ -13000,6 +13081,7 @@ export namespace Prisma {
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
     id?: StringFilter<"Order"> | string
+    restaurant_id?: StringNullableFilter<"Order"> | string | null
     table_id?: StringNullableFilter<"Order"> | string | null
     session_id?: StringFilter<"Order"> | string
     order_type?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
@@ -13011,6 +13093,7 @@ export namespace Prisma {
     total_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
     created_at?: DateTimeFilter<"Order"> | Date | string
     updated_at?: DateTimeFilter<"Order"> | Date | string
+    restaurant?: XOR<RestaurantNullableScalarRelationFilter, RestaurantWhereInput> | null
     table?: XOR<TableNullableScalarRelationFilter, TableWhereInput> | null
     orderItems?: OrderItemListRelationFilter
     payments?: PaymentListRelationFilter
@@ -13018,6 +13101,7 @@ export namespace Prisma {
 
   export type OrderOrderByWithRelationInput = {
     id?: SortOrder
+    restaurant_id?: SortOrderInput | SortOrder
     table_id?: SortOrderInput | SortOrder
     session_id?: SortOrder
     order_type?: SortOrder
@@ -13029,6 +13113,7 @@ export namespace Prisma {
     total_amount?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    restaurant?: RestaurantOrderByWithRelationInput
     table?: TableOrderByWithRelationInput
     orderItems?: OrderItemOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
@@ -13039,6 +13124,7 @@ export namespace Prisma {
     AND?: OrderWhereInput | OrderWhereInput[]
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
+    restaurant_id?: StringNullableFilter<"Order"> | string | null
     table_id?: StringNullableFilter<"Order"> | string | null
     session_id?: StringFilter<"Order"> | string
     order_type?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
@@ -13050,6 +13136,7 @@ export namespace Prisma {
     total_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
     created_at?: DateTimeFilter<"Order"> | Date | string
     updated_at?: DateTimeFilter<"Order"> | Date | string
+    restaurant?: XOR<RestaurantNullableScalarRelationFilter, RestaurantWhereInput> | null
     table?: XOR<TableNullableScalarRelationFilter, TableWhereInput> | null
     orderItems?: OrderItemListRelationFilter
     payments?: PaymentListRelationFilter
@@ -13057,6 +13144,7 @@ export namespace Prisma {
 
   export type OrderOrderByWithAggregationInput = {
     id?: SortOrder
+    restaurant_id?: SortOrderInput | SortOrder
     table_id?: SortOrderInput | SortOrder
     session_id?: SortOrder
     order_type?: SortOrder
@@ -13080,6 +13168,7 @@ export namespace Prisma {
     OR?: OrderScalarWhereWithAggregatesInput[]
     NOT?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Order"> | string
+    restaurant_id?: StringNullableWithAggregatesFilter<"Order"> | string | null
     table_id?: StringNullableWithAggregatesFilter<"Order"> | string | null
     session_id?: StringWithAggregatesFilter<"Order"> | string
     order_type?: EnumOrderTypeWithAggregatesFilter<"Order"> | $Enums.OrderType
@@ -13371,6 +13460,7 @@ export namespace Prisma {
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftCreateNestedManyWithoutRestaurantInput
+    orders?: OrderCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantUncheckedCreateInput = {
@@ -13386,6 +13476,7 @@ export namespace Prisma {
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutRestaurantInput
+    orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantUpdateInput = {
@@ -13401,6 +13492,7 @@ export namespace Prisma {
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUpdateManyWithoutRestaurantNestedInput
   }
 
   export type RestaurantUncheckedUpdateInput = {
@@ -13416,6 +13508,7 @@ export namespace Prisma {
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
   }
 
   export type RestaurantCreateManyInput = {
@@ -13664,6 +13757,7 @@ export namespace Prisma {
     total_amount: Decimal | DecimalJsLike | number | string
     created_at?: Date | string
     updated_at?: Date | string
+    restaurant?: RestaurantCreateNestedOneWithoutOrdersInput
     table?: TableCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     payments?: PaymentCreateNestedManyWithoutOrderInput
@@ -13671,6 +13765,7 @@ export namespace Prisma {
 
   export type OrderUncheckedCreateInput = {
     id?: string
+    restaurant_id?: string | null
     table_id?: string | null
     session_id: string
     order_type?: $Enums.OrderType
@@ -13698,6 +13793,7 @@ export namespace Prisma {
     total_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    restaurant?: RestaurantUpdateOneWithoutOrdersNestedInput
     table?: TableUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     payments?: PaymentUpdateManyWithoutOrderNestedInput
@@ -13705,6 +13801,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    restaurant_id?: NullableStringFieldUpdateOperationsInput | string | null
     table_id?: NullableStringFieldUpdateOperationsInput | string | null
     session_id?: StringFieldUpdateOperationsInput | string
     order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
@@ -13722,6 +13819,7 @@ export namespace Prisma {
 
   export type OrderCreateManyInput = {
     id?: string
+    restaurant_id?: string | null
     table_id?: string | null
     session_id: string
     order_type?: $Enums.OrderType
@@ -13751,6 +13849,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    restaurant_id?: NullableStringFieldUpdateOperationsInput | string | null
     table_id?: NullableStringFieldUpdateOperationsInput | string | null
     session_id?: StringFieldUpdateOperationsInput | string
     order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
@@ -14089,6 +14188,12 @@ export namespace Prisma {
     none?: ShiftWhereInput
   }
 
+  export type OrderListRelationFilter = {
+    every?: OrderWhereInput
+    some?: OrderWhereInput
+    none?: OrderWhereInput
+  }
+
   export type TableOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -14106,6 +14211,10 @@ export namespace Prisma {
   }
 
   export type ShiftOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrderOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14214,16 +14323,6 @@ export namespace Prisma {
   export type RestaurantScalarRelationFilter = {
     is?: RestaurantWhereInput
     isNot?: RestaurantWhereInput
-  }
-
-  export type OrderListRelationFilter = {
-    every?: OrderWhereInput
-    some?: OrderWhereInput
-    none?: OrderWhereInput
-  }
-
-  export type OrderOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type TableCountOrderByAggregateInput = {
@@ -14465,6 +14564,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type RestaurantNullableScalarRelationFilter = {
+    is?: RestaurantWhereInput | null
+    isNot?: RestaurantWhereInput | null
+  }
+
   export type TableNullableScalarRelationFilter = {
     is?: TableWhereInput | null
     isNot?: TableWhereInput | null
@@ -14482,6 +14586,7 @@ export namespace Prisma {
 
   export type OrderCountOrderByAggregateInput = {
     id?: SortOrder
+    restaurant_id?: SortOrder
     table_id?: SortOrder
     session_id?: SortOrder
     order_type?: SortOrder
@@ -14504,6 +14609,7 @@ export namespace Prisma {
 
   export type OrderMaxOrderByAggregateInput = {
     id?: SortOrder
+    restaurant_id?: SortOrder
     table_id?: SortOrder
     session_id?: SortOrder
     order_type?: SortOrder
@@ -14519,6 +14625,7 @@ export namespace Prisma {
 
   export type OrderMinOrderByAggregateInput = {
     id?: SortOrder
+    restaurant_id?: SortOrder
     table_id?: SortOrder
     session_id?: SortOrder
     order_type?: SortOrder
@@ -14886,6 +14993,13 @@ export namespace Prisma {
     connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
   }
 
+  export type OrderCreateNestedManyWithoutRestaurantInput = {
+    create?: XOR<OrderCreateWithoutRestaurantInput, OrderUncheckedCreateWithoutRestaurantInput> | OrderCreateWithoutRestaurantInput[] | OrderUncheckedCreateWithoutRestaurantInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutRestaurantInput | OrderCreateOrConnectWithoutRestaurantInput[]
+    createMany?: OrderCreateManyRestaurantInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
   export type TableUncheckedCreateNestedManyWithoutRestaurantInput = {
     create?: XOR<TableCreateWithoutRestaurantInput, TableUncheckedCreateWithoutRestaurantInput> | TableCreateWithoutRestaurantInput[] | TableUncheckedCreateWithoutRestaurantInput[]
     connectOrCreate?: TableCreateOrConnectWithoutRestaurantInput | TableCreateOrConnectWithoutRestaurantInput[]
@@ -14919,6 +15033,13 @@ export namespace Prisma {
     connectOrCreate?: ShiftCreateOrConnectWithoutRestaurantInput | ShiftCreateOrConnectWithoutRestaurantInput[]
     createMany?: ShiftCreateManyRestaurantInputEnvelope
     connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+  }
+
+  export type OrderUncheckedCreateNestedManyWithoutRestaurantInput = {
+    create?: XOR<OrderCreateWithoutRestaurantInput, OrderUncheckedCreateWithoutRestaurantInput> | OrderCreateWithoutRestaurantInput[] | OrderUncheckedCreateWithoutRestaurantInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutRestaurantInput | OrderCreateOrConnectWithoutRestaurantInput[]
+    createMany?: OrderCreateManyRestaurantInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -15007,6 +15128,20 @@ export namespace Prisma {
     deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
   }
 
+  export type OrderUpdateManyWithoutRestaurantNestedInput = {
+    create?: XOR<OrderCreateWithoutRestaurantInput, OrderUncheckedCreateWithoutRestaurantInput> | OrderCreateWithoutRestaurantInput[] | OrderUncheckedCreateWithoutRestaurantInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutRestaurantInput | OrderCreateOrConnectWithoutRestaurantInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutRestaurantInput | OrderUpsertWithWhereUniqueWithoutRestaurantInput[]
+    createMany?: OrderCreateManyRestaurantInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutRestaurantInput | OrderUpdateWithWhereUniqueWithoutRestaurantInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutRestaurantInput | OrderUpdateManyWithWhereWithoutRestaurantInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
   export type TableUncheckedUpdateManyWithoutRestaurantNestedInput = {
     create?: XOR<TableCreateWithoutRestaurantInput, TableUncheckedCreateWithoutRestaurantInput> | TableCreateWithoutRestaurantInput[] | TableUncheckedCreateWithoutRestaurantInput[]
     connectOrCreate?: TableCreateOrConnectWithoutRestaurantInput | TableCreateOrConnectWithoutRestaurantInput[]
@@ -15075,6 +15210,20 @@ export namespace Prisma {
     update?: ShiftUpdateWithWhereUniqueWithoutRestaurantInput | ShiftUpdateWithWhereUniqueWithoutRestaurantInput[]
     updateMany?: ShiftUpdateManyWithWhereWithoutRestaurantInput | ShiftUpdateManyWithWhereWithoutRestaurantInput[]
     deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+  }
+
+  export type OrderUncheckedUpdateManyWithoutRestaurantNestedInput = {
+    create?: XOR<OrderCreateWithoutRestaurantInput, OrderUncheckedCreateWithoutRestaurantInput> | OrderCreateWithoutRestaurantInput[] | OrderUncheckedCreateWithoutRestaurantInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutRestaurantInput | OrderCreateOrConnectWithoutRestaurantInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutRestaurantInput | OrderUpsertWithWhereUniqueWithoutRestaurantInput[]
+    createMany?: OrderCreateManyRestaurantInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutRestaurantInput | OrderUpdateWithWhereUniqueWithoutRestaurantInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutRestaurantInput | OrderUpdateManyWithWhereWithoutRestaurantInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
   export type RestaurantCreateNestedOneWithoutTablesInput = {
@@ -15283,6 +15432,12 @@ export namespace Prisma {
     deleteMany?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
   }
 
+  export type RestaurantCreateNestedOneWithoutOrdersInput = {
+    create?: XOR<RestaurantCreateWithoutOrdersInput, RestaurantUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: RestaurantCreateOrConnectWithoutOrdersInput
+    connect?: RestaurantWhereUniqueInput
+  }
+
   export type TableCreateNestedOneWithoutOrdersInput = {
     create?: XOR<TableCreateWithoutOrdersInput, TableUncheckedCreateWithoutOrdersInput>
     connectOrCreate?: TableCreateOrConnectWithoutOrdersInput
@@ -15327,6 +15482,16 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type RestaurantUpdateOneWithoutOrdersNestedInput = {
+    create?: XOR<RestaurantCreateWithoutOrdersInput, RestaurantUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: RestaurantCreateOrConnectWithoutOrdersInput
+    upsert?: RestaurantUpsertWithoutOrdersInput
+    disconnect?: RestaurantWhereInput | boolean
+    delete?: RestaurantWhereInput | boolean
+    connect?: RestaurantWhereUniqueInput
+    update?: XOR<XOR<RestaurantUpdateToOneWithWhereWithoutOrdersInput, RestaurantUpdateWithoutOrdersInput>, RestaurantUncheckedUpdateWithoutOrdersInput>
   }
 
   export type TableUpdateOneWithoutOrdersNestedInput = {
@@ -16025,6 +16190,50 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type OrderCreateWithoutRestaurantInput = {
+    id?: string
+    session_id: string
+    order_type?: $Enums.OrderType
+    queue_number?: string | null
+    status?: $Enums.OrderStatus
+    subtotal?: Decimal | DecimalJsLike | number | string
+    vat_amount?: Decimal | DecimalJsLike | number | string
+    service_charge_amount?: Decimal | DecimalJsLike | number | string
+    total_amount: Decimal | DecimalJsLike | number | string
+    created_at?: Date | string
+    updated_at?: Date | string
+    table?: TableCreateNestedOneWithoutOrdersInput
+    orderItems?: OrderItemCreateNestedManyWithoutOrderInput
+    payments?: PaymentCreateNestedManyWithoutOrderInput
+  }
+
+  export type OrderUncheckedCreateWithoutRestaurantInput = {
+    id?: string
+    table_id?: string | null
+    session_id: string
+    order_type?: $Enums.OrderType
+    queue_number?: string | null
+    status?: $Enums.OrderStatus
+    subtotal?: Decimal | DecimalJsLike | number | string
+    vat_amount?: Decimal | DecimalJsLike | number | string
+    service_charge_amount?: Decimal | DecimalJsLike | number | string
+    total_amount: Decimal | DecimalJsLike | number | string
+    created_at?: Date | string
+    updated_at?: Date | string
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutOrderInput
+  }
+
+  export type OrderCreateOrConnectWithoutRestaurantInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutRestaurantInput, OrderUncheckedCreateWithoutRestaurantInput>
+  }
+
+  export type OrderCreateManyRestaurantInputEnvelope = {
+    data: OrderCreateManyRestaurantInput | OrderCreateManyRestaurantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TableUpsertWithWhereUniqueWithoutRestaurantInput = {
     where: TableWhereUniqueInput
     update: XOR<TableUpdateWithoutRestaurantInput, TableUncheckedUpdateWithoutRestaurantInput>
@@ -16169,6 +16378,41 @@ export namespace Prisma {
     status?: EnumShiftStatusFilter<"Shift"> | $Enums.ShiftStatus
   }
 
+  export type OrderUpsertWithWhereUniqueWithoutRestaurantInput = {
+    where: OrderWhereUniqueInput
+    update: XOR<OrderUpdateWithoutRestaurantInput, OrderUncheckedUpdateWithoutRestaurantInput>
+    create: XOR<OrderCreateWithoutRestaurantInput, OrderUncheckedCreateWithoutRestaurantInput>
+  }
+
+  export type OrderUpdateWithWhereUniqueWithoutRestaurantInput = {
+    where: OrderWhereUniqueInput
+    data: XOR<OrderUpdateWithoutRestaurantInput, OrderUncheckedUpdateWithoutRestaurantInput>
+  }
+
+  export type OrderUpdateManyWithWhereWithoutRestaurantInput = {
+    where: OrderScalarWhereInput
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutRestaurantInput>
+  }
+
+  export type OrderScalarWhereInput = {
+    AND?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    OR?: OrderScalarWhereInput[]
+    NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    id?: StringFilter<"Order"> | string
+    restaurant_id?: StringNullableFilter<"Order"> | string | null
+    table_id?: StringNullableFilter<"Order"> | string | null
+    session_id?: StringFilter<"Order"> | string
+    order_type?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
+    queue_number?: StringNullableFilter<"Order"> | string | null
+    status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
+    subtotal?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+    vat_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+    service_charge_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+    total_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
+    created_at?: DateTimeFilter<"Order"> | Date | string
+    updated_at?: DateTimeFilter<"Order"> | Date | string
+  }
+
   export type RestaurantCreateWithoutTablesInput = {
     id?: string
     name: string
@@ -16181,6 +16425,7 @@ export namespace Prisma {
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftCreateNestedManyWithoutRestaurantInput
+    orders?: OrderCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantUncheckedCreateWithoutTablesInput = {
@@ -16195,6 +16440,7 @@ export namespace Prisma {
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutRestaurantInput
+    orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantCreateOrConnectWithoutTablesInput = {
@@ -16214,12 +16460,14 @@ export namespace Prisma {
     total_amount: Decimal | DecimalJsLike | number | string
     created_at?: Date | string
     updated_at?: Date | string
+    restaurant?: RestaurantCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
     payments?: PaymentCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutTableInput = {
     id?: string
+    restaurant_id?: string | null
     session_id: string
     order_type?: $Enums.OrderType
     queue_number?: string | null
@@ -16267,6 +16515,7 @@ export namespace Prisma {
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUpdateManyWithoutRestaurantNestedInput
   }
 
   export type RestaurantUncheckedUpdateWithoutTablesInput = {
@@ -16281,6 +16530,7 @@ export namespace Prisma {
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutTableInput = {
@@ -16299,24 +16549,6 @@ export namespace Prisma {
     data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutTableInput>
   }
 
-  export type OrderScalarWhereInput = {
-    AND?: OrderScalarWhereInput | OrderScalarWhereInput[]
-    OR?: OrderScalarWhereInput[]
-    NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
-    id?: StringFilter<"Order"> | string
-    table_id?: StringNullableFilter<"Order"> | string | null
-    session_id?: StringFilter<"Order"> | string
-    order_type?: EnumOrderTypeFilter<"Order"> | $Enums.OrderType
-    queue_number?: StringNullableFilter<"Order"> | string | null
-    status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
-    subtotal?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
-    vat_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
-    service_charge_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
-    total_amount?: DecimalFilter<"Order"> | Decimal | DecimalJsLike | number | string
-    created_at?: DateTimeFilter<"Order"> | Date | string
-    updated_at?: DateTimeFilter<"Order"> | Date | string
-  }
-
   export type RestaurantCreateWithoutCategoriesInput = {
     id?: string
     name: string
@@ -16329,6 +16561,7 @@ export namespace Prisma {
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftCreateNestedManyWithoutRestaurantInput
+    orders?: OrderCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantUncheckedCreateWithoutCategoriesInput = {
@@ -16343,6 +16576,7 @@ export namespace Prisma {
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutRestaurantInput
+    orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantCreateOrConnectWithoutCategoriesInput = {
@@ -16405,6 +16639,7 @@ export namespace Prisma {
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUpdateManyWithoutRestaurantNestedInput
   }
 
   export type RestaurantUncheckedUpdateWithoutCategoriesInput = {
@@ -16419,6 +16654,7 @@ export namespace Prisma {
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
   }
 
   export type MenuItemUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -16449,6 +16685,7 @@ export namespace Prisma {
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftCreateNestedManyWithoutRestaurantInput
+    orders?: OrderCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantUncheckedCreateWithoutMenuItemsInput = {
@@ -16463,6 +16700,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutRestaurantInput
+    orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantCreateOrConnectWithoutMenuItemsInput = {
@@ -16538,6 +16776,7 @@ export namespace Prisma {
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUpdateManyWithoutRestaurantNestedInput
   }
 
   export type RestaurantUncheckedUpdateWithoutMenuItemsInput = {
@@ -16552,6 +16791,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
   }
 
   export type CategoryUpsertWithoutMenuItemsInput = {
@@ -16605,6 +16845,41 @@ export namespace Prisma {
     quantity?: IntFilter<"OrderItem"> | number
     unit_price?: DecimalFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
     special_note?: StringNullableFilter<"OrderItem"> | string | null
+  }
+
+  export type RestaurantCreateWithoutOrdersInput = {
+    id?: string
+    name: string
+    address: string
+    latitude: number
+    longitude: number
+    radius_meters: number
+    is_active?: boolean
+    tables?: TableCreateNestedManyWithoutRestaurantInput
+    categories?: CategoryCreateNestedManyWithoutRestaurantInput
+    menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
+    admins?: AdminCreateNestedManyWithoutRestaurantInput
+    shifts?: ShiftCreateNestedManyWithoutRestaurantInput
+  }
+
+  export type RestaurantUncheckedCreateWithoutOrdersInput = {
+    id?: string
+    name: string
+    address: string
+    latitude: number
+    longitude: number
+    radius_meters: number
+    is_active?: boolean
+    tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
+    categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
+    menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
+    admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutRestaurantInput
+  }
+
+  export type RestaurantCreateOrConnectWithoutOrdersInput = {
+    where: RestaurantWhereUniqueInput
+    create: XOR<RestaurantCreateWithoutOrdersInput, RestaurantUncheckedCreateWithoutOrdersInput>
   }
 
   export type TableCreateWithoutOrdersInput = {
@@ -16680,6 +16955,47 @@ export namespace Prisma {
   export type PaymentCreateManyOrderInputEnvelope = {
     data: PaymentCreateManyOrderInput | PaymentCreateManyOrderInput[]
     skipDuplicates?: boolean
+  }
+
+  export type RestaurantUpsertWithoutOrdersInput = {
+    update: XOR<RestaurantUpdateWithoutOrdersInput, RestaurantUncheckedUpdateWithoutOrdersInput>
+    create: XOR<RestaurantCreateWithoutOrdersInput, RestaurantUncheckedCreateWithoutOrdersInput>
+    where?: RestaurantWhereInput
+  }
+
+  export type RestaurantUpdateToOneWithWhereWithoutOrdersInput = {
+    where?: RestaurantWhereInput
+    data: XOR<RestaurantUpdateWithoutOrdersInput, RestaurantUncheckedUpdateWithoutOrdersInput>
+  }
+
+  export type RestaurantUpdateWithoutOrdersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    radius_meters?: FloatFieldUpdateOperationsInput | number
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    tables?: TableUpdateManyWithoutRestaurantNestedInput
+    categories?: CategoryUpdateManyWithoutRestaurantNestedInput
+    menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
+    admins?: AdminUpdateManyWithoutRestaurantNestedInput
+    shifts?: ShiftUpdateManyWithoutRestaurantNestedInput
+  }
+
+  export type RestaurantUncheckedUpdateWithoutOrdersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    radius_meters?: FloatFieldUpdateOperationsInput | number
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
+    categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
+    menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
+    admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutRestaurantNestedInput
   }
 
   export type TableUpsertWithoutOrdersInput = {
@@ -16768,12 +17084,14 @@ export namespace Prisma {
     total_amount: Decimal | DecimalJsLike | number | string
     created_at?: Date | string
     updated_at?: Date | string
+    restaurant?: RestaurantCreateNestedOneWithoutOrdersInput
     table?: TableCreateNestedOneWithoutOrdersInput
     payments?: PaymentCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutOrderItemsInput = {
     id?: string
+    restaurant_id?: string | null
     table_id?: string | null
     session_id: string
     order_type?: $Enums.OrderType
@@ -16843,12 +17161,14 @@ export namespace Prisma {
     total_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    restaurant?: RestaurantUpdateOneWithoutOrdersNestedInput
     table?: TableUpdateOneWithoutOrdersNestedInput
     payments?: PaymentUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutOrderItemsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    restaurant_id?: NullableStringFieldUpdateOperationsInput | string | null
     table_id?: NullableStringFieldUpdateOperationsInput | string | null
     session_id?: StringFieldUpdateOperationsInput | string
     order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
@@ -16908,6 +17228,7 @@ export namespace Prisma {
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftCreateNestedManyWithoutRestaurantInput
+    orders?: OrderCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantUncheckedCreateWithoutAdminsInput = {
@@ -16922,6 +17243,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutRestaurantInput
+    orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantCreateOrConnectWithoutAdminsInput = {
@@ -16982,6 +17304,7 @@ export namespace Prisma {
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUpdateManyWithoutRestaurantNestedInput
   }
 
   export type RestaurantUncheckedUpdateWithoutAdminsInput = {
@@ -16996,6 +17319,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
   }
 
   export type ShiftUpsertWithWhereUniqueWithoutAdminInput = {
@@ -17026,12 +17350,14 @@ export namespace Prisma {
     total_amount: Decimal | DecimalJsLike | number | string
     created_at?: Date | string
     updated_at?: Date | string
+    restaurant?: RestaurantCreateNestedOneWithoutOrdersInput
     table?: TableCreateNestedOneWithoutOrdersInput
     orderItems?: OrderItemCreateNestedManyWithoutOrderInput
   }
 
   export type OrderUncheckedCreateWithoutPaymentsInput = {
     id?: string
+    restaurant_id?: string | null
     table_id?: string | null
     session_id: string
     order_type?: $Enums.OrderType
@@ -17074,12 +17400,14 @@ export namespace Prisma {
     total_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    restaurant?: RestaurantUpdateOneWithoutOrdersNestedInput
     table?: TableUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    restaurant_id?: NullableStringFieldUpdateOperationsInput | string | null
     table_id?: NullableStringFieldUpdateOperationsInput | string | null
     session_id?: StringFieldUpdateOperationsInput | string
     order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
@@ -17131,6 +17459,7 @@ export namespace Prisma {
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
+    orders?: OrderCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantUncheckedCreateWithoutShiftsInput = {
@@ -17145,6 +17474,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
+    orders?: OrderUncheckedCreateNestedManyWithoutRestaurantInput
   }
 
   export type RestaurantCreateOrConnectWithoutShiftsInput = {
@@ -17206,6 +17536,7 @@ export namespace Prisma {
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUpdateManyWithoutRestaurantNestedInput
   }
 
   export type RestaurantUncheckedUpdateWithoutShiftsInput = {
@@ -17220,6 +17551,7 @@ export namespace Prisma {
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutRestaurantNestedInput
   }
 
   export type TableCreateManyRestaurantInput = {
@@ -17264,6 +17596,21 @@ export namespace Prisma {
     opening_float: Decimal | DecimalJsLike | number | string
     closing_summary?: NullableJsonNullValueInput | InputJsonValue
     status?: $Enums.ShiftStatus
+  }
+
+  export type OrderCreateManyRestaurantInput = {
+    id?: string
+    table_id?: string | null
+    session_id: string
+    order_type?: $Enums.OrderType
+    queue_number?: string | null
+    status?: $Enums.OrderStatus
+    subtotal?: Decimal | DecimalJsLike | number | string
+    vat_amount?: Decimal | DecimalJsLike | number | string
+    service_charge_amount?: Decimal | DecimalJsLike | number | string
+    total_amount: Decimal | DecimalJsLike | number | string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type TableUpdateWithoutRestaurantInput = {
@@ -17406,8 +17753,58 @@ export namespace Prisma {
     status?: EnumShiftStatusFieldUpdateOperationsInput | $Enums.ShiftStatus
   }
 
+  export type OrderUpdateWithoutRestaurantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    session_id?: StringFieldUpdateOperationsInput | string
+    order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+    queue_number?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    vat_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    table?: TableUpdateOneWithoutOrdersNestedInput
+    orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
+    payments?: PaymentUpdateManyWithoutOrderNestedInput
+  }
+
+  export type OrderUncheckedUpdateWithoutRestaurantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    table_id?: NullableStringFieldUpdateOperationsInput | string | null
+    session_id?: StringFieldUpdateOperationsInput | string
+    order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+    queue_number?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    vat_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    orderItems?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutOrderNestedInput
+  }
+
+  export type OrderUncheckedUpdateManyWithoutRestaurantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    table_id?: NullableStringFieldUpdateOperationsInput | string | null
+    session_id?: StringFieldUpdateOperationsInput | string
+    order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
+    queue_number?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    subtotal?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    vat_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    service_charge_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    total_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OrderCreateManyTableInput = {
     id?: string
+    restaurant_id?: string | null
     session_id: string
     order_type?: $Enums.OrderType
     queue_number?: string | null
@@ -17432,12 +17829,14 @@ export namespace Prisma {
     total_amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    restaurant?: RestaurantUpdateOneWithoutOrdersNestedInput
     orderItems?: OrderItemUpdateManyWithoutOrderNestedInput
     payments?: PaymentUpdateManyWithoutOrderNestedInput
   }
 
   export type OrderUncheckedUpdateWithoutTableInput = {
     id?: StringFieldUpdateOperationsInput | string
+    restaurant_id?: NullableStringFieldUpdateOperationsInput | string | null
     session_id?: StringFieldUpdateOperationsInput | string
     order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
     queue_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17454,6 +17853,7 @@ export namespace Prisma {
 
   export type OrderUncheckedUpdateManyWithoutTableInput = {
     id?: StringFieldUpdateOperationsInput | string
+    restaurant_id?: NullableStringFieldUpdateOperationsInput | string | null
     session_id?: StringFieldUpdateOperationsInput | string
     order_type?: EnumOrderTypeFieldUpdateOperationsInput | $Enums.OrderType
     queue_number?: NullableStringFieldUpdateOperationsInput | string | null

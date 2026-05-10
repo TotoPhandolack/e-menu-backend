@@ -12,6 +12,8 @@ import { UpdateOrderItemDto } from './dto/update-order-item.dto';
 import { OrderStatus } from '../../generated/prisma';
 import { SplitBillDto } from './dto/split-bill.dto';
 import { ProcessPaymentDto } from './dto/process-payment.dto';
+import { ToggleAvailabilityDto } from './dto/toggle-availability.dto';
+import { ReprintDto } from './dto/reprint.dto';
 import { randomUUID } from 'crypto';
 import * as QRCode from 'qrcode';
 
@@ -553,5 +555,136 @@ export class CashierService {
         is_fully_paid,
       };
     });
+  }
+
+  // ─── Operations & Menu Control ────────────────────────────────────────────
+
+  async setMenuItemAvailability(
+    item_id: string,
+    dto: ToggleAvailabilityDto,
+    restaurant_id: string,
+  ) {
+    const item = await this.prisma.menuItem.findUnique({
+      where: { id: item_id },
+    });
+    if (!item) throw new NotFoundException('Menu item not found');
+    if (item.restaurant_id !== restaurant_id)
+      throw new BadRequestException(
+        'Menu item does not belong to your restaurant',
+      );
+
+    return this.prisma.menuItem.update({
+      where: { id: item_id },
+      data: { is_available: dto.is_available },
+      select: { id: true, name: true, is_available: true },
+    });
+  }
+
+  private async _loadOrderForPrint(order_id: string) {
+    const order = await this.prisma.order.findUnique({
+      where: { id: order_id },
+      include: {
+        restaurant: {
+          select: {
+            name: true,
+            address: true,
+            vat_rate: true,
+            service_charge_rate: true,
+          },
+        },
+        table: { select: { table_number: true } },
+        orderItems: {
+          include: { menuItem: { select: { name: true } } },
+        },
+        payments: true,
+      },
+    });
+    if (!order) throw new NotFoundException('Order not found');
+    return order;
+  }
+
+  async printReceipt(order_id: string) {
+    const order = await this._loadOrderForPrint(order_id);
+
+    const items = order.orderItems.map((i) => ({
+      name: i.menuItem.name,
+      quantity: i.quantity,
+      unit_price: Number(i.unit_price),
+      line_total: round(Number(i.unit_price) * i.quantity),
+      special_note: i.special_note ?? null,
+    }));
+
+    const subtotal = items.reduce((s, i) => s + i.line_total, 0);
+    const vat_rate = Number(order.restaurant?.vat_rate ?? 7);
+    const sc_rate = Number(order.restaurant?.service_charge_rate ?? 0);
+    const vat_amount = round(subtotal * (vat_rate / 100));
+    const service_charge_amount = round(subtotal * (sc_rate / 100));
+    const total_amount = round(subtotal + vat_amount + service_charge_amount);
+    const total_paid = round(
+      order.payments.reduce((s, p) => s + Number(p.amount), 0),
+    );
+
+    return {
+      print_type: 'RECEIPT',
+      generated_at: new Date().toISOString(),
+      restaurant: {
+        name: order.restaurant?.name ?? '',
+        address: order.restaurant?.address ?? '',
+      },
+      order: {
+        id: order.id,
+        order_type: order.order_type,
+        table_number: order.table?.table_number ?? null,
+        queue_number: order.queue_number ?? null,
+        created_at: order.created_at,
+        status: order.status,
+      },
+      items,
+      subtotal,
+      vat_rate,
+      vat_amount,
+      service_charge_rate: sc_rate,
+      service_charge_amount,
+      total_amount,
+      payments: order.payments.map((p) => ({
+        method: p.method,
+        amount: Number(p.amount),
+        paid_at: p.paid_at,
+      })),
+      total_paid,
+      change: total_paid > total_amount ? round(total_paid - total_amount) : 0,
+    };
+  }
+
+  async printKitchenTicket(order_id: string) {
+    const order = await this._loadOrderForPrint(order_id);
+    if (order.status === 'CANCELLED')
+      throw new BadRequestException(
+        'Cannot print ticket for a cancelled order',
+      );
+
+    return {
+      print_type: 'KITCHEN_TICKET',
+      generated_at: new Date().toISOString(),
+      order: {
+        id: order.id,
+        order_type: order.order_type,
+        table_number: order.table?.table_number ?? null,
+        queue_number: order.queue_number ?? null,
+        created_at: order.created_at,
+        status: order.status,
+      },
+      items: order.orderItems.map((i) => ({
+        name: i.menuItem.name,
+        quantity: i.quantity,
+        special_note: i.special_note ?? null,
+      })),
+    };
+  }
+
+  async reprint(dto: ReprintDto) {
+    return dto.type === 'receipt'
+      ? this.printReceipt(dto.order_id)
+      : this.printKitchenTicket(dto.order_id);
   }
 }

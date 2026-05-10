@@ -17,6 +17,8 @@ import { AddOrderItemsDto } from './dto/add-order-items.dto';
 import { UpdateOrderItemDto } from './dto/update-order-item.dto';
 import { SplitBillDto } from './dto/split-bill.dto';
 import { ProcessPaymentDto } from './dto/process-payment.dto';
+import { ToggleAvailabilityDto } from './dto/toggle-availability.dto';
+import { ReprintDto } from './dto/reprint.dto';
 
 type JwtReq = { user: { restaurant_id: string } };
 
@@ -101,5 +103,31 @@ export class CashierController {
     @Request() req: JwtReq,
   ) {
     return this.cashierService.processPayment(order_id, dto, req.user.restaurant_id);
+  }
+
+  // ─── Operations & Menu Control ────────────────────────────────────────────
+
+  @Patch('menu-items/:id/availability')
+  setMenuItemAvailability(
+    @Param('id') item_id: string,
+    @Body() dto: ToggleAvailabilityDto,
+    @Request() req: JwtReq,
+  ) {
+    return this.cashierService.setMenuItemAvailability(item_id, dto, req.user.restaurant_id);
+  }
+
+  @Post('print/receipt/:orderId')
+  printReceipt(@Param('orderId') order_id: string) {
+    return this.cashierService.printReceipt(order_id);
+  }
+
+  @Post('print/kitchen/:orderId')
+  printKitchenTicket(@Param('orderId') order_id: string) {
+    return this.cashierService.printKitchenTicket(order_id);
+  }
+
+  @Post('print/reprint')
+  reprint(@Body() dto: ReprintDto) {
+    return this.cashierService.reprint(dto);
   }
 }

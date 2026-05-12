@@ -1,5 +1,5 @@
 // category/category.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -37,13 +37,17 @@ export class CategoryService {
     return this.prisma.category.create({ data: dto });
   }
 
-  async update(id: string, dto: UpdateCategoryDto) {
-    await this.findOne(id);
+  async update(id: string, dto: UpdateCategoryDto, restaurant_id: string) {
+    const category = await this.findOne(id);
+    if (category.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Category does not belong to your restaurant');
     return this.prisma.category.update({ where: { id }, data: dto });
   }
 
-  async remove(id: string) {
-    await this.findOne(id);
+  async remove(id: string, restaurant_id: string) {
+    const category = await this.findOne(id);
+    if (category.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Category does not belong to your restaurant');
     return this.prisma.category.delete({ where: { id } });
   }
 }

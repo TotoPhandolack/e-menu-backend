@@ -1,6 +1,7 @@
 // table/table.service.ts
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -50,21 +51,29 @@ export class TableService {
     return { ...table, qr_image };
   }
 
-  async update(id: string, dto: UpdateTableDto) {
-    await this.findOne(id);
+  async update(id: string, dto: UpdateTableDto, restaurant_id: string) {
+    const table = await this.findOne(id);
+    if (table.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Table does not belong to your restaurant');
     return this.prisma.table.update({ where: { id }, data: dto });
   }
 
-  async remove(id: string) {
-    await this.findOne(id);
+  async remove(id: string, restaurant_id: string) {
+    const table = await this.findOne(id);
+    if (table.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Table does not belong to your restaurant');
     return this.prisma.table.update({
       where: { id },
-      data: { is_active: false }, // soft delete
+      data: { is_active: false },
     });
   }
 
   // regenerate QR ใหม่ เช่น กรณี token หลุด
-  async regenerateQR(id: string) {
+  async regenerateQR(id: string, restaurant_id: string) {
+    const table = await this.findOne(id);
+    if (table.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Table does not belong to your restaurant');
+
     const qr_code_token = randomUUID();
     const qr_url = `${process.env.FRONTEND_URL}/menu?token=${qr_code_token}`;
     const qr_image = await QRCode.toDataURL(qr_url);

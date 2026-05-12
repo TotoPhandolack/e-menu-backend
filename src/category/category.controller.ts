@@ -7,10 +7,15 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+
+type JwtReq = { user: { restaurant_id: string } };
 
 @Controller('categories')
 export class CategoryController {
@@ -26,18 +31,25 @@ export class CategoryController {
     return this.categoryService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() dto: CreateCategoryDto) {
     return this.categoryService.create(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateCategoryDto) {
-    return this.categoryService.update(id, dto);
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateCategoryDto,
+    @Request() req: JwtReq,
+  ) {
+    return this.categoryService.update(id, dto, req.user.restaurant_id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.categoryService.remove(id);
+  remove(@Param('id') id: string, @Request() req: JwtReq) {
+    return this.categoryService.remove(id, req.user.restaurant_id);
   }
 }

@@ -6,6 +6,7 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import express from 'express';
 import { INestApplication } from '@nestjs/common';
 import { IncomingMessage, ServerResponse } from 'http';
+import { join } from 'path';
 
 let cachedApp: INestApplication;
 
@@ -13,6 +14,7 @@ async function createApp(): Promise<INestApplication> {
   if (cachedApp) return cachedApp;
 
   const expressApp = express();
+  expressApp.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
   app.enableCors({

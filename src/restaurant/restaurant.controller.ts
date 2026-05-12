@@ -7,11 +7,11 @@ import {
   Delete,
   Param,
   Body,
-  UseGuards,
 } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
+import { ScanRestaurantDto } from './dto/scan-restaurant.dto';
 
 @Controller('restaurants')
 export class RestaurantController {
@@ -40,5 +40,10 @@ export class RestaurantController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.restaurantService.remove(id);
+  }
+
+  @Post(':id/scan')
+  scanByLocation(@Param('id') id: string, @Body() dto: ScanRestaurantDto) {
+    return this.restaurantService.scanByLocation(id, dto);
   }
 }

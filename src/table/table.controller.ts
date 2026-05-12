@@ -7,29 +7,31 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { TableService } from './table.service';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { VerifyLocationDto } from './dto/verify-location.dto';
 
+type JwtReq = { user: { restaurant_id: string } };
 
 @Controller('tables')
 export class TableController {
   constructor(private readonly tableService: TableService) {}
 
-  // ดูโต๊ะทั้งหมดของร้าน
   @Get('restaurant/:restaurant_id')
   findAll(@Param('restaurant_id') restaurant_id: string) {
     return this.tableService.findAll(restaurant_id);
   }
-  // customer scan QR เพื่อโหลดเมนู — ไม่ตรวจ location (เข้าถึงได้จากทุกที่)
+
   @Get('scan/:token')
   scanQRNoLocation(@Param('token') token: string) {
     return this.tableService.scanByToken(token);
   }
 
-  // customer ยืนยัน location ก่อนสั่งอาหาร
   @Post('scan/:token')
   scanQR(@Param('token') token: string, @Body() dto: VerifyLocationDto) {
     return this.tableService.verifyLocationAndScan(token, dto);
@@ -40,24 +42,31 @@ export class TableController {
     return this.tableService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() dto: CreateTableDto) {
     return this.tableService.create(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
-  update(@Param('id') id: string, @Body() dto: UpdateTableDto) {
-    return this.tableService.update(id, dto);
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateTableDto,
+    @Request() req: JwtReq,
+  ) {
+    return this.tableService.update(id, dto, req.user.restaurant_id);
   }
 
-  // regenerate QR ใหม่
+  @UseGuards(JwtAuthGuard)
   @Put(':id/regenerate-qr')
-  regenerateQR(@Param('id') id: string) {
-    return this.tableService.regenerateQR(id);
+  regenerateQR(@Param('id') id: string, @Request() req: JwtReq) {
+    return this.tableService.regenerateQR(id, req.user.restaurant_id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tableService.remove(id);
+  remove(@Param('id') id: string, @Request() req: JwtReq) {
+    return this.tableService.remove(id, req.user.restaurant_id);
   }
 }

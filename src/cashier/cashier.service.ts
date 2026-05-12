@@ -14,6 +14,7 @@ import { ToggleAvailabilityDto } from './dto/toggle-availability.dto';
 import { ReprintDto } from './dto/reprint.dto';
 import { randomUUID } from 'crypto';
 import * as QRCode from 'qrcode';
+import { MenuItemService } from '../menu-item/menu-item.service';
 
 const CLOSED_STATUSES: OrderStatus[] = [
   OrderStatus.PAID,
@@ -27,6 +28,7 @@ export class CashierService {
   constructor(
     private prisma: PrismaService,
     private eventsGateway: EventsGateway,
+    private menuItemService: MenuItemService,
   ) {}
 
   // ─── Table & Session Management ───────────────────────────────────────────
@@ -475,5 +477,38 @@ export class CashierService {
     return dto.type === 'receipt'
       ? this.printReceipt(dto.order_id)
       : this.printKitchenTicket(dto.order_id);
+  }
+
+  // ─── Menu Item Management ─────────────────────────────────────────────────
+
+  getMenuItems(restaurant_id: string) {
+    return this.menuItemService.findAll(restaurant_id, true);
+  }
+
+  // ─── QR Code ──────────────────────────────────────────────────────────────
+
+  async getTableQR(table_id: string, restaurant_id: string) {
+    const table = await this.prisma.table.findUnique({
+      where: { id: table_id },
+    });
+    if (!table || !table.is_active)
+      throw new NotFoundException('Table not found');
+    if (table.restaurant_id !== restaurant_id)
+      throw new NotFoundException('Table not found');
+
+    const qr_url = `${process.env.FRONTEND_URL}/menu?token=${table.qr_code_token}`;
+    const qr_image = await QRCode.toDataURL(qr_url);
+    return { table_id: table.id, table_number: table.table_number, qr_image };
+  }
+
+  async getRestaurantQR(restaurant_id: string) {
+    const restaurant = await this.prisma.restaurant.findUnique({
+      where: { id: restaurant_id },
+    });
+    if (!restaurant) throw new NotFoundException('Restaurant not found');
+
+    const qr_url = `${process.env.FRONTEND_URL}/menu?restaurant_id=${restaurant_id}`;
+    const qr_image = await QRCode.toDataURL(qr_url);
+    return { restaurant_id, restaurant_name: restaurant.name, qr_image };
   }
 }

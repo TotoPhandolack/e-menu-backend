@@ -5,7 +5,6 @@ import {
   IsNotEmpty,
   IsUUID,
   IsOptional,
-  IsUrl,
   Min,
 } from 'class-validator';
 
@@ -28,7 +27,7 @@ export class CreateMenuItemDto {
   @Min(0)
   price!: number;
 
-  @IsUrl()
+  @IsString()
   @IsOptional()
-  image_url?: string;
+  imge_url?: string;
 }

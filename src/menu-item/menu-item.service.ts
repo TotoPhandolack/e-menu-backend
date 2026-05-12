@@ -1,5 +1,9 @@
 // menu-item/menu-item.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
@@ -8,10 +12,9 @@ import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
 export class MenuItemService {
   constructor(private prisma: PrismaService) {}
 
-  // ดึงเมนูทั้งหมดของร้าน จัดกลุ่มตาม category
-  findAll(restaurant_id: string) {
+  findAll(restaurant_id: string, includeAll = false) {
     return this.prisma.menuItem.findMany({
-      where: { restaurant_id, is_available: true },
+      where: { restaurant_id, ...(includeAll ? {} : { is_available: true }) },
       include: { category: true },
       orderBy: { category: { sort_order: 'asc' } },
     });
@@ -33,8 +36,10 @@ export class MenuItemService {
     });
   }
 
-  async update(id: string, dto: UpdateMenuItemDto) {
-    await this.findOne(id);
+  async update(id: string, dto: UpdateMenuItemDto, restaurant_id: string) {
+    const item = await this.findOne(id);
+    if (item.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Item does not belong to your restaurant');
     return this.prisma.menuItem.update({
       where: { id },
       data: dto,
@@ -42,12 +47,24 @@ export class MenuItemService {
     });
   }
 
-  // soft delete — แค่ปิดไม่ให้แสดงในเมนู
-  async remove(id: string) {
-    await this.findOne(id);
+  async remove(id: string, restaurant_id: string) {
+    const item = await this.findOne(id);
+    if (item.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Item does not belong to your restaurant');
     return this.prisma.menuItem.update({
       where: { id },
       data: { is_available: false },
+    });
+  }
+
+  async uploadImage(id: string, restaurant_id: string, filename: string) {
+    const item = await this.findOne(id);
+    if (item.restaurant_id !== restaurant_id)
+      throw new ForbiddenException('Item does not belong to your restaurant');
+    return this.prisma.menuItem.update({
+      where: { id },
+      data: { imge_url: `/uploads/menu-items/${filename}` },
+      include: { category: true },
     });
   }
 }

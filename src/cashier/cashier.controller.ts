@@ -124,4 +124,23 @@ export class CashierController {
   reprint(@Body() dto: ReprintDto) {
     return this.cashierService.reprint(dto);
   }
+
+  // ─── Menu Item Management ─────────────────────────────────────────────────
+
+  @Get('menu-items')
+  getMenuItems(@Request() req: JwtReq) {
+    return this.cashierService.getMenuItems(req.user.restaurant_id);
+  }
+
+  // ─── QR Code ──────────────────────────────────────────────────────────────
+
+  @Get('tables/:id/qr')
+  getTableQR(@Param('id') table_id: string, @Request() req: JwtReq) {
+    return this.cashierService.getTableQR(table_id, req.user.restaurant_id);
+  }
+
+  @Get('qr/restaurant')
+  getRestaurantQR(@Request() req: JwtReq) {
+    return this.cashierService.getRestaurantQR(req.user.restaurant_id);
+  }
 }

@@ -12,11 +12,11 @@ import {
 
 export class CashierOrderItemDto {
   @IsUUID()
-  menu_item_id: string;
+  menu_item_id!: string;
 
   @IsInt()
   @Min(1)
-  quantity: number;
+  quantity!: number;
 
   @IsOptional()
   @IsString()
@@ -25,7 +25,7 @@ export class CashierOrderItemDto {
 
 export class CreateCashierOrderDto {
   @IsEnum(['TABLE', 'TAKEAWAY'])
-  order_type: 'TABLE' | 'TAKEAWAY';
+  order_type!: 'TABLE' | 'TAKEAWAY';
 
   @IsOptional()
   @IsUUID()
@@ -34,5 +34,5 @@ export class CreateCashierOrderDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CashierOrderItemDto)
-  items: CashierOrderItemDto[];
+  items!: CashierOrderItemDto[];
 }

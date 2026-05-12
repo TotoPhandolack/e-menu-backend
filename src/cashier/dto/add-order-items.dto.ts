@@ -11,11 +11,11 @@ import {
 
 export class AddItemDto {
   @IsUUID()
-  menu_item_id: string;
+  menu_item_id!: string;
 
   @IsInt()
   @Min(1)
-  quantity: number;
+  quantity!: number;
 
   @IsOptional()
   @IsString()
@@ -26,5 +26,5 @@ export class AddOrderItemsDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => AddItemDto)
-  items: AddItemDto[];
+  items!: AddItemDto[];
 }

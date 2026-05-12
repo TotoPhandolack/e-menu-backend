@@ -15,8 +15,6 @@ import { MoveTableDto } from './dto/move-table.dto';
 import { CreateCashierOrderDto } from './dto/create-cashier-order.dto';
 import { AddOrderItemsDto } from './dto/add-order-items.dto';
 import { UpdateOrderItemDto } from './dto/update-order-item.dto';
-import { SplitBillDto } from './dto/split-bill.dto';
-import { ProcessPaymentDto } from './dto/process-payment.dto';
 import { ToggleAvailabilityDto } from './dto/toggle-availability.dto';
 import { ReprintDto } from './dto/reprint.dto';
 
@@ -62,7 +60,11 @@ export class CashierController {
     @Body() dto: AddOrderItemsDto,
     @Request() req: JwtReq,
   ) {
-    return this.cashierService.addOrderItems(order_id, dto, req.user.restaurant_id);
+    return this.cashierService.addOrderItems(
+      order_id,
+      dto,
+      req.user.restaurant_id,
+    );
   }
 
   @Patch('orders/:id/items/:itemId')
@@ -72,7 +74,12 @@ export class CashierController {
     @Body() dto: UpdateOrderItemDto,
     @Request() req: JwtReq,
   ) {
-    return this.cashierService.updateOrderItem(order_id, item_id, dto, req.user.restaurant_id);
+    return this.cashierService.updateOrderItem(
+      order_id,
+      item_id,
+      dto,
+      req.user.restaurant_id,
+    );
   }
 
   @Delete('orders/:id/items/:itemId')
@@ -81,28 +88,11 @@ export class CashierController {
     @Param('itemId') item_id: string,
     @Request() req: JwtReq,
   ) {
-    return this.cashierService.removeOrderItem(order_id, item_id, req.user.restaurant_id);
-  }
-
-  // ─── Billing & Payments ───────────────────────────────────────────────────
-
-  @Get('orders/:id/bill')
-  getBill(@Param('id') order_id: string) {
-    return this.cashierService.getBill(order_id);
-  }
-
-  @Post('orders/:id/bill/split')
-  splitBill(@Param('id') order_id: string, @Body() dto: SplitBillDto) {
-    return this.cashierService.splitBill(order_id, dto);
-  }
-
-  @Post('orders/:id/pay')
-  processPayment(
-    @Param('id') order_id: string,
-    @Body() dto: ProcessPaymentDto,
-    @Request() req: JwtReq,
-  ) {
-    return this.cashierService.processPayment(order_id, dto, req.user.restaurant_id);
+    return this.cashierService.removeOrderItem(
+      order_id,
+      item_id,
+      req.user.restaurant_id,
+    );
   }
 
   // ─── Operations & Menu Control ────────────────────────────────────────────
@@ -113,7 +103,11 @@ export class CashierController {
     @Body() dto: ToggleAvailabilityDto,
     @Request() req: JwtReq,
   ) {
-    return this.cashierService.setMenuItemAvailability(item_id, dto, req.user.restaurant_id);
+    return this.cashierService.setMenuItemAvailability(
+      item_id,
+      dto,
+      req.user.restaurant_id,
+    );
   }
 
   @Post('print/receipt/:orderId')

@@ -14,7 +14,7 @@ async function createApp(): Promise<INestApplication> {
   if (cachedApp) return cachedApp;
 
   const expressApp = express();
-  expressApp.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
+  expressApp.use('/uploads', express.static(join(process.cwd(), 'uploads')));
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
   app.enableCors({

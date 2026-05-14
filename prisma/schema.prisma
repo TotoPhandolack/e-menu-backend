@@ -48,15 +48,15 @@ enum ShiftStatus {
 }
 
 model Restaurant {
-  id                   String  @id @default(uuid())
-  name                 String
-  address              String
-  latitude             Float
-  longitude            Float
-  radius_meters        Float
-  is_active            Boolean @default(true)
-  vat_rate             Decimal @default(7)
-  service_charge_rate  Decimal @default(0)
+  id                  String  @id @default(uuid())
+  name                String
+  address             String
+  latitude            Float
+  longitude           Float
+  radius_meters       Float
+  is_active           Boolean @default(true)
+  vat_rate            Decimal @default(7)
+  service_charge_rate Decimal @default(0)
 
   // back-relations
   tables     Table[]

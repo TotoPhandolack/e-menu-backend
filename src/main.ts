@@ -15,7 +15,10 @@ async function createApp(): Promise<INestApplication> {
 
   const expressApp = express();
   expressApp.use('/uploads', express.static(join(process.cwd(), 'uploads')));
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressApp),
+  );
 
   app.enableCors({
     // Allow all origins (true allows reflection of request origin) or specify domains
@@ -38,13 +41,22 @@ async function createApp(): Promise<INestApplication> {
   return app;
 }
 
-export default async function handler(req: IncomingMessage, res: ServerResponse) {
+export default async function handler(
+  req: IncomingMessage,
+  res: ServerResponse,
+) {
   // --- แก้ไขจุดที่ 2: จัดการ Preflight Request (OPTIONS) ---
   // บางครั้ง Serverless Handler อาจจะบล็อกคำขอ OPTIONS จากเบราว์เซอร์
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    );
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Accept, Authorization',
+    );
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.statusCode = 204;
     res.end();
@@ -52,12 +64,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   }
 
   const app = await createApp();
-  const expressApp = app.getHttpAdapter().getInstance();
+  const expressApp = app.getHttpAdapter().getInstance() as express.Express;
   expressApp(req, res);
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  createApp().then(async (app) => {
+  void createApp().then(async (app) => {
     const port = process.env.PORT || 3003;
     await app.listen(port);
     console.log(`🚀 Server running on http://localhost:${port}`);

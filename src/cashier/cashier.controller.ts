@@ -110,6 +110,19 @@ export class CashierController {
     );
   }
 
+  @Patch('menu-items/:id/recommended')
+  setMenuItemRecommended(
+    @Param('id') item_id: string,
+    @Body() dto: ToggleAvailabilityDto,
+    @Request() req: JwtReq,
+  ) {
+    return this.cashierService.setMenuItemRecommended(
+      item_id,
+      dto,
+      req.user.restaurant_id,
+    );
+  }
+
   @Post('print/receipt/:orderId')
   printReceipt(@Param('orderId') order_id: string) {
     return this.cashierService.printReceipt(order_id);

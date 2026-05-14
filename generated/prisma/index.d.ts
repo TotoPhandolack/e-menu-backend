@@ -5528,6 +5528,7 @@ export namespace Prisma {
     price: Decimal | null
     imge_url: string | null
     is_available: boolean | null
+    is_recommended: boolean | null
   }
 
   export type MenuItemMaxAggregateOutputType = {
@@ -5539,6 +5540,7 @@ export namespace Prisma {
     price: Decimal | null
     imge_url: string | null
     is_available: boolean | null
+    is_recommended: boolean | null
   }
 
   export type MenuItemCountAggregateOutputType = {
@@ -5550,6 +5552,7 @@ export namespace Prisma {
     price: number
     imge_url: number
     is_available: number
+    is_recommended: number
     _all: number
   }
 
@@ -5571,6 +5574,7 @@ export namespace Prisma {
     price?: true
     imge_url?: true
     is_available?: true
+    is_recommended?: true
   }
 
   export type MenuItemMaxAggregateInputType = {
@@ -5582,6 +5586,7 @@ export namespace Prisma {
     price?: true
     imge_url?: true
     is_available?: true
+    is_recommended?: true
   }
 
   export type MenuItemCountAggregateInputType = {
@@ -5593,6 +5598,7 @@ export namespace Prisma {
     price?: true
     imge_url?: true
     is_available?: true
+    is_recommended?: true
     _all?: true
   }
 
@@ -5691,6 +5697,7 @@ export namespace Prisma {
     price: Decimal
     imge_url: string | null
     is_available: boolean
+    is_recommended: boolean
     _count: MenuItemCountAggregateOutputType | null
     _avg: MenuItemAvgAggregateOutputType | null
     _sum: MenuItemSumAggregateOutputType | null
@@ -5721,6 +5728,7 @@ export namespace Prisma {
     price?: boolean
     imge_url?: boolean
     is_available?: boolean
+    is_recommended?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     orderItems?: boolean | MenuItem$orderItemsArgs<ExtArgs>
@@ -5736,6 +5744,7 @@ export namespace Prisma {
     price?: boolean
     imge_url?: boolean
     is_available?: boolean
+    is_recommended?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["menuItem"]>
@@ -5749,6 +5758,7 @@ export namespace Prisma {
     price?: boolean
     imge_url?: boolean
     is_available?: boolean
+    is_recommended?: boolean
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["menuItem"]>
@@ -5762,9 +5772,10 @@ export namespace Prisma {
     price?: boolean
     imge_url?: boolean
     is_available?: boolean
+    is_recommended?: boolean
   }
 
-  export type MenuItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "restaurant_id" | "category_id" | "name" | "description" | "price" | "imge_url" | "is_available", ExtArgs["result"]["menuItem"]>
+  export type MenuItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "restaurant_id" | "category_id" | "name" | "description" | "price" | "imge_url" | "is_available" | "is_recommended", ExtArgs["result"]["menuItem"]>
   export type MenuItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     restaurant?: boolean | RestaurantDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -5796,6 +5807,7 @@ export namespace Prisma {
       price: Prisma.Decimal
       imge_url: string | null
       is_available: boolean
+      is_recommended: boolean
     }, ExtArgs["result"]["menuItem"]>
     composites: {}
   }
@@ -6230,6 +6242,7 @@ export namespace Prisma {
     readonly price: FieldRef<"MenuItem", 'Decimal'>
     readonly imge_url: FieldRef<"MenuItem", 'String'>
     readonly is_available: FieldRef<"MenuItem", 'Boolean'>
+    readonly is_recommended: FieldRef<"MenuItem", 'Boolean'>
   }
     
 
@@ -12528,7 +12541,8 @@ export namespace Prisma {
     description: 'description',
     price: 'price',
     imge_url: 'imge_url',
-    is_available: 'is_available'
+    is_available: 'is_available',
+    is_recommended: 'is_recommended'
   };
 
   export type MenuItemScalarFieldEnum = (typeof MenuItemScalarFieldEnum)[keyof typeof MenuItemScalarFieldEnum]
@@ -13056,6 +13070,7 @@ export namespace Prisma {
     price?: DecimalFilter<"MenuItem"> | Decimal | DecimalJsLike | number | string
     imge_url?: StringNullableFilter<"MenuItem"> | string | null
     is_available?: BoolFilter<"MenuItem"> | boolean
+    is_recommended?: BoolFilter<"MenuItem"> | boolean
     restaurant?: XOR<RestaurantScalarRelationFilter, RestaurantWhereInput>
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     orderItems?: OrderItemListRelationFilter
@@ -13070,6 +13085,7 @@ export namespace Prisma {
     price?: SortOrder
     imge_url?: SortOrderInput | SortOrder
     is_available?: SortOrder
+    is_recommended?: SortOrder
     restaurant?: RestaurantOrderByWithRelationInput
     category?: CategoryOrderByWithRelationInput
     orderItems?: OrderItemOrderByRelationAggregateInput
@@ -13087,6 +13103,7 @@ export namespace Prisma {
     price?: DecimalFilter<"MenuItem"> | Decimal | DecimalJsLike | number | string
     imge_url?: StringNullableFilter<"MenuItem"> | string | null
     is_available?: BoolFilter<"MenuItem"> | boolean
+    is_recommended?: BoolFilter<"MenuItem"> | boolean
     restaurant?: XOR<RestaurantScalarRelationFilter, RestaurantWhereInput>
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
     orderItems?: OrderItemListRelationFilter
@@ -13101,6 +13118,7 @@ export namespace Prisma {
     price?: SortOrder
     imge_url?: SortOrderInput | SortOrder
     is_available?: SortOrder
+    is_recommended?: SortOrder
     _count?: MenuItemCountOrderByAggregateInput
     _avg?: MenuItemAvgOrderByAggregateInput
     _max?: MenuItemMaxOrderByAggregateInput
@@ -13120,6 +13138,7 @@ export namespace Prisma {
     price?: DecimalWithAggregatesFilter<"MenuItem"> | Decimal | DecimalJsLike | number | string
     imge_url?: StringNullableWithAggregatesFilter<"MenuItem"> | string | null
     is_available?: BoolWithAggregatesFilter<"MenuItem"> | boolean
+    is_recommended?: BoolWithAggregatesFilter<"MenuItem"> | boolean
   }
 
   export type OrderWhereInput = {
@@ -13733,6 +13752,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
     restaurant: RestaurantCreateNestedOneWithoutMenuItemsInput
     category: CategoryCreateNestedOneWithoutMenuItemsInput
     orderItems?: OrderItemCreateNestedManyWithoutMenuItemInput
@@ -13747,6 +13767,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutMenuItemInput
   }
 
@@ -13757,6 +13778,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
     restaurant?: RestaurantUpdateOneRequiredWithoutMenuItemsNestedInput
     category?: CategoryUpdateOneRequiredWithoutMenuItemsNestedInput
     orderItems?: OrderItemUpdateManyWithoutMenuItemNestedInput
@@ -13771,6 +13793,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
     orderItems?: OrderItemUncheckedUpdateManyWithoutMenuItemNestedInput
   }
 
@@ -13783,6 +13806,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
   }
 
   export type MenuItemUpdateManyMutationInput = {
@@ -13792,6 +13816,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type MenuItemUncheckedUpdateManyInput = {
@@ -13803,6 +13828,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OrderCreateInput = {
@@ -14559,6 +14585,7 @@ export namespace Prisma {
     price?: SortOrder
     imge_url?: SortOrder
     is_available?: SortOrder
+    is_recommended?: SortOrder
   }
 
   export type MenuItemAvgOrderByAggregateInput = {
@@ -14574,6 +14601,7 @@ export namespace Prisma {
     price?: SortOrder
     imge_url?: SortOrder
     is_available?: SortOrder
+    is_recommended?: SortOrder
   }
 
   export type MenuItemMinOrderByAggregateInput = {
@@ -14585,6 +14613,7 @@ export namespace Prisma {
     price?: SortOrder
     imge_url?: SortOrder
     is_available?: SortOrder
+    is_recommended?: SortOrder
   }
 
   export type MenuItemSumOrderByAggregateInput = {
@@ -16175,6 +16204,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
     category: CategoryCreateNestedOneWithoutMenuItemsInput
     orderItems?: OrderItemCreateNestedManyWithoutMenuItemInput
   }
@@ -16187,6 +16217,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutMenuItemInput
   }
 
@@ -16387,6 +16418,7 @@ export namespace Prisma {
     price?: DecimalFilter<"MenuItem"> | Decimal | DecimalJsLike | number | string
     imge_url?: StringNullableFilter<"MenuItem"> | string | null
     is_available?: BoolFilter<"MenuItem"> | boolean
+    is_recommended?: BoolFilter<"MenuItem"> | boolean
   }
 
   export type AdminUpsertWithWhereUniqueWithoutRestaurantInput = {
@@ -16673,6 +16705,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
     restaurant: RestaurantCreateNestedOneWithoutMenuItemsInput
     orderItems?: OrderItemCreateNestedManyWithoutMenuItemInput
   }
@@ -16685,6 +16718,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutMenuItemInput
   }
 
@@ -17220,6 +17254,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
     restaurant: RestaurantCreateNestedOneWithoutMenuItemsInput
     category: CategoryCreateNestedOneWithoutMenuItemsInput
   }
@@ -17233,6 +17268,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
   }
 
   export type MenuItemCreateOrConnectWithoutOrderItemsInput = {
@@ -17303,6 +17339,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
     restaurant?: RestaurantUpdateOneRequiredWithoutMenuItemsNestedInput
     category?: CategoryUpdateOneRequiredWithoutMenuItemsNestedInput
   }
@@ -17316,6 +17353,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type RestaurantCreateWithoutAdminsInput = {
@@ -17695,6 +17733,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
   }
 
   export type AdminCreateManyRestaurantInput = {
@@ -17787,6 +17826,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
     category?: CategoryUpdateOneRequiredWithoutMenuItemsNestedInput
     orderItems?: OrderItemUpdateManyWithoutMenuItemNestedInput
   }
@@ -17799,6 +17839,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
     orderItems?: OrderItemUncheckedUpdateManyWithoutMenuItemNestedInput
   }
 
@@ -17810,6 +17851,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AdminUpdateWithoutRestaurantInput = {
@@ -17992,6 +18034,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imge_url?: string | null
     is_available?: boolean
+    is_recommended?: boolean
   }
 
   export type MenuItemUpdateWithoutCategoryInput = {
@@ -18001,6 +18044,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
     restaurant?: RestaurantUpdateOneRequiredWithoutMenuItemsNestedInput
     orderItems?: OrderItemUpdateManyWithoutMenuItemNestedInput
   }
@@ -18013,6 +18057,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
     orderItems?: OrderItemUncheckedUpdateManyWithoutMenuItemNestedInput
   }
 
@@ -18024,6 +18069,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imge_url?: NullableStringFieldUpdateOperationsInput | string | null
     is_available?: BoolFieldUpdateOperationsInput | boolean
+    is_recommended?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OrderItemCreateManyMenuItemInput = {

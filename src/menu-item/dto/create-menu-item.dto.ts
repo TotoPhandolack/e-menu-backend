@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsUUID,
   IsOptional,
+  IsBoolean,
   Min,
 } from 'class-validator';
 
@@ -30,4 +31,8 @@ export class CreateMenuItemDto {
   @IsString()
   @IsOptional()
   imge_url?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  is_recommended?: boolean;
 }

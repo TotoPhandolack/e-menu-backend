@@ -157,7 +157,8 @@ exports.Prisma.MenuItemScalarFieldEnum = {
   description: 'description',
   price: 'price',
   imge_url: 'imge_url',
-  is_available: 'is_available'
+  is_available: 'is_available',
+  is_recommended: 'is_recommended'
 };
 
 exports.Prisma.OrderScalarFieldEnum = {

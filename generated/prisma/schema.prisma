@@ -93,14 +93,15 @@ model Category {
 }
 
 model MenuItem {
-  id            String  @id @default(uuid())
-  restaurant_id String
-  category_id   String
-  name          String
-  description   String
-  price         Decimal
-  imge_url      String?
-  is_available  Boolean @default(true)
+  id             String  @id @default(uuid())
+  restaurant_id  String
+  category_id    String
+  name           String
+  description    String
+  price          Decimal
+  imge_url       String?
+  is_available   Boolean @default(true)
+  is_recommended Boolean @default(false)
 
   // relation
   restaurant Restaurant  @relation(fields: [restaurant_id], references: [id])

@@ -396,6 +396,27 @@ export class CashierService {
     });
   }
 
+  async setMenuItemRecommended(
+    item_id: string,
+    dto: ToggleAvailabilityDto,
+    restaurant_id: string,
+  ) {
+    const item = await this.prisma.menuItem.findUnique({
+      where: { id: item_id },
+    });
+    if (!item) throw new NotFoundException('Menu item not found');
+    if (item.restaurant_id !== restaurant_id)
+      throw new BadRequestException(
+        'Menu item does not belong to your restaurant',
+      );
+
+    return this.prisma.menuItem.update({
+      where: { id: item_id },
+      data: { is_recommended: dto.is_available },
+      select: { id: true, name: true, is_recommended: true },
+    });
+  }
+
   private async _loadOrderForPrint(order_id: string) {
     const order = await this.prisma.order.findUnique({
       where: { id: order_id },

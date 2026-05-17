@@ -101,7 +101,7 @@ export class TableService {
   async scanByToken(token: string) {
     const table = await this.findByToken(token);
     return {
-      table_id: table.id,
+      id: table.id,
       table_number: table.table_number,
       restaurant_id: table.restaurant.id,
       restaurant_name: table.restaurant.name,

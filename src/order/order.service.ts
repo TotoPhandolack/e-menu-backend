@@ -29,12 +29,12 @@ export class OrderService {
     });
   }
 
-  // ดู order ทั้งหมดของร้าน (สำหรับแคชเชียร์/เชฟ)
+  // ดู order สำหรับครัว — เฉพาะ CONFIRMED เท่านั้น
   findByRestaurant(restaurant_id: string) {
     return this.prisma.order.findMany({
       where: {
-        table: { restaurant_id },
-        status: { notIn: ['PAID', 'CANCELLED'] },
+        restaurant_id,
+        status: 'CONFIRMED',
       },
       include: {
         table: true,
@@ -147,9 +147,20 @@ export class OrderService {
     if (order.status !== 'PENDING') {
       throw new BadRequestException('Can only cancel PENDING orders');
     }
-    return this.prisma.order.update({
+    const cancelled = await this.prisma.order.update({
       where: { id },
       data: { status: 'CANCELLED' },
+      include: {
+        table: true,
+        orderItems: { include: { menuItem: true } },
+      },
     });
+    if (cancelled.table) {
+      this.eventsGateway.notifyOrderStatus(
+        cancelled.table.restaurant_id,
+        cancelled,
+      );
+    }
+    return cancelled;
   }
 }

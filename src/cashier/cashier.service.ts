@@ -174,6 +174,7 @@ export class CashierService {
         order_type: dto.order_type,
         queue_number,
         total_amount,
+        status: OrderStatus.CONFIRMED,
         orderItems: {
           create: dto.items.map((item) => {
             const found = menuItems.find((m) => m.id === item.menu_item_id)!;

@@ -8,7 +8,11 @@ import { PrismaClient } from '../../generated/prisma';
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     // 1. สร้าง Connection Pool สำหรับต่อฐานข้อมูล (ใช้ URL จาก .env)
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      connectionTimeoutMillis: 30000,
+      idleTimeoutMillis: 30000,
+    });
 
     // 2. สร้าง Adapter ของ Prisma
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

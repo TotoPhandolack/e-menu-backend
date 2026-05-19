@@ -7,6 +7,7 @@ import express from 'express';
 import { INestApplication } from '@nestjs/common';
 import { IncomingMessage, ServerResponse } from 'http';
 import { join } from 'path';
+import { DbRetryInterceptor } from './common/db-retry.interceptor';
 
 let cachedApp: INestApplication;
 
@@ -27,6 +28,8 @@ async function createApp(): Promise<INestApplication> {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',
   });
+
+  app.useGlobalInterceptors(new DbRetryInterceptor());
 
   app.useGlobalPipes(
     new ValidationPipe({

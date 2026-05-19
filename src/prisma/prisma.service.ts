@@ -1,28 +1,25 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 import { PrismaClient } from '../../generated/prisma';
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit {
+export class PrismaService extends PrismaClient {
   constructor() {
-    // 1. สร้าง Connection Pool สำหรับต่อฐานข้อมูล (ใช้ URL จาก .env)
     const pool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      connectionTimeoutMillis: 30000,
-      idleTimeoutMillis: 30000,
+      max: 3,
+      idleTimeoutMillis: 10000,
+      connectionTimeoutMillis: 60000,
+      ssl: { rejectUnauthorized: false },
     });
 
-    // 2. สร้าง Adapter ของ Prisma
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    pool.on('error', (err) => {
+      new Logger('PgPool').warn(`Idle client error: ${err.message}`);
+    });
+
     const adapter = new PrismaPg(pool as any);
-
-    // 3. ส่ง Adapter เข้าไปให้ PrismaClient ตามกฎของ v7
     super({ adapter });
-  }
-
-  async onModuleInit() {
-    await this.$connect();
   }
 }

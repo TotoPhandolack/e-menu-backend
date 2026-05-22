@@ -8,11 +8,11 @@ import {
 import { Server } from 'socket.io';
 
 @WebSocketGateway({
-  cors: { origin: 'http://localhost:3001' },
+  cors: { origin: '*' },
 })
 export class EventsGateway {
   @WebSocketServer()
-  server: Server;
+  server!: Server;
 
   // เชฟ/แคชเชียร์ join room ของร้านตัวเอง
   @SubscribeMessage('join_restaurant')

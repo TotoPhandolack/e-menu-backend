@@ -42,6 +42,11 @@ export class CashierController {
     return this.cashierService.clearTable(table_id);
   }
 
+  @Patch('tables/:id/available')
+  setTableAvailable(@Param('id') table_id: string) {
+    return this.cashierService.setTableAvailable(table_id);
+  }
+
   // ─── Order Management ─────────────────────────────────────────────────────
 
   @Post('orders')

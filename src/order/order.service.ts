@@ -85,31 +85,42 @@ export class OrderService {
       return sum + Number(menuItem!.price) * item.quantity;
     }, 0);
 
-    // 4. สร้าง order พร้อม orderItems ในครั้งเดียว
-    const newOrder = await this.prisma.order.create({
-      data: {
-        restaurant_id: table.restaurant_id,
-        table_id: dto.table_id,
-        session_id: dto.session_id,
-        total_amount,
-        orderItems: {
-          create: dto.items.map((item) => {
-            const menuItem = menuItems.find((m) => m.id === item.menu_item_id);
-            return {
-              menu_item_id: item.menu_item_id,
-              quantity: item.quantity,
-              unit_price: menuItem!.price,
-              special_note: item.special_note,
-            };
-          }),
+    // 4. Create order + mark table occupied atomically
+    const newOrder = await this.prisma.$transaction(async (tx) => {
+      const order = await tx.order.create({
+        data: {
+          restaurant_id: table.restaurant_id,
+          table_id: dto.table_id,
+          session_id: dto.session_id,
+          total_amount,
+          orderItems: {
+            create: dto.items.map((item) => {
+              const menuItem = menuItems.find(
+                (m) => m.id === item.menu_item_id,
+              );
+              return {
+                menu_item_id: item.menu_item_id,
+                quantity: item.quantity,
+                unit_price: menuItem!.price,
+                special_note: item.special_note,
+              };
+            }),
+          },
         },
-      },
-      include: {
-        table: true,
-        orderItems: {
-          include: { menuItem: true },
+        include: {
+          table: true,
+          orderItems: {
+            include: { menuItem: true },
+          },
         },
-      },
+      });
+
+      await tx.table.update({
+        where: { id: dto.table_id },
+        data: { status: 'OCCUPIED' },
+      });
+
+      return order;
     });
 
     this.eventsGateway.notifyNewOrder(table.restaurant_id, newOrder);

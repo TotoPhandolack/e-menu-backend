@@ -48,6 +48,19 @@ export class CashierService {
     });
   }
 
+  async setTableAvailable(table_id: string) {
+    const table = await this.prisma.table.findUnique({
+      where: { id: table_id },
+    });
+    if (!table || !table.is_active)
+      throw new NotFoundException('Table not found');
+
+    return this.prisma.table.update({
+      where: { id: table_id },
+      data: { status: 'AVAILABLE' },
+    });
+  }
+
   async moveTable(source_table_id: string, dto: MoveTableDto) {
     const { target_table_id } = dto;
 

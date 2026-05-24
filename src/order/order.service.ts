@@ -129,18 +129,40 @@ export class OrderService {
 
   // อัปเดต status เช่น เชฟกด PREPARING, แคชเชียร์กด PAID
   async updateStatus(id: string, dto: UpdateOrderStatusDto) {
-    console.log('updating order id:', id);
-    console.log('status:', dto.status);
     await this.findOne(id);
-    const updatedOrder = await this.prisma.order.update({
-      where: { id },
-      data: { status: dto.status },
-      include: {
-        table: true,
-        orderItems: {
-          include: { menuItem: true },
+
+    const updatedOrder = await this.prisma.$transaction(async (tx) => {
+      const order = await tx.order.update({
+        where: { id },
+        data: { status: dto.status },
+        include: {
+          table: true,
+          orderItems: {
+            include: { menuItem: true },
+          },
         },
-      },
+      });
+
+      // When closing an order on a table, free the table if no active orders remain
+      if (
+        order.table_id &&
+        (dto.status === 'PAID' || dto.status === 'CANCELLED')
+      ) {
+        const activeCount = await tx.order.count({
+          where: {
+            table_id: order.table_id,
+            status: { notIn: ['PAID', 'CANCELLED'] },
+          },
+        });
+        if (activeCount === 0) {
+          await tx.table.update({
+            where: { id: order.table_id },
+            data: { status: 'AVAILABLE' },
+          });
+        }
+      }
+
+      return order;
     });
 
     if (updatedOrder.table) {

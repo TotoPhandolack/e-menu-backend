@@ -59,6 +59,11 @@ export class CashierController {
     return this.cashierService.getLiveOrders(req.user.restaurant_id);
   }
 
+  @Get('orders/history')
+  getOrderHistory(@Request() req: JwtReq) {
+    return this.cashierService.getOrderHistory(req.user.restaurant_id);
+  }
+
   @Post('orders/:id/items')
   addOrderItems(
     @Param('id') order_id: string,

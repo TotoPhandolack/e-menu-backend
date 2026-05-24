@@ -514,6 +514,25 @@ export class CashierService {
       : this.printKitchenTicket(dto.order_id);
   }
 
+  getOrderHistory(restaurant_id: string) {
+    return this.prisma.order.findMany({
+      where: {
+        restaurant_id,
+        status: { in: [OrderStatus.PAID, OrderStatus.CANCELLED] },
+      },
+      include: {
+        table: { select: { id: true, table_number: true } },
+        orderItems: {
+          include: {
+            menuItem: { select: { id: true, name: true, price: true } },
+          },
+        },
+      },
+      orderBy: { created_at: 'desc' },
+      take: 500,
+    });
+  }
+
   // ─── Menu Item Management ─────────────────────────────────────────────────
 
   getMenuItems(restaurant_id: string) {

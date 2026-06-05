@@ -565,4 +565,39 @@ export class CashierService {
     const qr_image = await QRCode.toDataURL(qr_url);
     return { restaurant_id, restaurant_name: restaurant.name, qr_image };
   }
+
+  // ─── Team Management ──────────────────────────────────────────────────────
+
+  async getTeam(restaurant_id: string) {
+    return this.prisma.admin.findMany({
+      where: { restaurant_id },
+      select: { id: true, name: true, email: true, role: true, created_at: true },
+      orderBy: { created_at: 'asc' },
+    });
+  }
+
+  async addTeamMember(
+    restaurant_id: string,
+    dto: { name: string; email: string; password: string; role: 'ADMIN' | 'CASHIER' },
+  ) {
+    const existing = await this.prisma.admin.findUnique({ where: { email: dto.email } });
+    if (existing) throw new BadRequestException('Email already exists');
+
+    const bcrypt = await import('bcrypt');
+    const hashed = await bcrypt.hash(dto.password, 10);
+
+    const admin = await this.prisma.admin.create({
+      data: { ...dto, password: hashed, restaurant_id },
+      select: { id: true, name: true, email: true, role: true, created_at: true },
+    });
+    return admin;
+  }
+
+  async removeTeamMember(member_id: string, restaurant_id: string) {
+    const admin = await this.prisma.admin.findUnique({ where: { id: member_id } });
+    if (!admin || admin.restaurant_id !== restaurant_id)
+      throw new NotFoundException('Team member not found');
+    await this.prisma.admin.delete({ where: { id: member_id } });
+    return { message: 'Team member removed' };
+  }
 }

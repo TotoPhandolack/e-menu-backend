@@ -80,7 +80,7 @@ export class AuthService {
         email: true,
         role: true,
         restaurant_id: true,
-        restaurant: { select: { name: true } },
+        restaurant: { select: { name: true, logo_url: true, theme_color: true } },
       },
     });
   }

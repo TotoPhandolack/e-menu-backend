@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { join } from 'path';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
@@ -45,6 +46,15 @@ export class RestaurantService {
     return this.prisma.restaurant.update({
       where: { id },
       data: { is_active: false },
+    });
+  }
+
+  async uploadLogo(id: string, filename: string) {
+    await this.findOne(id);
+    const logo_url = `/uploads/restaurants/${filename}`;
+    return this.prisma.restaurant.update({
+      where: { id },
+      data: { logo_url },
     });
   }
 

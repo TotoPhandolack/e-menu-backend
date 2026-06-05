@@ -8,6 +8,7 @@ import {
   Post,
   Request,
   UseGuards,
+  BadRequestException,
 } from '@nestjs/common';
 import { CashierService } from './cashier.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -165,5 +166,30 @@ export class CashierController {
   @Get('qr/restaurant')
   getRestaurantQR(@Request() req: JwtReq) {
     return this.cashierService.getRestaurantQR(req.user.restaurant_id);
+  }
+
+  // ─── Team Management ──────────────────────────────────────────────────────
+
+  @Get('team')
+  getTeam(@Request() req: JwtReq) {
+    return this.cashierService.getTeam(req.user.restaurant_id);
+  }
+
+  @Post('team')
+  addTeamMember(
+    @Body() dto: { name: string; email: string; password: string; role?: 'ADMIN' | 'CASHIER' },
+    @Request() req: JwtReq,
+  ) {
+    if (!dto.name || !dto.email || !dto.password)
+      throw new BadRequestException('name, email and password are required');
+    return this.cashierService.addTeamMember(req.user.restaurant_id, {
+      ...dto,
+      role: dto.role ?? 'CASHIER',
+    });
+  }
+
+  @Delete('team/:memberId')
+  removeTeamMember(@Param('memberId') memberId: string, @Request() req: JwtReq) {
+    return this.cashierService.removeTeamMember(memberId, req.user.restaurant_id);
   }
 }

@@ -129,7 +129,9 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   radius_meters: 'radius_meters',
   is_active: 'is_active',
   vat_rate: 'vat_rate',
-  service_charge_rate: 'service_charge_rate'
+  service_charge_rate: 'service_charge_rate',
+  logo_url: 'logo_url',
+  theme_color: 'theme_color'
 };
 
 exports.Prisma.TableScalarFieldEnum = {
@@ -253,8 +255,6 @@ exports.OrderType = exports.$Enums.OrderType = {
 exports.OrderStatus = exports.$Enums.OrderStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  PREPARING: 'PREPARING',
-  SERVED: 'SERVED',
   PAID: 'PAID',
   CANCELLED: 'CANCELLED'
 };

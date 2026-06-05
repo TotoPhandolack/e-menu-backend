@@ -1,5 +1,5 @@
 // restaurant/dto/create-restaurant.dto.ts
-import { IsString, IsNumber, IsNotEmpty, Min, Max } from 'class-validator';
+import { IsString, IsNumber, IsNotEmpty, IsOptional, Min, Max } from 'class-validator';
 
 export class CreateRestaurantDto {
   @IsString()
@@ -23,4 +23,12 @@ export class CreateRestaurantDto {
   @IsNumber()
   @Min(10)
   radius_meters!: number;
+
+  @IsOptional()
+  @IsString()
+  logo_url?: string;
+
+  @IsOptional()
+  @IsString()
+  theme_color?: string;
 }

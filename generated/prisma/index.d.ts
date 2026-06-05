@@ -66,8 +66,6 @@ export namespace $Enums {
   export const OrderStatus: {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
-  PREPARING: 'PREPARING',
-  SERVED: 'SERVED',
   PAID: 'PAID',
   CANCELLED: 'CANCELLED'
 };
@@ -1953,6 +1951,8 @@ export namespace Prisma {
     is_active: boolean | null
     vat_rate: Decimal | null
     service_charge_rate: Decimal | null
+    logo_url: string | null
+    theme_color: string | null
   }
 
   export type RestaurantMaxAggregateOutputType = {
@@ -1965,6 +1965,8 @@ export namespace Prisma {
     is_active: boolean | null
     vat_rate: Decimal | null
     service_charge_rate: Decimal | null
+    logo_url: string | null
+    theme_color: string | null
   }
 
   export type RestaurantCountAggregateOutputType = {
@@ -1977,6 +1979,8 @@ export namespace Prisma {
     is_active: number
     vat_rate: number
     service_charge_rate: number
+    logo_url: number
+    theme_color: number
     _all: number
   }
 
@@ -2007,6 +2011,8 @@ export namespace Prisma {
     is_active?: true
     vat_rate?: true
     service_charge_rate?: true
+    logo_url?: true
+    theme_color?: true
   }
 
   export type RestaurantMaxAggregateInputType = {
@@ -2019,6 +2025,8 @@ export namespace Prisma {
     is_active?: true
     vat_rate?: true
     service_charge_rate?: true
+    logo_url?: true
+    theme_color?: true
   }
 
   export type RestaurantCountAggregateInputType = {
@@ -2031,6 +2039,8 @@ export namespace Prisma {
     is_active?: true
     vat_rate?: true
     service_charge_rate?: true
+    logo_url?: true
+    theme_color?: true
     _all?: true
   }
 
@@ -2130,6 +2140,8 @@ export namespace Prisma {
     is_active: boolean
     vat_rate: Decimal
     service_charge_rate: Decimal
+    logo_url: string | null
+    theme_color: string | null
     _count: RestaurantCountAggregateOutputType | null
     _avg: RestaurantAvgAggregateOutputType | null
     _sum: RestaurantSumAggregateOutputType | null
@@ -2161,6 +2173,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: boolean
     service_charge_rate?: boolean
+    logo_url?: boolean
+    theme_color?: boolean
     tables?: boolean | Restaurant$tablesArgs<ExtArgs>
     categories?: boolean | Restaurant$categoriesArgs<ExtArgs>
     menuItems?: boolean | Restaurant$menuItemsArgs<ExtArgs>
@@ -2180,6 +2194,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: boolean
     service_charge_rate?: boolean
+    logo_url?: boolean
+    theme_color?: boolean
   }, ExtArgs["result"]["restaurant"]>
 
   export type RestaurantSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2192,6 +2208,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: boolean
     service_charge_rate?: boolean
+    logo_url?: boolean
+    theme_color?: boolean
   }, ExtArgs["result"]["restaurant"]>
 
   export type RestaurantSelectScalar = {
@@ -2204,9 +2222,11 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: boolean
     service_charge_rate?: boolean
+    logo_url?: boolean
+    theme_color?: boolean
   }
 
-  export type RestaurantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude" | "radius_meters" | "is_active" | "vat_rate" | "service_charge_rate", ExtArgs["result"]["restaurant"]>
+  export type RestaurantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude" | "radius_meters" | "is_active" | "vat_rate" | "service_charge_rate" | "logo_url" | "theme_color", ExtArgs["result"]["restaurant"]>
   export type RestaurantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tables?: boolean | Restaurant$tablesArgs<ExtArgs>
     categories?: boolean | Restaurant$categoriesArgs<ExtArgs>
@@ -2239,6 +2259,8 @@ export namespace Prisma {
       is_active: boolean
       vat_rate: Prisma.Decimal
       service_charge_rate: Prisma.Decimal
+      logo_url: string | null
+      theme_color: string | null
     }, ExtArgs["result"]["restaurant"]>
     composites: {}
   }
@@ -2677,6 +2699,8 @@ export namespace Prisma {
     readonly is_active: FieldRef<"Restaurant", 'Boolean'>
     readonly vat_rate: FieldRef<"Restaurant", 'Decimal'>
     readonly service_charge_rate: FieldRef<"Restaurant", 'Decimal'>
+    readonly logo_url: FieldRef<"Restaurant", 'String'>
+    readonly theme_color: FieldRef<"Restaurant", 'String'>
   }
     
 
@@ -12504,7 +12528,9 @@ export namespace Prisma {
     radius_meters: 'radius_meters',
     is_active: 'is_active',
     vat_rate: 'vat_rate',
-    service_charge_rate: 'service_charge_rate'
+    service_charge_rate: 'service_charge_rate',
+    logo_url: 'logo_url',
+    theme_color: 'theme_color'
   };
 
   export type RestaurantScalarFieldEnum = (typeof RestaurantScalarFieldEnum)[keyof typeof RestaurantScalarFieldEnum]
@@ -12854,6 +12880,8 @@ export namespace Prisma {
     is_active?: BoolFilter<"Restaurant"> | boolean
     vat_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
+    logo_url?: StringNullableFilter<"Restaurant"> | string | null
+    theme_color?: StringNullableFilter<"Restaurant"> | string | null
     tables?: TableListRelationFilter
     categories?: CategoryListRelationFilter
     menuItems?: MenuItemListRelationFilter
@@ -12872,6 +12900,8 @@ export namespace Prisma {
     is_active?: SortOrder
     vat_rate?: SortOrder
     service_charge_rate?: SortOrder
+    logo_url?: SortOrderInput | SortOrder
+    theme_color?: SortOrderInput | SortOrder
     tables?: TableOrderByRelationAggregateInput
     categories?: CategoryOrderByRelationAggregateInput
     menuItems?: MenuItemOrderByRelationAggregateInput
@@ -12893,6 +12923,8 @@ export namespace Prisma {
     is_active?: BoolFilter<"Restaurant"> | boolean
     vat_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
+    logo_url?: StringNullableFilter<"Restaurant"> | string | null
+    theme_color?: StringNullableFilter<"Restaurant"> | string | null
     tables?: TableListRelationFilter
     categories?: CategoryListRelationFilter
     menuItems?: MenuItemListRelationFilter
@@ -12911,6 +12943,8 @@ export namespace Prisma {
     is_active?: SortOrder
     vat_rate?: SortOrder
     service_charge_rate?: SortOrder
+    logo_url?: SortOrderInput | SortOrder
+    theme_color?: SortOrderInput | SortOrder
     _count?: RestaurantCountOrderByAggregateInput
     _avg?: RestaurantAvgOrderByAggregateInput
     _max?: RestaurantMaxOrderByAggregateInput
@@ -12931,6 +12965,8 @@ export namespace Prisma {
     is_active?: BoolWithAggregatesFilter<"Restaurant"> | boolean
     vat_rate?: DecimalWithAggregatesFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalWithAggregatesFilter<"Restaurant"> | Decimal | DecimalJsLike | number | string
+    logo_url?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
+    theme_color?: StringNullableWithAggregatesFilter<"Restaurant"> | string | null
   }
 
   export type TableWhereInput = {
@@ -13522,6 +13558,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -13540,6 +13578,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -13558,6 +13598,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -13576,6 +13618,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -13594,6 +13638,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
   }
 
   export type RestaurantUpdateManyMutationInput = {
@@ -13606,6 +13652,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RestaurantUncheckedUpdateManyInput = {
@@ -13618,6 +13666,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TableCreateInput = {
@@ -14255,6 +14305,21 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type TableListRelationFilter = {
     every?: TableWhereInput
     some?: TableWhereInput
@@ -14291,6 +14356,11 @@ export namespace Prisma {
     none?: OrderWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type TableOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -14325,6 +14395,8 @@ export namespace Prisma {
     is_active?: SortOrder
     vat_rate?: SortOrder
     service_charge_rate?: SortOrder
+    logo_url?: SortOrder
+    theme_color?: SortOrder
   }
 
   export type RestaurantAvgOrderByAggregateInput = {
@@ -14345,6 +14417,8 @@ export namespace Prisma {
     is_active?: SortOrder
     vat_rate?: SortOrder
     service_charge_rate?: SortOrder
+    logo_url?: SortOrder
+    theme_color?: SortOrder
   }
 
   export type RestaurantMinOrderByAggregateInput = {
@@ -14357,6 +14431,8 @@ export namespace Prisma {
     is_active?: SortOrder
     vat_rate?: SortOrder
     service_charge_rate?: SortOrder
+    logo_url?: SortOrder
+    theme_color?: SortOrder
   }
 
   export type RestaurantSumOrderByAggregateInput = {
@@ -14423,6 +14499,24 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -14541,21 +14635,6 @@ export namespace Prisma {
     sort_order?: SortOrder
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type CategoryScalarRelationFilter = {
     is?: CategoryWhereInput
     isNot?: CategoryWhereInput
@@ -14565,11 +14644,6 @@ export namespace Prisma {
     every?: OrderItemWhereInput
     some?: OrderItemWhereInput
     none?: OrderItemWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type OrderItemOrderByRelationAggregateInput = {
@@ -14618,24 +14692,6 @@ export namespace Prisma {
 
   export type MenuItemSumOrderByAggregateInput = {
     price?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumOrderTypeFilter<$PrismaModel = never> = {
@@ -15165,6 +15221,10 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type TableUpdateManyWithoutRestaurantNestedInput = {
     create?: XOR<TableCreateWithoutRestaurantInput, TableUncheckedCreateWithoutRestaurantInput> | TableCreateWithoutRestaurantInput[] | TableUncheckedCreateWithoutRestaurantInput[]
     connectOrCreate?: TableCreateOrConnectWithoutRestaurantInput | TableCreateOrConnectWithoutRestaurantInput[]
@@ -15481,10 +15541,6 @@ export namespace Prisma {
     connectOrCreate?: OrderItemCreateOrConnectWithoutMenuItemInput | OrderItemCreateOrConnectWithoutMenuItemInput[]
     createMany?: OrderItemCreateManyMenuItemInputEnvelope
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type RestaurantUpdateOneRequiredWithoutMenuItemsNestedInput = {
@@ -15842,6 +15898,20 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15910,6 +15980,34 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumTableStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.TableStatus | EnumTableStatusFieldRefInput<$PrismaModel>
     in?: $Enums.TableStatus[] | ListEnumTableStatusFieldRefInput<$PrismaModel>
@@ -15941,48 +16039,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTableStatusFilter<$PrismaModel>
     _max?: NestedEnumTableStatusFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumOrderTypeFilter<$PrismaModel = never> = {
@@ -16525,6 +16581,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
@@ -16542,6 +16600,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
@@ -16619,6 +16679,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
@@ -16636,6 +16698,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -16669,6 +16733,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
@@ -16686,6 +16752,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
@@ -16753,6 +16821,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
@@ -16770,6 +16840,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -16803,6 +16875,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     admins?: AdminCreateNestedManyWithoutRestaurantInput
@@ -16820,6 +16894,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     admins?: AdminUncheckedCreateNestedManyWithoutRestaurantInput
@@ -16898,6 +16974,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUpdateManyWithoutRestaurantNestedInput
@@ -16915,6 +16993,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     admins?: AdminUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -16985,6 +17065,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -17002,6 +17084,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -17110,6 +17194,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -17127,6 +17213,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -17366,6 +17454,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -17383,6 +17473,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -17446,6 +17538,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -17463,6 +17557,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput
@@ -17605,6 +17701,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableCreateNestedManyWithoutRestaurantInput
     categories?: CategoryCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemCreateNestedManyWithoutRestaurantInput
@@ -17622,6 +17720,8 @@ export namespace Prisma {
     is_active?: boolean
     vat_rate?: Decimal | DecimalJsLike | number | string
     service_charge_rate?: Decimal | DecimalJsLike | number | string
+    logo_url?: string | null
+    theme_color?: string | null
     tables?: TableUncheckedCreateNestedManyWithoutRestaurantInput
     categories?: CategoryUncheckedCreateNestedManyWithoutRestaurantInput
     menuItems?: MenuItemUncheckedCreateNestedManyWithoutRestaurantInput
@@ -17686,6 +17786,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUpdateManyWithoutRestaurantNestedInput
@@ -17703,6 +17805,8 @@ export namespace Prisma {
     is_active?: BoolFieldUpdateOperationsInput | boolean
     vat_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     service_charge_rate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    logo_url?: NullableStringFieldUpdateOperationsInput | string | null
+    theme_color?: NullableStringFieldUpdateOperationsInput | string | null
     tables?: TableUncheckedUpdateManyWithoutRestaurantNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutRestaurantNestedInput
     menuItems?: MenuItemUncheckedUpdateManyWithoutRestaurantNestedInput

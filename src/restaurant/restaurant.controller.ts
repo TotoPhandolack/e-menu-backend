@@ -13,17 +13,20 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname, join } from 'path';
+import { memoryStorage } from 'multer';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RestaurantService } from './restaurant.service';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { ScanRestaurantDto } from './dto/scan-restaurant.dto';
 
 @Controller('restaurants')
 export class RestaurantController {
-  constructor(private readonly restaurantService: RestaurantService) {}
+  constructor(
+    private readonly restaurantService: RestaurantService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
   @Get()
   findAll() {
@@ -60,13 +63,7 @@ export class RestaurantController {
   @Post(':id/logo')
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: diskStorage({
-        destination: join(process.cwd(), 'uploads', 'restaurants'),
-        filename: (_req, file, cb) => {
-          const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-          cb(null, `${unique}${extname(file.originalname)}`);
-        },
-      }),
+      storage: memoryStorage(),
       fileFilter: (_req, file, cb) => {
         if (!file.mimetype.match(/^image\//)) {
           return cb(new BadRequestException('Only image files are allowed'), false);
@@ -76,11 +73,15 @@ export class RestaurantController {
       limits: { fileSize: 5 * 1024 * 1024 },
     }),
   )
-  uploadLogo(
+  async uploadLogo(
     @Param('id') id: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
     if (!file) throw new BadRequestException('No file uploaded');
-    return this.restaurantService.uploadLogo(id, file.filename);
+    const logoUrl = await this.cloudinaryService.uploadBuffer(
+      file.buffer,
+      'restaurants',
+    );
+    return this.restaurantService.uploadLogo(id, logoUrl);
   }
 }

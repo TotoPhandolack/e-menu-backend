@@ -57,13 +57,13 @@ export class MenuItemService {
     });
   }
 
-  async uploadImage(id: string, restaurant_id: string, filename: string) {
+  async uploadImage(id: string, restaurant_id: string, imageUrl: string) {
     const item = await this.findOne(id);
     if (item.restaurant_id !== restaurant_id)
       throw new ForbiddenException('Item does not belong to your restaurant');
     return this.prisma.menuItem.update({
       where: { id },
-      data: { imge_url: `/uploads/menu-items/${filename}` },
+      data: { imge_url: imageUrl },
       include: { category: true },
     });
   }

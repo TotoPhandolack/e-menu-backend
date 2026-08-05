@@ -384,7 +384,9 @@ async function main() {
     }
     console.log(`   • ${cat.name}: ${cat.items.length} items`);
   }
-  console.log(`✅ Created ${categoryCount} categories / ${itemCount} menu items`);
+  console.log(
+    `✅ Created ${categoryCount} categories / ${itemCount} menu items`,
+  );
 
   // Create 10 tables
   console.log('🪑 Creating tables...');
@@ -422,7 +424,9 @@ async function main() {
   console.log('✨ Database seeding completed successfully!');
   console.log('📊 Summary:');
   console.log(`   - 1 Restaurant  (${restaurant.name})`);
-  console.log(`   - ${categoryCount} Categories (Lao & Thai, Chinese, Japanese, Euro, USA)`);
+  console.log(
+    `   - ${categoryCount} Categories (Lao & Thai, Chinese, Japanese, Euro, USA)`,
+  );
   console.log(`   - ${itemCount} Menu Items (with image URLs)`);
   console.log('   - 10 Tables (T01–T10)');
   console.log('   - 1 Cashier account');

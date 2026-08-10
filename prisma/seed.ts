@@ -66,7 +66,8 @@ const MENU: SeedCategory[] = [
       },
       {
         name: 'Tom Yum Goong',
-        description: 'Hot-and-sour prawn soup with lemongrass, galangal and lime leaf.',
+        description:
+          'Hot-and-sour prawn soup with lemongrass, galangal and lime leaf.',
         price: 7.9,
         imge_url: 'https://www.themealdb.com/images/media/meals/l50vz41763422681.jpg',
         is_recommended: true,
@@ -345,12 +346,20 @@ const CASHIER = {
   password: 'Cashier@123',
 };
 
+// Admin account (role ADMIN — can manage stock).
+const ADMIN = {
+  name: 'World Flavors Admin',
+  email: 'admin@worldflavors.la',
+  password: 'Admin@123',
+};
+
 async function main() {
   console.log('🌱 Starting database seeding...');
 
   // Delete existing data (FK-safe order). Harmless after a `migrate reset`,
   // and keeps the seed re-runnable on its own via `npm run prisma:seed`.
   console.log('🗑️  Cleaning up existing data...');
+  await prisma.stockLedger.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.payment.deleteMany();
   await prisma.order.deleteMany();
@@ -400,8 +409,11 @@ async function main() {
           description: item.description,
           price: item.price,
           imge_url: item.imge_url,
-          is_available: true,
+          is_available: item.stock_qty !== undefined && item.stock_qty <= 0 ? false : true,
           is_recommended: item.is_recommended ?? false,
+          stock_qty: item.stock_qty ?? null,
+          stock_unit: item.stock_unit ?? null,
+          low_stock_threshold: item.low_stock_threshold ?? null,
         },
       });
       itemCount++;
@@ -432,17 +444,31 @@ async function main() {
 
   // Create cashier account
   console.log('🧑‍💼 Creating cashier account...');
-  const hashedPassword = await bcrypt.hash(CASHIER.password, 10);
+  const hashedCashierPw = await bcrypt.hash(CASHIER.password, 10);
   const cashier = await prisma.admin.create({
     data: {
       name: CASHIER.name,
       email: CASHIER.email,
-      password: hashedPassword,
+      password: hashedCashierPw,
       role: 'CASHIER',
       restaurant_id: restaurant.id,
     },
   });
   console.log(`✅ Created cashier: ${cashier.email}`);
+
+  // Create admin account
+  console.log('👑 Creating admin account...');
+  const hashedAdminPw = await bcrypt.hash(ADMIN.password, 10);
+  const admin = await prisma.admin.create({
+    data: {
+      name: ADMIN.name,
+      email: ADMIN.email,
+      password: hashedAdminPw,
+      role: 'ADMIN',
+      restaurant_id: restaurant.id,
+    },
+  });
+  console.log(`✅ Created admin: ${admin.email}`);
 
   console.log('');
   console.log('✨ Database seeding completed successfully!');
@@ -451,10 +477,14 @@ async function main() {
   console.log(
     `   - ${categoryCount} Categories (Lao & Thai, Chinese, Japanese, Euro, USA)`,
   );
-  console.log(`   - ${itemCount} Menu Items (with image URLs)`);
+  console.log(`   - ${itemCount} Menu Items (6 with stock tracking, rest untracked)`);
   console.log('   - 10 Tables (T01–T10)');
+  console.log('   - 1 Admin account');
   console.log('   - 1 Cashier account');
   console.log('');
+  console.log('🔐 Admin login:');
+  console.log(`   email:    ${ADMIN.email}`);
+  console.log(`   password: ${ADMIN.password}`);
   console.log('🔐 Cashier login:');
   console.log(`   email:    ${CASHIER.email}`);
   console.log(`   password: ${CASHIER.password}`);

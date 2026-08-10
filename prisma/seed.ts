@@ -19,8 +19,8 @@ type SeedItem = {
   price: number;
   imge_url: string;
   is_recommended?: boolean;
-  stock_qty?: number;     // omit = untracked (null)
-  stock_unit?: string;   // "pcs" | "kg" | "L" | "ml"
+  stock_qty?: number; // omit = untracked (null)
+  stock_unit?: string; // "pcs" | "kg" | "L" | "ml"
   low_stock_threshold?: number;
 };
 
@@ -37,30 +37,36 @@ const MENU: SeedCategory[] = [
     items: [
       {
         name: 'Pad Thai',
-        description: 'Stir-fried rice noodles with prawns, egg, bean sprouts and crushed peanuts.',
+        description:
+          'Stir-fried rice noodles with prawns, egg, bean sprouts and crushed peanuts.',
         price: 8.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/rg9ze01763479093.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/rg9ze01763479093.jpg',
         is_recommended: true,
-        stock_qty: 3,          // LOW
+        stock_qty: 3, // LOW
         stock_unit: 'pcs',
         low_stock_threshold: 5,
       },
       {
         name: 'Thai Green Curry',
-        description: 'Creamy coconut green curry with chicken, bamboo shoots and Thai basil.',
+        description:
+          'Creamy coconut green curry with chicken, bamboo shoots and Thai basil.',
         price: 9.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/sstssx1487349585.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/sstssx1487349585.jpg',
         is_recommended: true,
-        stock_qty: 25,         // healthy
+        stock_qty: 25, // healthy
         stock_unit: 'pcs',
         low_stock_threshold: 5,
       },
       {
         name: 'Massaman Beef Curry',
-        description: 'Slow-braised beef in a rich peanut-and-potato massaman curry.',
+        description:
+          'Slow-braised beef in a rich peanut-and-potato massaman curry.',
         price: 10.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/tvttqv1504640475.jpg',
-        stock_qty: 0,          // OUT
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/tvttqv1504640475.jpg',
+        stock_qty: 0, // OUT
         stock_unit: 'pcs',
         low_stock_threshold: 5,
       },
@@ -69,32 +75,41 @@ const MENU: SeedCategory[] = [
         description:
           'Hot-and-sour prawn soup with lemongrass, galangal and lime leaf.',
         price: 7.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/l50vz41763422681.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/l50vz41763422681.jpg',
         is_recommended: true,
       },
       {
         name: 'Tom Kha Gai',
-        description: 'Coconut chicken soup with mushrooms, lemongrass and a citrus kick.',
+        description:
+          'Coconut chicken soup with mushrooms, lemongrass and a citrus kick.',
         price: 7.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/ol2xxt1763582263.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/ol2xxt1763582263.jpg',
       },
       {
         name: 'Pad See Ew',
-        description: 'Wide rice noodles stir-fried with egg, Chinese broccoli and dark soy.',
+        description:
+          'Wide rice noodles stir-fried with egg, Chinese broccoli and dark soy.',
         price: 8.2,
-        imge_url: 'https://www.themealdb.com/images/media/meals/uuuspp1468263334.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/uuuspp1468263334.jpg',
       },
       {
         name: 'Drunken Noodles (Pad Kee Mao)',
-        description: 'Spicy stir-fried flat noodles with holy basil, chilli and vegetables.',
+        description:
+          'Spicy stir-fried flat noodles with holy basil, chilli and vegetables.',
         price: 8.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/2wx8cm1763373419.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/2wx8cm1763373419.jpg',
       },
       {
         name: 'Thai Prawn Fried Rice',
-        description: 'Wok-fried jasmine rice with prawns, peas, egg and spring onion.',
+        description:
+          'Wok-fried jasmine rice with prawns, peas, egg and spring onion.',
         price: 8.0,
-        imge_url: 'https://www.themealdb.com/images/media/meals/hblwvg1763478203.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/hblwvg1763478203.jpg',
       },
     ],
   },
@@ -104,25 +119,29 @@ const MENU: SeedCategory[] = [
     items: [
       {
         name: 'Kung Pao Chicken',
-        description: 'Diced chicken stir-fried with peanuts, dried chillies and Sichuan pepper.',
+        description:
+          'Diced chicken stir-fried with peanuts, dried chillies and Sichuan pepper.',
         price: 9.2,
         imge_url: 'https://www.themealdb.com/images/media/meals/1525872624.jpg',
         is_recommended: true,
-        stock_qty: 4,          // LOW
+        stock_qty: 4, // LOW
         stock_unit: 'pcs',
         low_stock_threshold: 6,
       },
       {
         name: 'Sweet and Sour Pork',
-        description: 'Crispy pork tossed with pineapple, peppers and a tangy sweet-sour glaze.',
+        description:
+          'Crispy pork tossed with pineapple, peppers and a tangy sweet-sour glaze.',
         price: 9.0,
         imge_url: 'https://www.themealdb.com/images/media/meals/1529442316.jpg',
       },
       {
         name: 'Beef and Broccoli Stir-Fry',
-        description: 'Tender beef and broccoli in a glossy garlic-ginger soy sauce.',
+        description:
+          'Tender beef and broccoli in a glossy garlic-ginger soy sauce.',
         price: 9.8,
-        imge_url: 'https://www.themealdb.com/images/media/meals/m0p0j81765568742.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/m0p0j81765568742.jpg',
         is_recommended: true,
       },
       {
@@ -133,25 +152,29 @@ const MENU: SeedCategory[] = [
       },
       {
         name: 'Beef Lo Mein',
-        description: 'Soft egg noodles tossed with beef and crisp mixed vegetables.',
+        description:
+          'Soft egg noodles tossed with beef and crisp mixed vegetables.',
         price: 8.9,
         imge_url: 'https://www.themealdb.com/images/media/meals/1529444830.jpg',
       },
       {
         name: 'Ma Po Tofu',
-        description: 'Silken tofu and minced pork in a numbing-spicy Sichuan bean sauce.',
+        description:
+          'Silken tofu and minced pork in a numbing-spicy Sichuan bean sauce.',
         price: 8.4,
         imge_url: 'https://www.themealdb.com/images/media/meals/1525874812.jpg',
       },
       {
         name: 'Hot and Sour Soup',
-        description: 'Classic peppery-tangy soup with tofu, mushroom and bamboo shoots.',
+        description:
+          'Classic peppery-tangy soup with tofu, mushroom and bamboo shoots.',
         price: 5.9,
         imge_url: 'https://www.themealdb.com/images/media/meals/1529445893.jpg',
       },
       {
         name: 'Pork Wontons',
-        description: 'Hand-folded pork wontons served in a light savoury broth.',
+        description:
+          'Hand-folded pork wontons served in a light savoury broth.',
         price: 6.5,
         imge_url: 'https://www.themealdb.com/images/media/meals/1525876468.jpg',
       },
@@ -163,60 +186,73 @@ const MENU: SeedCategory[] = [
     items: [
       {
         name: 'Sushi Platter',
-        description: 'Chef-selected nigiri and maki rolls with wasabi and pickled ginger.',
+        description:
+          'Chef-selected nigiri and maki rolls with wasabi and pickled ginger.',
         price: 12.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg',
         is_recommended: true,
-        stock_qty: 1,          // LOW (critical)
+        stock_qty: 1, // LOW (critical)
         stock_unit: 'pcs',
         low_stock_threshold: 3,
       },
       {
         name: 'Chicken Karaage',
-        description: 'Japanese-style crispy fried chicken with a squeeze of lemon.',
+        description:
+          'Japanese-style crispy fried chicken with a squeeze of lemon.',
         price: 8.0,
-        imge_url: 'https://www.themealdb.com/images/media/meals/tyywsw1505930373.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/tyywsw1505930373.jpg',
         is_recommended: true,
-        stock_qty: 2,          // bulk kg tracked
+        stock_qty: 2, // bulk kg tracked
         stock_unit: 'kg',
         low_stock_threshold: 2,
       },
       {
         name: 'Katsudon',
-        description: 'Breaded pork cutlet simmered with egg and onion over steamed rice.',
+        description:
+          'Breaded pork cutlet simmered with egg and onion over steamed rice.',
         price: 10.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/d8f6qx1604182128.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/d8f6qx1604182128.jpg',
       },
       {
         name: 'Chicken Katsu Curry',
-        description: 'Crispy chicken cutlet with Japanese curry sauce and rice.',
+        description:
+          'Crispy chicken cutlet with Japanese curry sauce and rice.',
         price: 10.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/vwrpps1503068729.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/vwrpps1503068729.jpg',
         is_recommended: true,
       },
       {
         name: 'Honey Teriyaki Salmon',
-        description: 'Pan-seared salmon glazed in a sweet honey-teriyaki sauce.',
+        description:
+          'Pan-seared salmon glazed in a sweet honey-teriyaki sauce.',
         price: 13.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/xxyupu1468262513.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/xxyupu1468262513.jpg',
       },
       {
         name: 'Tonkatsu Pork',
         description: 'Golden panko-crusted pork cutlet with tonkatsu sauce.',
         price: 10.2,
-        imge_url: 'https://www.themealdb.com/images/media/meals/lwsnkl1604181187.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/lwsnkl1604181187.jpg',
       },
       {
         name: 'Yaki Udon',
         description: 'Thick udon noodles stir-fried with pork and vegetables.',
         price: 9.0,
-        imge_url: 'https://www.themealdb.com/images/media/meals/wrustq1511475474.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/wrustq1511475474.jpg',
       },
       {
         name: 'Teriyaki Chicken',
         description: 'Grilled chicken in glossy teriyaki sauce over rice.',
         price: 9.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg',
       },
     ],
   },
@@ -226,9 +262,11 @@ const MENU: SeedCategory[] = [
     items: [
       {
         name: 'Spaghetti Bolognese',
-        description: 'Slow-cooked beef ragù over al dente spaghetti with parmesan.',
+        description:
+          'Slow-cooked beef ragù over al dente spaghetti with parmesan.',
         price: 9.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg',
         is_recommended: true,
         stock_qty: 30,
         stock_unit: 'pcs',
@@ -236,47 +274,60 @@ const MENU: SeedCategory[] = [
       },
       {
         name: 'Beef Lasagne',
-        description: 'Layers of pasta, rich meat sauce and creamy béchamel, oven-baked.',
+        description:
+          'Layers of pasta, rich meat sauce and creamy béchamel, oven-baked.',
         price: 10.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/wtsvxx1511296896.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/wtsvxx1511296896.jpg',
         is_recommended: true,
       },
       {
         name: 'Spaghetti Carbonara',
-        description: 'Roman classic with egg, pecorino, black pepper and guanciale.',
+        description:
+          'Roman classic with egg, pecorino, black pepper and guanciale.',
         price: 10.2,
-        imge_url: 'https://www.themealdb.com/images/media/meals/llcbn01574260722.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/llcbn01574260722.jpg',
       },
       {
         name: 'Margherita Pizza',
-        description: 'Wood-fired pizza with tomato, fresh mozzarella and basil.',
+        description:
+          'Wood-fired pizza with tomato, fresh mozzarella and basil.',
         price: 9.0,
-        imge_url: 'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg',
         is_recommended: true,
       },
       {
         name: 'Penne Arrabbiata',
         description: 'Penne in a spicy garlic-chilli tomato sauce.',
         price: 8.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
       },
       {
         name: 'Fettuccine Alfredo',
-        description: 'Silky fettuccine tossed in a buttery parmesan cream sauce.',
+        description:
+          'Silky fettuccine tossed in a buttery parmesan cream sauce.',
         price: 9.4,
-        imge_url: 'https://www.themealdb.com/images/media/meals/0jv5gx1661040802.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/0jv5gx1661040802.jpg',
       },
       {
         name: 'Beef Wellington',
-        description: 'Tender beef fillet wrapped in mushroom duxelles and golden pastry.',
+        description:
+          'Tender beef fillet wrapped in mushroom duxelles and golden pastry.',
         price: 18.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/vvpprx1487325699.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/vvpprx1487325699.jpg',
       },
       {
         name: 'Osso Buco alla Milanese',
-        description: 'Braised veal shanks in white wine, served with gremolata.',
+        description:
+          'Braised veal shanks in white wine, served with gremolata.',
         price: 16.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/wwuqvt1487345467.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/wwuqvt1487345467.jpg',
       },
     ],
   },
@@ -286,53 +337,64 @@ const MENU: SeedCategory[] = [
     items: [
       {
         name: 'BBQ Pulled Pork Sloppy Joes',
-        description: 'Smoky pulled pork piled on a toasted bun with tangy BBQ sauce.',
+        description:
+          'Smoky pulled pork piled on a toasted bun with tangy BBQ sauce.',
         price: 9.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/atd5sh1583188467.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/atd5sh1583188467.jpg',
         is_recommended: true,
       },
       {
         name: 'Southern Fried Chicken',
         description: 'Buttermilk-marinated, crispy deep-fried chicken.',
         price: 10.0,
-        imge_url: 'https://www.themealdb.com/images/media/meals/40r49m1763197022.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/40r49m1763197022.jpg',
         is_recommended: true,
       },
       {
         name: 'New England Clam Chowder',
         description: 'Creamy chowder loaded with clams, potato and bacon.',
         price: 7.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/rvtvuw1511190488.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/rvtvuw1511190488.jpg',
       },
       {
         name: 'Grilled Mac & Cheese Sandwich',
         description: 'Griddled sandwich stuffed with gooey three-cheese mac.',
         price: 8.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/xutquv1505330523.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/xutquv1505330523.jpg',
       },
       {
         name: 'Chicken Fajita Mac & Cheese',
-        description: 'Creamy mac & cheese loaded with fajita-spiced chicken and peppers.',
+        description:
+          'Creamy mac & cheese loaded with fajita-spiced chicken and peppers.',
         price: 9.2,
-        imge_url: 'https://www.themealdb.com/images/media/meals/qrqywr1503066605.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/qrqywr1503066605.jpg',
       },
       {
         name: 'Buttermilk Pancakes',
         description: 'Stack of fluffy pancakes with butter and maple syrup.',
         price: 6.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/rwuyqx1511383174.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/rwuyqx1511383174.jpg',
       },
       {
         name: 'Key Lime Pie',
-        description: 'Zesty Florida key lime custard in a buttery graham crust.',
+        description:
+          'Zesty Florida key lime custard in a buttery graham crust.',
         price: 5.9,
-        imge_url: 'https://www.themealdb.com/images/media/meals/qpqtuu1511386216.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/qpqtuu1511386216.jpg',
       },
       {
         name: 'Chocolate Raspberry Brownies',
         description: 'Fudgy chocolate brownies swirled with fresh raspberry.',
         price: 5.5,
-        imge_url: 'https://www.themealdb.com/images/media/meals/yypvst1511386427.jpg',
+        imge_url:
+          'https://www.themealdb.com/images/media/meals/yypvst1511386427.jpg',
         is_recommended: true,
       },
     ],
@@ -409,7 +471,8 @@ async function main() {
           description: item.description,
           price: item.price,
           imge_url: item.imge_url,
-          is_available: item.stock_qty !== undefined && item.stock_qty <= 0 ? false : true,
+          is_available:
+            item.stock_qty !== undefined && item.stock_qty <= 0 ? false : true,
           is_recommended: item.is_recommended ?? false,
           stock_qty: item.stock_qty ?? null,
           stock_unit: item.stock_unit ?? null,
@@ -477,7 +540,9 @@ async function main() {
   console.log(
     `   - ${categoryCount} Categories (Lao & Thai, Chinese, Japanese, Euro, USA)`,
   );
-  console.log(`   - ${itemCount} Menu Items (6 with stock tracking, rest untracked)`);
+  console.log(
+    `   - ${itemCount} Menu Items (6 with stock tracking, rest untracked)`,
+  );
   console.log('   - 10 Tables (T01–T10)');
   console.log('   - 1 Admin account');
   console.log('   - 1 Cashier account');

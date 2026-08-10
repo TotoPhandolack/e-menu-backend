@@ -19,6 +19,9 @@ type SeedItem = {
   price: number;
   imge_url: string;
   is_recommended?: boolean;
+  stock_qty?: number;     // omit = untracked (null)
+  stock_unit?: string;   // "pcs" | "kg" | "L" | "ml"
+  low_stock_threshold?: number;
 };
 
 type SeedCategory = {
@@ -38,6 +41,9 @@ const MENU: SeedCategory[] = [
         price: 8.5,
         imge_url: 'https://www.themealdb.com/images/media/meals/rg9ze01763479093.jpg',
         is_recommended: true,
+        stock_qty: 3,          // LOW
+        stock_unit: 'pcs',
+        low_stock_threshold: 5,
       },
       {
         name: 'Thai Green Curry',
@@ -45,12 +51,18 @@ const MENU: SeedCategory[] = [
         price: 9.5,
         imge_url: 'https://www.themealdb.com/images/media/meals/sstssx1487349585.jpg',
         is_recommended: true,
+        stock_qty: 25,         // healthy
+        stock_unit: 'pcs',
+        low_stock_threshold: 5,
       },
       {
         name: 'Massaman Beef Curry',
         description: 'Slow-braised beef in a rich peanut-and-potato massaman curry.',
         price: 10.9,
         imge_url: 'https://www.themealdb.com/images/media/meals/tvttqv1504640475.jpg',
+        stock_qty: 0,          // OUT
+        stock_unit: 'pcs',
+        low_stock_threshold: 5,
       },
       {
         name: 'Tom Yum Goong',
@@ -95,6 +107,9 @@ const MENU: SeedCategory[] = [
         price: 9.2,
         imge_url: 'https://www.themealdb.com/images/media/meals/1525872624.jpg',
         is_recommended: true,
+        stock_qty: 4,          // LOW
+        stock_unit: 'pcs',
+        low_stock_threshold: 6,
       },
       {
         name: 'Sweet and Sour Pork',
@@ -151,6 +166,9 @@ const MENU: SeedCategory[] = [
         price: 12.9,
         imge_url: 'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg',
         is_recommended: true,
+        stock_qty: 1,          // LOW (critical)
+        stock_unit: 'pcs',
+        low_stock_threshold: 3,
       },
       {
         name: 'Chicken Karaage',
@@ -158,6 +176,9 @@ const MENU: SeedCategory[] = [
         price: 8.0,
         imge_url: 'https://www.themealdb.com/images/media/meals/tyywsw1505930373.jpg',
         is_recommended: true,
+        stock_qty: 2,          // bulk kg tracked
+        stock_unit: 'kg',
+        low_stock_threshold: 2,
       },
       {
         name: 'Katsudon',
@@ -208,6 +229,9 @@ const MENU: SeedCategory[] = [
         price: 9.9,
         imge_url: 'https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg',
         is_recommended: true,
+        stock_qty: 30,
+        stock_unit: 'pcs',
+        low_stock_threshold: 5,
       },
       {
         name: 'Beef Lasagne',

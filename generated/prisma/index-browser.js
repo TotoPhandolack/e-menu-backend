@@ -128,10 +128,11 @@ exports.Prisma.RestaurantScalarFieldEnum = {
   longitude: 'longitude',
   radius_meters: 'radius_meters',
   is_active: 'is_active',
-  vat_rate: 'vat_rate',
   service_charge_rate: 'service_charge_rate',
+  vat_rate: 'vat_rate',
   logo_url: 'logo_url',
-  theme_color: 'theme_color'
+  theme_color: 'theme_color',
+  text_color: 'text_color'
 };
 
 exports.Prisma.TableScalarFieldEnum = {
@@ -160,23 +161,26 @@ exports.Prisma.MenuItemScalarFieldEnum = {
   price: 'price',
   imge_url: 'imge_url',
   is_available: 'is_available',
-  is_recommended: 'is_recommended'
+  is_recommended: 'is_recommended',
+  stock_qty: 'stock_qty',
+  stock_unit: 'stock_unit',
+  low_stock_threshold: 'low_stock_threshold'
 };
 
 exports.Prisma.OrderScalarFieldEnum = {
   id: 'id',
-  restaurant_id: 'restaurant_id',
   table_id: 'table_id',
   session_id: 'session_id',
-  order_type: 'order_type',
-  queue_number: 'queue_number',
   status: 'status',
-  subtotal: 'subtotal',
-  vat_amount: 'vat_amount',
-  service_charge_amount: 'service_charge_amount',
   total_amount: 'total_amount',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  order_type: 'order_type',
+  queue_number: 'queue_number',
+  restaurant_id: 'restaurant_id',
+  service_charge_amount: 'service_charge_amount',
+  subtotal: 'subtotal',
+  vat_amount: 'vat_amount'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
@@ -193,9 +197,9 @@ exports.Prisma.AdminScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
-  role: 'role',
   restaurant_id: 'restaurant_id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  role: 'role'
 };
 
 exports.Prisma.PaymentScalarFieldEnum = {
@@ -215,6 +219,18 @@ exports.Prisma.ShiftScalarFieldEnum = {
   opening_float: 'opening_float',
   closing_summary: 'closing_summary',
   status: 'status'
+};
+
+exports.Prisma.StockLedgerScalarFieldEnum = {
+  id: 'id',
+  menu_item_id: 'menu_item_id',
+  restaurant_id: 'restaurant_id',
+  delta: 'delta',
+  balance_after: 'balance_after',
+  reason: 'reason',
+  note: 'note',
+  admin_id: 'admin_id',
+  created_at: 'created_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -247,16 +263,18 @@ exports.TableStatus = exports.$Enums.TableStatus = {
   OCCUPIED: 'OCCUPIED'
 };
 
-exports.OrderType = exports.$Enums.OrderType = {
-  TABLE: 'TABLE',
-  TAKEAWAY: 'TAKEAWAY'
-};
-
 exports.OrderStatus = exports.$Enums.OrderStatus = {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
+  PREPARING: 'PREPARING',
+  SERVED: 'SERVED',
   PAID: 'PAID',
   CANCELLED: 'CANCELLED'
+};
+
+exports.OrderType = exports.$Enums.OrderType = {
+  TABLE: 'TABLE',
+  TAKEAWAY: 'TAKEAWAY'
 };
 
 exports.AdminRole = exports.$Enums.AdminRole = {
@@ -275,6 +293,14 @@ exports.ShiftStatus = exports.$Enums.ShiftStatus = {
   CLOSED: 'CLOSED'
 };
 
+exports.StockReason = exports.$Enums.StockReason = {
+  RESTOCK: 'RESTOCK',
+  ADJUST: 'ADJUST',
+  WASTE: 'WASTE',
+  ORDER_DEDUCT: 'ORDER_DEDUCT',
+  ORDER_REFUND: 'ORDER_REFUND'
+};
+
 exports.Prisma.ModelName = {
   Restaurant: 'Restaurant',
   Table: 'Table',
@@ -284,7 +310,8 @@ exports.Prisma.ModelName = {
   OrderItem: 'OrderItem',
   Admin: 'Admin',
   Payment: 'Payment',
-  Shift: 'Shift'
+  Shift: 'Shift',
+  StockLedger: 'StockLedger'
 };
 
 /**

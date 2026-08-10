@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -12,9 +7,156 @@ datasource db {
   provider = "postgresql"
 }
 
+model Restaurant {
+  id                  String     @id @default(uuid())
+  name                String
+  address             String
+  latitude            Float
+  longitude           Float
+  radius_meters       Float
+  is_active           Boolean    @default(true)
+  service_charge_rate Decimal    @default(0)
+  vat_rate            Decimal    @default(7)
+  logo_url            String?
+  theme_color         String?
+  text_color          String?
+  admins              Admin[]
+  categories          Category[]
+  menuItems           MenuItem[]
+  orders              Order[]
+  shifts              Shift[]
+  tables              Table[]
+}
+
+model Table {
+  id            String      @id @default(uuid())
+  restaurant_id String
+  table_number  String
+  qr_code_token String      @unique
+  capacity      Int
+  is_active     Boolean     @default(true)
+  status        TableStatus @default(AVAILABLE)
+  orders        Order[]
+  restaurant    Restaurant  @relation(fields: [restaurant_id], references: [id])
+}
+
+model Category {
+  id            String     @id @default(uuid())
+  restaurant_id String
+  name          String
+  sort_order    Int
+  restaurant    Restaurant @relation(fields: [restaurant_id], references: [id])
+  menuItems     MenuItem[]
+}
+
+model MenuItem {
+  id                  String        @id @default(uuid())
+  restaurant_id       String
+  category_id         String
+  name                String
+  description         String
+  price               Decimal
+  imge_url            String?
+  is_available        Boolean       @default(true)
+  is_recommended      Boolean       @default(false)
+  stock_qty           Decimal?
+  stock_unit          String?
+  low_stock_threshold Int?
+  category            Category      @relation(fields: [category_id], references: [id])
+  restaurant          Restaurant    @relation(fields: [restaurant_id], references: [id])
+  orderItems          OrderItem[]
+  ledger              StockLedger[]
+}
+
+model Order {
+  id                    String      @id @default(uuid())
+  table_id              String?
+  session_id            String
+  status                OrderStatus @default(PENDING)
+  total_amount          Decimal
+  created_at            DateTime    @default(now())
+  updated_at            DateTime    @updatedAt
+  order_type            OrderType   @default(TABLE)
+  queue_number          String?
+  restaurant_id         String?
+  service_charge_amount Decimal     @default(0)
+  subtotal              Decimal     @default(0)
+  vat_amount            Decimal     @default(0)
+  restaurant            Restaurant? @relation(fields: [restaurant_id], references: [id])
+  table                 Table?      @relation(fields: [table_id], references: [id])
+  orderItems            OrderItem[]
+  payments              Payment[]
+}
+
+model OrderItem {
+  id           String   @id @default(uuid())
+  order_id     String
+  menu_item_id String
+  quantity     Int
+  unit_price   Decimal
+  special_note String?
+  menuItem     MenuItem @relation(fields: [menu_item_id], references: [id])
+  order        Order    @relation(fields: [order_id], references: [id])
+}
+
+model Admin {
+  id            String        @id @default(uuid())
+  email         String        @unique
+  password      String
+  name          String
+  restaurant_id String
+  created_at    DateTime      @default(now())
+  role          AdminRole     @default(ADMIN)
+  restaurant    Restaurant    @relation(fields: [restaurant_id], references: [id])
+  shifts        Shift[]
+  ledger        StockLedger[]
+}
+
+model Payment {
+  id       String        @id @default(uuid())
+  order_id String
+  method   PaymentMethod
+  amount   Decimal
+  paid_at  DateTime      @default(now())
+  order    Order         @relation(fields: [order_id], references: [id])
+}
+
+model Shift {
+  id              String      @id @default(uuid())
+  admin_id        String
+  restaurant_id   String
+  clock_in        DateTime    @default(now())
+  clock_out       DateTime?
+  opening_float   Decimal
+  closing_summary Json?
+  status          ShiftStatus @default(OPEN)
+  admin           Admin       @relation(fields: [admin_id], references: [id])
+  restaurant      Restaurant  @relation(fields: [restaurant_id], references: [id])
+}
+
+model StockLedger {
+  id            String      @id @default(uuid())
+  menu_item_id  String
+  restaurant_id String
+  delta         Decimal
+  balance_after Decimal
+  reason        StockReason
+  note          String?
+  admin_id      String?
+  created_at    DateTime    @default(now())
+
+  menuItem MenuItem @relation(fields: [menu_item_id], references: [id])
+  admin    Admin?   @relation(fields: [admin_id], references: [id])
+
+  @@index([restaurant_id, created_at])
+  @@index([menu_item_id])
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED
+  PREPARING
+  SERVED
   PAID
   CANCELLED
 }
@@ -45,138 +187,10 @@ enum ShiftStatus {
   CLOSED
 }
 
-model Restaurant {
-  id                  String  @id @default(uuid())
-  name                String
-  address             String
-  latitude            Float
-  longitude           Float
-  radius_meters       Float
-  is_active           Boolean @default(true)
-  vat_rate            Decimal @default(7)
-  service_charge_rate Decimal @default(0)
-  logo_url            String?
-  theme_color         String?
-
-  // back-relations
-  tables     Table[]
-  categories Category[]
-  menuItems  MenuItem[]
-  admins     Admin[]
-  shifts     Shift[]
-  orders     Order[]
-}
-
-model Table {
-  id            String      @id @default(uuid())
-  restaurant_id String
-  table_number  String
-  qr_code_token String      @unique
-  capacity      Int
-  is_active     Boolean     @default(true)
-  status        TableStatus @default(AVAILABLE)
-
-  // relation
-  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
-  orders     Order[]
-}
-
-model Category {
-  id            String @id @default(uuid())
-  restaurant_id String
-  name          String
-  sort_order    Int
-
-  //relation
-  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
-  menuItems  MenuItem[]
-}
-
-model MenuItem {
-  id             String  @id @default(uuid())
-  restaurant_id  String
-  category_id    String
-  name           String
-  description    String
-  price          Decimal
-  imge_url       String?
-  is_available   Boolean @default(true)
-  is_recommended Boolean @default(false)
-
-  // relation
-  restaurant Restaurant  @relation(fields: [restaurant_id], references: [id])
-  category   Category    @relation(fields: [category_id], references: [id])
-  orderItems OrderItem[]
-}
-
-model Order {
-  id                    String      @id @default(uuid())
-  restaurant_id         String?
-  table_id              String?
-  session_id            String
-  order_type            OrderType   @default(TABLE)
-  queue_number          String?
-  status                OrderStatus @default(PENDING)
-  subtotal              Decimal     @default(0)
-  vat_amount            Decimal     @default(0)
-  service_charge_amount Decimal     @default(0)
-  total_amount          Decimal
-  created_at            DateTime    @default(now())
-  updated_at            DateTime    @updatedAt
-
-  // relation
-  restaurant Restaurant? @relation(fields: [restaurant_id], references: [id])
-  table      Table?      @relation(fields: [table_id], references: [id])
-  orderItems OrderItem[]
-  payments   Payment[]
-}
-
-model OrderItem {
-  id           String  @id @default(uuid())
-  order_id     String
-  menu_item_id String
-  quantity     Int
-  unit_price   Decimal
-  special_note String?
-
-  // relation
-  order    Order    @relation(fields: [order_id], references: [id])
-  menuItem MenuItem @relation(fields: [menu_item_id], references: [id])
-}
-
-model Admin {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  password      String
-  name          String
-  role          AdminRole @default(ADMIN)
-  restaurant_id String
-  created_at    DateTime  @default(now())
-
-  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
-  shifts     Shift[]
-}
-
-model Payment {
-  id       String        @id @default(uuid())
-  order_id String
-  method   PaymentMethod
-  amount   Decimal
-  paid_at  DateTime      @default(now())
-
-  order Order @relation(fields: [order_id], references: [id])
-}
-
-model Shift {
-  id              String      @id @default(uuid())
-  admin_id        String
-  restaurant_id   String
-  clock_in        DateTime    @default(now())
-  clock_out       DateTime?
-  opening_float   Decimal
-  closing_summary Json?
-  status          ShiftStatus @default(OPEN)
-
-  admin      Admin      @relation(fields: [admin_id], references: [id])
-  restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+enum StockReason {
+  RESTOCK
+  ADJUST
+  WASTE
+  ORDER_DEDUCT
+  ORDER_REFUND
 }

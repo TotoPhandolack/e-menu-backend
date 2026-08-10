@@ -45,6 +45,14 @@ enum ShiftStatus {
   CLOSED
 }
 
+enum StockReason {
+  RESTOCK
+  ADJUST
+  WASTE
+  ORDER_DEDUCT
+  ORDER_REFUND
+}
+
 model Restaurant {
   id                  String  @id @default(uuid())
   name                String
@@ -103,10 +111,16 @@ model MenuItem {
   is_available  Boolean @default(true)
   is_recommended Boolean @default(false)
 
+  // stock tracking (null stock_qty = untracked, keeps is_available manual)
+  stock_qty            Decimal?
+  stock_unit           String?
+  low_stock_threshold  Int?
+
   // relation
   restaurant Restaurant  @relation(fields: [restaurant_id], references: [id])
   category   Category    @relation(fields: [category_id], references: [id])
   orderItems OrderItem[]
+  ledger     StockLedger[]
 }
 
 model Order {
@@ -155,6 +169,7 @@ model Admin {
 
   restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
   shifts     Shift[]
+  ledger     StockLedger[]
 }
 
 model Payment {
@@ -179,4 +194,22 @@ model Shift {
 
   admin      Admin      @relation(fields: [admin_id], references: [id])
   restaurant Restaurant @relation(fields: [restaurant_id], references: [id])
+}
+
+model StockLedger {
+  id            String      @id @default(uuid())
+  menu_item_id  String
+  restaurant_id String
+  delta         Decimal
+  balance_after Decimal
+  reason        StockReason
+  note          String?
+  admin_id       String?
+  created_at    DateTime    @default(now())
+
+  menuItem MenuItem @relation(fields: [menu_item_id], references: [id])
+  admin    Admin?   @relation(fields: [admin_id], references: [id])
+
+  @@index([restaurant_id, created_at])
+  @@index([menu_item_id])
 }
